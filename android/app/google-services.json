@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "574878357929",
+    "project_id": "toohak-58bc4",
+    "storage_bucket": "toohak-58bc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574878357929:android:9fc5e960be082852f5ccb8",
+        "android_client_info": {
+          "package_name": "com.example.toohak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6SHapgwkcRo5aLzh8JY70D9rSEO7bBVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
