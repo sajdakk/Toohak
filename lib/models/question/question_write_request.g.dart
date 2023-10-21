@@ -13,8 +13,9 @@ QuestionWriteRequest _$QuestionWriteRequestFromJson(
       answer1: json['answer_1'] as String,
       answer2: json['answer_2'] as String,
       correctAnswer: json['correct_answer'] as int,
-      hint: json['hint'] as String,
+      hint: json['hint'] as String?,
       durationInSec: json['duration_in_sec'] as int,
+      doubleBoost: json['double_boost'] as bool,
     );
 
 Map<String, dynamic> _$QuestionWriteRequestToJson(
@@ -26,4 +27,5 @@ Map<String, dynamic> _$QuestionWriteRequestToJson(
       'correct_answer': instance.correctAnswer,
       'hint': instance.hint,
       'duration_in_sec': instance.durationInSec,
+      'double_boost': instance.doubleBoost,
     };

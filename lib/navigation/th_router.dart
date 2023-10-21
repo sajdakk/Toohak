@@ -1,7 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:itmesh_flutter_shared/flutter_shared.dart';
 import 'package:toohak/_toohak.dart';
 
 final ThRouter thRouter = ThRouter.instance;

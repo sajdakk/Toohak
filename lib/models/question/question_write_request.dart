@@ -13,6 +13,7 @@ class QuestionWriteRequest extends Equatable {
     required this.correctAnswer,
     required this.hint,
     required this.durationInSec,
+    required this.doubleBoost,
   });
 
   factory QuestionWriteRequest.fromJson(Map<String, dynamic> json) {
@@ -36,10 +37,13 @@ class QuestionWriteRequest extends Equatable {
   final int correctAnswer;
 
   @JsonKey(name: QuestionFields.hint)
-  final String hint;
+  final String? hint;
 
   @JsonKey(name: QuestionFields.durationInSec)
   final int durationInSec;
+
+  @JsonKey(name: QuestionFields.doubleBoost)
+  final bool doubleBoost;
 
   @override
   List<Object?> get props => <Object?>[
@@ -49,5 +53,6 @@ class QuestionWriteRequest extends Equatable {
         correctAnswer,
         hint,
         durationInSec,
+        doubleBoost,
       ];
 }

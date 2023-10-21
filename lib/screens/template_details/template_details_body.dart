@@ -1,0 +1,176 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toohak/_toohak.dart';
+
+import 'cubit/template_details_cubit.dart';
+import 'widgets/question_details_dialog.dart';
+import 'widgets/question_row.dart';
+
+class TemplateDetailsBody extends StatefulWidget {
+  const TemplateDetailsBody({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  final TemplateDetailsLoadedState state;
+
+  @override
+  State<TemplateDetailsBody> createState() => _TemplateDetailsBodyState();
+}
+
+class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormFieldState<GameType>> _gameTypeKey = GlobalKey<FormFieldState<GameType>>();
+
+  final GlobalKey<FormFieldState<String>> _nameKey = GlobalKey<FormFieldState<String>>();
+
+  final List<QuestionParameters> questions = <QuestionParameters>[];
+
+  @override
+  void initState() {
+    if (widget.state.template != null && widget.state.template!.questions.isNotEmpty) {
+      for (Question lesson in widget.state.template!.questions) {
+        questions.add(QuestionParameters(
+          currentQuestion: lesson,
+          question: lesson.question,
+          correctAnswer: lesson.correctAnswer,
+          answer1: lesson.answer1,
+          answer2: lesson.answer2,
+          doubleBoost: lesson.doubleBoost,
+          durationInSec: lesson.durationInSec,
+          hint: lesson.hint,
+        ));
+      }
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Game template details',
+                    style: ThTextStyles.headlineH2Semibold.copyWith(
+                      color: ThColors.textText1,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  ThDropdownInput(
+                    isRequired: true,
+                    values: GameType.values.toSet(),
+                    formFieldKey: _gameTypeKey,
+                    label: 'GameType *',
+                    initialValue: widget.state.template?.type,
+                    translateItemToString: (GameType? value) => value == null ? '' : GameTypeMapper.getName(value),
+                  ),
+                  const SizedBox(height: 8.0),
+                  ThTextInput(
+                    initialValue: widget.state.template?.name,
+                    isRequired: true,
+                    formFieldKey: _nameKey,
+                    labelText: 'Name *',
+                    maxLines: null,
+                  ),
+                  const SizedBox(height: 24.0),
+                  Text(
+                    'Questions',
+                    style: ThTextStyles.headlineH2Semibold.copyWith(
+                      color: ThColors.textText2,
+                    ),
+                  ),
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () async {
+                          QuestionParameters? params = await QuestionDetailDialog.show(
+                            context: context,
+                            lesson: questions[index],
+                          );
+
+                          if (params == null) {
+                            return;
+                          }
+
+                          questions[index] = params;
+
+                          setState(() {});
+                        },
+                        child: QuestionRow(
+                          question: questions[index].question,
+                          duration: questions[index].durationInSec,
+                          onDelete: () => thShowAlert(
+                            context,
+                            content: 'Are you sure, that you want to delete this lesson?',
+                            onConfirm: () {
+                              questions.removeAt(index);
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: questions.length,
+                    separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 16.0),
+                    shrinkWrap: true,
+                  ),
+                  const SizedBox(height: 16.0),
+                  ThButton(
+                    title: 'Add lesson',
+                    onTap: () async {
+                      QuestionParameters? lesson = await QuestionDetailDialog.show(
+                        context: context,
+                        lesson: null,
+                      );
+                      if (lesson == null) {
+                        return;
+                      }
+
+                      questions.add(lesson);
+
+                      setState(() {});
+                    },
+                    size: ThPrimaryButtonSize.large,
+                    style: ThPrimaryButtonStyle.justText,
+                  ),
+                  const SizedBox(height: 32.0),
+                  ThButton(
+                    title: widget.state.template == null ? 'Publish template' : 'Update template ',
+                    onTap: () async => await _submit(context),
+                    size: ThPrimaryButtonSize.large,
+                    style: ThPrimaryButtonStyle.primary,
+                  ),
+                  const SizedBox(height: 32.0),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _submit(BuildContext context) async {
+    if (_formKey.currentState?.validate() != true) {
+      return;
+    }
+
+    await context.read<TemplateDetailsCubit>().save(
+          template: widget.state.template,
+          name: _nameKey.currentState!.value!,
+          params: questions,
+          type: _gameTypeKey.currentState!.value!,
+        );
+
+    thRouter.pop();
+  }
+}

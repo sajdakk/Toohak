@@ -11,9 +11,19 @@ class AdminNoDataState extends AdminState {
   const AdminNoDataState();
 }
 
+class AdminLoadingState extends AdminState {
+  const AdminLoadingState();
+}
+
 class AdminLoadedState extends AdminState {
-  const AdminLoadedState();
+  const AdminLoadedState({
+    required this.templates,
+  });
+
+  final List<GameTemplate> templates;
 
   @override
-  List<dynamic> get props => <dynamic>[];
+  List<dynamic> get props => <dynamic>[
+        templates,
+      ];
 }

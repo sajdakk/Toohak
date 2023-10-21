@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:itmesh_flutter_shared/flutter_shared.dart';
 import 'package:toohak/_toohak.dart';
 
 class ThTextInput extends StatelessWidget {

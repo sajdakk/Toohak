@@ -1,6 +1,7 @@
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/screens/admin/admin_screen.dart';
 import 'package:toohak/screens/init/init_screen.dart';
+import 'package:toohak/screens/template_details/template_details_screen.dart';
 
 class ThRoutes {
   const ThRoutes();
@@ -8,6 +9,7 @@ class ThRoutes {
   static final List<ThRoute> allRoutes = <ThRoute>[
     init,
     admin,
+    templateDetails,
   ];
 
   static const String dialogRouteName = '/dialog';
@@ -22,5 +24,11 @@ class ThRoutes {
     name: 'Admin',
     route: '/admin',
     handler: AdminScreen.routeHandler,
+  );
+
+  static final ThRoute templateDetails = ThRoute(
+    name: 'Template details',
+    route: '/templates/:id',
+    handler: TemplateDetailsScreen.routeHandler,
   );
 }

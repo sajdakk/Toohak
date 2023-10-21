@@ -14,6 +14,7 @@ class Question extends Equatable {
     required this.correctAnswer,
     required this.hint,
     required this.durationInSec,
+    required this.doubleBoost,
   });
 
   factory Question.fromJson(Map<String, dynamic> json) {
@@ -40,10 +41,13 @@ class Question extends Equatable {
   final int correctAnswer;
 
   @JsonKey(name: QuestionFields.hint)
-  final String hint;
+  final String? hint;
 
   @JsonKey(name: QuestionFields.durationInSec)
   final int durationInSec;
+
+  @JsonKey(name: QuestionFields.doubleBoost)
+  final bool doubleBoost;
 
   @override
   List<Object?> get props => <Object?>[
@@ -54,5 +58,6 @@ class Question extends Equatable {
         correctAnswer,
         hint,
         durationInSec,
+        doubleBoost,
       ];
 }

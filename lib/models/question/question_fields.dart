@@ -12,4 +12,6 @@ class QuestionFields {
   static const String hint = 'hint';
 
   static const String durationInSec = 'duration_in_sec';
+
+  static const String doubleBoost = 'double_boost';
 }
