@@ -11,10 +11,22 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
   TemplateDetailsCubit() : super(const TemplateDetailsLoadingState());
 
   final GameTemplateDataManager _gameTemplateDataManager = sl();
+  final ProfilesDataManager _profilesDataManager = sl();
 
   StreamSubscription<dynamic>? _subscription;
 
   Future<void> init(String? id) async {
+    String? userId = appSession.currentUser?.uid;
+    if (userId == null) {
+      emit(
+        const TemplateDetailsErrorState(
+          error: 'Cannot find user',
+        ),
+      );
+
+      return;
+    }
+
     if (id == null) {
       emit(
         const TemplateDetailsLoadedState(
@@ -26,6 +38,8 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
     }
 
     await _gameTemplateDataManager.fetchWithId(id);
+
+    await _profilesDataManager.fetchWithId(userId);
 
     _subscription = _gameTemplateDataManager.dataForId$(id).listen(
       (GameTemplate? template) {
@@ -53,6 +67,12 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
     required List<QuestionParameters> params,
     required GameType type,
   }) async {
+    String? userId = appSession.currentUser?.uid;
+
+    if (userId == null) {
+      return false;
+    }
+
     bool result = false;
 
     List<Question> questions = <Question>[];
@@ -64,18 +84,29 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
     }
 
     if (template == null) {
-      result = await _gameTemplateDataManager.addGameTemplate(
+      String? gameTemplateId = await _gameTemplateDataManager.addGameTemplate(
         gameTemplateWriteRequest: GameTemplateWriteRequest(
-          userId: 'absdd',
+          userId: userId,
           questions: questions,
           name: name,
           type: type,
         ),
       );
+
+      if (gameTemplateId == null) {
+        BotToast.closeAllLoading();
+
+        return false;
+      }
+
+      result = await _profilesDataManager.addGameTemplate(
+        id: userId,
+        gameTemplateId: gameTemplateId,
+      );
     } else {
       result = await _gameTemplateDataManager.updateGameTemplate(
         gameTemplateWriteRequest: GameTemplateWriteRequest(
-          userId: 'absdd',
+          userId: userId,
           questions: questions,
           name: name,
           type: type,

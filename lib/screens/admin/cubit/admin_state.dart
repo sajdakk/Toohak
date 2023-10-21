@@ -27,3 +27,16 @@ class AdminLoadedState extends AdminState {
         templates,
       ];
 }
+
+class AdminErrorState extends AdminState {
+  const AdminErrorState({
+    required this.error,
+  });
+
+  final String error;
+
+  @override
+  List<dynamic> get props => <dynamic>[
+        error,
+      ];
+}

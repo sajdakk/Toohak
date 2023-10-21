@@ -23,9 +23,20 @@ class AdminCubit extends ThCubit<AdminState> {
 
   Future<void> init() async {
     _logger.info('Initializing AdminCubit');
-    _gameTemplateDataManager.fetchData(NoFetchingParams());
+    String? userId = appSession.currentUser?.uid;
+    if (userId == null) {
+      emit(
+        const AdminErrorState(
+          error: 'Cannot find user',
+        ),
+      );
 
-    _subscription = _gameTemplateDataManager.data$.listen(
+      return;
+    }
+
+  await  _gameTemplateDataManager.fetchWithUserId(userId);
+
+    _subscription = _gameTemplateDataManager.dataWithUserId$(userId).listen(
       (List<GameTemplate> templates) {
         emit(
           AdminLoadedState(

@@ -40,7 +40,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
       final Map<String, GameTemplate> result = await _gameTemplateDataProvider.fetchWithUserId(userId);
       updateStreamWith(
         result,
-        deleteWhere: (GameTemplate course) => course.userId == userId,
+        deleteWhere: (GameTemplate template) => template.userId == userId,
       );
       return true;
     } catch (e, stacktrace) {
@@ -53,7 +53,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
     }
   }
 
-  Future<bool> addGameTemplate({
+  Future<String?> addGameTemplate({
     required GameTemplateWriteRequest gameTemplateWriteRequest,
   }) async {
     try {
@@ -61,14 +61,14 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         gameTemplateWriteRequest: gameTemplateWriteRequest,
       );
       await fetchWithId(id);
-      return true;
+      return id;
     } catch (error, stacktrace) {
       _logger.error(
         'addGameTemplate, could not add gameTemplate',
         error: error,
         stackTrace: stacktrace,
       );
-      return false;
+      return null;
     }
   }
 

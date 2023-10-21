@@ -30,16 +30,18 @@ class AdminScreen extends StatelessWidget {
         child: BlocProvider<AdminCubit>(
           create: (_) => sl()..init(),
           child: BlocBuilder<AdminCubit, AdminState>(
-            builder: (BuildContext lessonContext, AdminState lessonState) {
-              switch (lessonState) {
+            builder: (BuildContext context, AdminState state) {
+              switch (state) {
                 case AdminLoadedState():
                   return AdminBody(
-                    state: lessonState,
+                    state: state,
                   );
                 case AdminNoDataState():
                   return const NoDataView();
                 case AdminLoadingState():
                   return const LoadingView();
+                  case AdminErrorState():
+                  return  ErrorView.unhandledState(state);
               }
             },
           ),

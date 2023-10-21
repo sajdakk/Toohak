@@ -40,6 +40,12 @@ class TemplateRow extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16.0),
+            ThButton(
+              title: 'Create game',
+              onTap: () {},
+              size: ThPrimaryButtonSize.small,
+              style: ThPrimaryButtonStyle.primary,
+            ),
             IconButton(
               padding: EdgeInsets.zero,
               icon: const Icon(

@@ -62,7 +62,7 @@ class _InitScreenState extends State<InitScreen> {
                       ),
                       const SizedBox(width: 8.0),
                       GestureDetector(
-                        onTap: () => thRouter.pushNamed(ThRoutes.admin.route),
+                        onTap: () async => await appSession.init(),
                         child: Text(
                           'Przejdź tutaj!',
                           style: ThTextStyles.headlineH6Semibold.copyWith(

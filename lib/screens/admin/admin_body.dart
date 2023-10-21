@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
@@ -26,6 +27,21 @@ class _AdminBodyState extends State<AdminBody> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          ThButton(
+            title: 'Log out',
+            onTap: () => thShowAlert(
+              context,
+              content: 'Would you like to log out?',
+              onConfirm: () async {
+                BotToast.showLoading();
+                await appSession.signOut();
+                BotToast.closeAllLoading();
+              },
+            ),
+            size: ThPrimaryButtonSize.large,
+            style: ThPrimaryButtonStyle.justText,
+            secondaryTextColor: ThColors.statusColorDanger,
+          ),
           ThButton(
             title: 'Stwórz nowy quiz',
             onTap: () => thRouter.pushNamed(
@@ -56,7 +72,6 @@ class _AdminBodyState extends State<AdminBody> {
               separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 16.0),
             ),
           ),
-          const SizedBox(height: 16.0),
           const SizedBox(height: 16.0),
         ],
       ),
