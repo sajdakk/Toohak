@@ -16,6 +16,7 @@ class ThAppScaffold extends StatelessWidget {
     this.floatingActionButtonLocation,
     this.resizeToAvoidBottomInset = false,
     this.showBorderLine = false,
+    this.backgroundColor = ThColors.backgroundBG0,
   });
 
   final Widget body;
@@ -30,11 +31,12 @@ class ThAppScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget? leadingWidget;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThColors.backgroundBG0,
+      backgroundColor:backgroundColor,
       extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       floatingActionButton: floatingActionButton,

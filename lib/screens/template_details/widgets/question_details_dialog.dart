@@ -6,14 +6,14 @@ import 'package:toohak/_toohak.dart';
 class QuestionDetailDialog extends StatefulWidget {
   const QuestionDetailDialog({
     Key? key,
-    required this.lessonParameters,
+    required this.questionParameters,
   }) : super(key: key);
 
-  final QuestionParameters? lessonParameters;
+  final QuestionParameters? questionParameters;
 
   static Future<QuestionParameters?> show({
     required BuildContext context,
-    required QuestionParameters? lesson,
+    required QuestionParameters? question,
   }) {
     return showDialog<QuestionParameters?>(
       context: context,
@@ -29,7 +29,7 @@ class QuestionDetailDialog extends StatefulWidget {
               maxHeight: 575.0,
             ),
             child: QuestionDetailDialog(
-              lessonParameters: lesson,
+              questionParameters: question,
             ),
           ),
         );
@@ -46,7 +46,6 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
 
   final GlobalKey<FormFieldState<String>> _questionKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<FormFieldState<int>> _correctAnswerKey = GlobalKey<FormFieldState<int>>();
-  final GlobalKey<FormFieldState<String>> _orderKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<FormFieldState<String>> _durationKey = GlobalKey<FormFieldState<String>>();
   final GlobalKey<FormFieldState<String>> _answer1Key = GlobalKey<FormFieldState<String>>();
   final GlobalKey<FormFieldState<String>> _answer2Key = GlobalKey<FormFieldState<String>>();
@@ -84,7 +83,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                   child: Column(
                     children: <Widget>[
                       ThTextInput(
-                        initialValue: widget.lessonParameters?.question,
+                        initialValue: widget.questionParameters?.question,
                         isRequired: true,
                         formFieldKey: _questionKey,
                         labelText: 'Question *',
@@ -92,7 +91,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                       ),
                       const SizedBox(height: 8.0),
                       ThTextInput(
-                        initialValue: widget.lessonParameters?.answer1,
+                        initialValue: widget.questionParameters?.answer1,
                         isRequired: true,
                         formFieldKey: _answer1Key,
                         labelText: 'Answer 1 *',
@@ -100,7 +99,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                       ),
                       const SizedBox(height: 8.0),
                       ThTextInput(
-                        initialValue: widget.lessonParameters?.answer2,
+                        initialValue: widget.questionParameters?.answer2,
                         isRequired: true,
                         formFieldKey: _answer2Key,
                         labelText: 'Answer 2 *',
@@ -112,11 +111,11 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                         label: 'Correct answer *',
                         formFieldKey: _correctAnswerKey,
                         isRequired: true,
-                        initialValue: widget.lessonParameters?.correctAnswer,
+                        initialValue: widget.questionParameters?.correctAnswer,
                       ),
                       const SizedBox(height: 8.0),
                       ThTextInput(
-                        initialValue: widget.lessonParameters?.hint,
+                        initialValue: widget.questionParameters?.hint,
                         isRequired: true,
                         formFieldKey: _hintKey,
                         labelText: 'Hint',
@@ -125,18 +124,17 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                       ThCheckboxInput(
                         label: 'Double boost',
                         formFieldKey: _doubleBoostKey,
-                        checkRequired: true,
                       ),
                       const SizedBox(height: 8.0),
                       ThNumberInput(
-                        initialValue: widget.lessonParameters?.durationInSec.toString(),
+                        initialValue: widget.questionParameters?.durationInSec.toString(),
                         required: true,
                         formFieldKey: _durationKey,
                         labelText: 'Duration in sec *',
                       ),
                       const SizedBox(height: 32.0),
                       ThButton(
-                        title: widget.lessonParameters == null ? 'Add lesson' : 'Update lesson ',
+                        title: widget.questionParameters == null ? 'Add question' : 'Update question ',
                         onTap: () async => await _submit(context),
                         size: ThPrimaryButtonSize.large,
                         style: ThPrimaryButtonStyle.secondary,
@@ -181,21 +179,21 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
       return;
     }
 
-    int? order = int.tryParse(_orderKey.currentState!.value!);
     int? readingTimeMins = int.tryParse(_durationKey.currentState!.value!);
 
-    if (order == null) {
+    if (readingTimeMins == null) {
       return;
     }
 
+
     QuestionParameters lessonParameters = QuestionParameters(
-      currentQuestion: widget.lessonParameters?.currentQuestion,
+      currentQuestion: widget.questionParameters?.currentQuestion,
       question: _questionKey.currentState!.value!,
       answer1: _answer1Key.currentState!.value!,
       answer2: _answer2Key.currentState!.value!,
       correctAnswer: _correctAnswerKey.currentState!.value!,
       hint: _hintKey.currentState!.value!,
-      durationInSec: readingTimeMins!,
+      durationInSec: readingTimeMins,
       doubleBoost: _doubleBoostKey.currentState!.value!,
     );
 

@@ -37,9 +37,9 @@ abstract class ThColors {
   static const Color statusColorWarning = Color(0xfff1dd77);
   static const Color statusColorDanger = Color(0xffe38c87);
 
-  static const Color backgroundBG0 = Color(0xff6979BA);
-  static const Color backgroundBG1 = Color(0xff37424A);
-  static const Color backgroundBG2 = Color(0xff4C5B66);
+  static const Color backgroundBG0 = Color(0xff4456A0);
+  static const Color backgroundBG1 = Color(0xff6979BA);
+  static const Color backgroundBG2 = Color(0xff9AABEF);
   static const Color textFormBg = Color.fromRGBO(255, 255, 255, 0.05);
 
   static const Color categoriesBody = Color(0xffF19C60);

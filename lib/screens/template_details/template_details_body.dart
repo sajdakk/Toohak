@@ -94,7 +94,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                         onTap: () async {
                           QuestionParameters? params = await QuestionDetailDialog.show(
                             context: context,
-                            lesson: questions[index],
+                            question: questions[index],
                           );
 
                           if (params == null) {
@@ -125,11 +125,11 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                   ),
                   const SizedBox(height: 16.0),
                   ThButton(
-                    title: 'Add lesson',
+                    title: 'Add question',
                     onTap: () async {
                       QuestionParameters? lesson = await QuestionDetailDialog.show(
                         context: context,
-                        lesson: null,
+                        question: null,
                       );
                       if (lesson == null) {
                         return;

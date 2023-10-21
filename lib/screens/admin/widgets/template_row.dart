@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/template_details/template_details_screen.dart';
 
 class TemplateRow extends StatelessWidget {
   const TemplateRow({
@@ -14,10 +15,9 @@ class TemplateRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      // onTap: () => thRouter.pushNamed(
-      //   AdminProgramDetailsScreen.getRoute(id: template.id),
-      // ),
+      onTap: () => thRouter.pushNamed(
+        TemplateDetailsScreen.getRoute(id: template.id),
+      ),
       child: Container(
         padding: const EdgeInsets.only(
           left: 16.0,

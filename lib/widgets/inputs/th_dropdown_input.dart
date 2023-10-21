@@ -37,13 +37,13 @@ class ThDropdownInput<T> extends StatelessWidget {
       formFieldKey: formFieldKey,
       onChanged: onChanged,
       textStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText2,
+        color: ThColors.textText1,
       ),
       errorStyle: ThTextStyles.paragraphP3Medium.copyWith(
         color: ThColors.statusColorDanger,
       ),
       labelStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
+        color: ThColors.textText1,
       ),
       isRequired: isRequired,
       validator: validator,
@@ -54,7 +54,7 @@ class ThDropdownInput<T> extends StatelessWidget {
       dropdownDecoration: BoxDecoration(
         color: ThColors.backgroundBG1,
         border: Border.all(
-          color: ThColors.ascentAscent,
+          color: ThColors.textText5,
         ),
         borderRadius: BorderRadius.circular(8.0),
       ),
@@ -63,12 +63,12 @@ class ThDropdownInput<T> extends StatelessWidget {
         color: ThColors.textText3,
       ),
       subtitleStyle: ThTextStyles.paragraphP3Medium.copyWith(
-        color: ThColors.textText2,
+        color: ThColors.textText1,
       ),
       translateItemtoString: translateItemToString,
       translateItemtoSubtitle: translateItemToSubtitle,
       titleStyle: ThTextStyles.paragraphP3Medium.copyWith(
-        color: ThColors.textText2,
+        color: ThColors.textText1,
       ),
       customSorting: customSorting,
       inputHeight: 52.0,

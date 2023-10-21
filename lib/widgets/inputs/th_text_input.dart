@@ -22,6 +22,8 @@ class ThTextInput extends StatelessWidget {
     this.autofillHints,
     this.withoutSpaces = false,
     this.suffixText,
+    this.fillColor = ThColors.backgroundBG1,
+    this.textColor = ThColors.textText1,
   });
 
   final String? labelText;
@@ -42,6 +44,8 @@ class ThTextInput extends StatelessWidget {
   final List<String>? autofillHints;
   final bool withoutSpaces;
   final String? suffixText;
+  final Color fillColor;
+  final Color textColor;
 
 
 
@@ -64,7 +68,7 @@ class ThTextInput extends StatelessWidget {
       focusNode: focusNode,
       controller: controller,
       textStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText2,
+        color: textColor,
       ),
       errorStyle: ThTextStyles.paragraphP3Medium.copyWith(
         color: ThColors.statusColorDanger,
@@ -81,7 +85,7 @@ class ThTextInput extends StatelessWidget {
           color: ThColors.statusColorDanger,
         ),
       ),
-      fillColor: ThColors.textText1,
+      fillColor: fillColor,
       hintStyle: ThTextStyles.textCategory.copyWith(
         color: ThColors.textText4,
       ),
@@ -89,7 +93,7 @@ class ThTextInput extends StatelessWidget {
         color: ThColors.textText4,
       ),
       floatingLabelStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
+        color: ThColors.textText1,
       ),
       enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
