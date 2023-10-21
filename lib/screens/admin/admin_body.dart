@@ -58,6 +58,15 @@ class _AdminBodyState extends State<AdminBody> {
 
                 return TemplateRow(
                   template: template,
+                  createGame: () async {
+                    AdminCubit cubit = context.read();
+                    final bool result = await cubit.createGame(template.id);
+                    if (!result) {
+                      return;
+                    }
+
+                    thRouter.pushNamed(ThRoutes.adminWaiting.route);
+                  },
                   onDelete: () => thShowAlert(
                     context,
                     content: 'Are you sure, that you want to delete this template?',

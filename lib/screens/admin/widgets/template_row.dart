@@ -7,10 +7,12 @@ class TemplateRow extends StatelessWidget {
     super.key,
     required this.template,
     required this.onDelete,
+    required this.createGame,
   });
 
   final GameTemplate template;
   final VoidCallback onDelete;
+  final VoidCallback createGame;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class TemplateRow extends StatelessWidget {
             const SizedBox(width: 16.0),
             ThButton(
               title: 'Create game',
-              onTap: () {},
+              onTap: createGame,
               size: ThPrimaryButtonSize.small,
               style: ThPrimaryButtonStyle.primary,
             ),

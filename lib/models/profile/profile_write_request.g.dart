@@ -8,7 +8,7 @@ part of 'profile_write_request.dart';
 
 ProfileWriteRequest _$ProfileWriteRequestFromJson(Map<String, dynamic> json) =>
     ProfileWriteRequest(
-      gameTemplateIds: (json['gameTemplateIds'] as List<dynamic>)
+      gameTemplateIds: (json['game_template_ids'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
     );
@@ -16,5 +16,5 @@ ProfileWriteRequest _$ProfileWriteRequestFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ProfileWriteRequestToJson(
         ProfileWriteRequest instance) =>
     <String, dynamic>{
-      'gameTemplateIds': instance.gameTemplateIds,
+      'game_template_ids': instance.gameTemplateIds,
     };

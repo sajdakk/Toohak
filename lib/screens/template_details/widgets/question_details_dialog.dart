@@ -111,7 +111,8 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                         label: 'Correct answer *',
                         formFieldKey: _correctAnswerKey,
                         isRequired: true,
-                        initialValue: widget.questionParameters?.correctAnswer,
+                        initialValue:
+                            widget.questionParameters == null ? null : widget.questionParameters!.correctAnswer + 1,
                       ),
                       const SizedBox(height: 8.0),
                       ThTextInput(
@@ -185,13 +186,12 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
       return;
     }
 
-
     QuestionParameters lessonParameters = QuestionParameters(
       currentQuestion: widget.questionParameters?.currentQuestion,
       question: _questionKey.currentState!.value!,
       answer1: _answer1Key.currentState!.value!,
       answer2: _answer2Key.currentState!.value!,
-      correctAnswer: _correctAnswerKey.currentState!.value!,
+      correctAnswer: _correctAnswerKey.currentState!.value! - 1,
       hint: _hintKey.currentState!.value!,
       durationInSec: readingTimeMins,
       doubleBoost: _doubleBoostKey.currentState!.value!,

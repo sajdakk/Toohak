@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/nickname/nickname_screen.dart';
 
 class InitScreen extends StatefulWidget {
   const InitScreen({super.key});
@@ -18,10 +19,11 @@ class InitScreen extends StatefulWidget {
 }
 
 class _InitScreenState extends State<InitScreen> {
+  final GlobalKey<FormFieldState<String>> _codeKey = GlobalKey<FormFieldState<String>>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThColors.backgroundBG0,
+    return ThAppScaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -34,18 +36,27 @@ class _InitScreenState extends State<InitScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Tahook',
+                    'Toohak',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
                   ),
                   const SizedBox(height: 32.0),
-                  const ThTextInput(
+                  ThTextInput(
                     hintText: 'Podaj kod PIN',
+                    isRequired: true,
+                    formFieldKey: _codeKey,
                   ),
                   ThButton(
-                    title: 'Dołącz',
-                    onTap: () {},
+                    title: 'Dalej',
+                    onTap: () {
+                      if (_codeKey.currentState!.validate() != true) {
+                        return;
+                      }
+
+                      final String code = _codeKey.currentState!.value!;
+                      thRouter.pushNamed(NicknameScreen.getRoute(code: code));
+                    },
                     size: ThPrimaryButtonSize.large,
                     style: ThPrimaryButtonStyle.primary,
                   ),

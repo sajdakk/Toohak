@@ -3,3 +3,7 @@ export 'game_template_data_manager.dart';
 export 'data_manager.dart';
 export 'auth_manager.dart';
 export 'profiles_data_manager.dart';
+export 'cloud_functions_manager.dart';
+export 'game_data_manager.dart';
+export 'cloud_events_manager.dart';
+export 'players_manager.dart';

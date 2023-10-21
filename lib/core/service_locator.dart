@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/screens/admin/cubit/admin_cubit.dart';
+import 'package:toohak/screens/admin_waiting/cubit/admin_waiting_cubit.dart';
 import 'package:toohak/screens/auth/login/cubit/login_cubit.dart';
 import 'package:toohak/screens/auth/registration/cubit/registration_cubit.dart';
+import 'package:toohak/screens/nickname/cubit/nickname_cubit.dart';
 import 'package:toohak/screens/template_details/cubit/template_details_cubit.dart';
 
 final GetIt sl = GetIt.instance;
@@ -12,32 +15,73 @@ final GetIt sl = GetIt.instance;
 Future<void> setupLocator() async {
   sl.registerSingleton(FirebaseFirestore.instance);
   sl.registerSingleton(FirebaseAuth.instance);
+  sl.registerSingleton(FirebaseFunctions.instance);
   sl.registerSingleton(PackageInfoManager()..init());
   sl.registerSingleton(ThRouter()..init(ThRoutes.allRoutes));
 
 // managers
+// TODO(sajdakk): Check for error
+  await _registerManagers();
 
 //data managers
 
   sl.registerLazySingleton(() => NavigationManager());
   sl.registerLazySingleton(() => GameTemplateDataManager());
+  sl.registerLazySingleton(() => GameDataManager());
   sl.registerLazySingleton(() => AuthManager());
   sl.registerLazySingleton(() => ProfilesDataManager());
+  sl.registerLazySingleton(() => CloudFunctionsManager());
 
 //data providers
 
   sl.registerFactory(() => GameTemplateDataProvider());
+  sl.registerFactory(() => GameDataProvider());
   sl.registerFactory(() => AuthProvider());
   sl.registerFactory(() => ProfilesDataProvider());
+  sl.registerFactory(() => CloudFunctionsDataProvider());
 
 //cubits
   sl.registerFactory(() => AdminCubit());
   sl.registerFactory(() => TemplateDetailsCubit());
   sl.registerFactory(() => RegistrationCubit());
   sl.registerFactory(() => LoginCubit());
+  sl.registerFactory(() => NicknameCubit());
+  sl.registerFactory(() => AdminWaitingCubit());
 
   //app session
   sl.registerSingleton(AppSession());
+}
+
+Future<bool> _registerManagers() async {
+  // region CloudEventsManager
+
+  CloudEventsManager cloudEventsManager = CloudEventsManager();
+  final bool cloudEventsSuccess = await cloudEventsManager.init();
+  if (!cloudEventsSuccess) {
+    // Logger
+    return false;
+  }
+
+  sl.registerSingleton(cloudEventsManager);
+
+  // endregion
+
+  // region PlayersManager
+
+  PlayersManager playersManager = PlayersManager(
+    cloudEventsManager: cloudEventsManager,
+  );
+  final bool playersSuccess = await playersManager.init();
+  if (!playersSuccess) {
+    // Logger
+    return false;
+  }
+
+  sl.registerSingleton(playersManager);
+
+  // endregion
+
+  return true;
 }
 
 Future<void> fetchAllData() async {}

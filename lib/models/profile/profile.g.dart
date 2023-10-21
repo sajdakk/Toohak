@@ -8,12 +8,12 @@ part of 'profile.dart';
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
       id: json['id'] as String,
-      gameTemplateIds: (json['gameTemplateIds'] as List<dynamic>)
+      gameTemplateIds: (json['game_template_ids'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
     );
 
 Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
       'id': instance.id,
-      'gameTemplateIds': instance.gameTemplateIds,
+      'game_template_ids': instance.gameTemplateIds,
     };
