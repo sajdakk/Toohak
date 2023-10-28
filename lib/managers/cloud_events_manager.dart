@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:toohak/models/_models.dart';
@@ -18,20 +20,16 @@ class CloudEventsManager {
 
   Future<void> _onMessage(RemoteMessage message) async {
     final Map<String, dynamic> data = message.data;
-    print('data : $data');
 
     final dynamic typeRaw = data['type'];
     if (typeRaw is! String) {
-      print('typeRaw is not String');
       return;
     }
 
     final CloudEventType? type = CloudEventTypeMapper.fromName(typeRaw);
     if (type == null) {
-      print('type is null');
       return;
     }
-    print('type : $type');
 
     switch (type) {
       case CloudEventType.playerJoined:
@@ -43,10 +41,15 @@ class CloudEventsManager {
         break;
 
       case CloudEventType.questionSent:
-        // _cloudEvents$.add(typeRaw);
-        break;
-      case CloudEventType.rankingUpdated:
-        // _cloudEvents$.add(typeRaw);
+        _cloudEvents$.add(
+          QuestionSentCloudEvent(
+            question: data['question'],
+            answers: (jsonDecode(data['answers']) as List<dynamic>).cast(),
+            hint: data['hint'],
+            isDouble: data['is_double'] == 'true',
+            finishWhen: DateTime.parse(data['finish_when']),
+          ),
+        );
         break;
       case CloudEventType.roundFinished:
         // _cloudEvents$.add(typeRaw);
@@ -58,4 +61,20 @@ class CloudEventsManager {
   }
 
   // endregion
+
+  Future<String?> getToken() async {
+    try {
+      final bool isSupported = await FirebaseMessaging.instance.isSupported();
+      if (!isSupported) {
+        return null;
+      }
+
+      String? token = await FirebaseMessaging.instance.getToken(
+        vapidKey: 'BDTg3K0NjFgNzNdT4ZJWq8Y4WVmfvNAejGNf5HLRqXvtet0mnLQQmC6pCRGOl2P575ZKQYa1V7OJcx-ewWLua0k',
+      );
+      return token;
+    } catch (e) {
+      return null;
+    }
+  }
 }

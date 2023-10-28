@@ -132,9 +132,8 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
       return Question(
         id: id,
         question: param.question,
-        answer1: param.answer1,
-        answer2: param.answer2,
-        correctAnswer: param.correctAnswer,
+        answers: param.answers,
+        correctAnswerIndex: param.correctAnswerIndex,
         hint: param.hint,
         durationInSec: param.durationInSec,
         doubleBoost: param.doubleBoost,
@@ -142,9 +141,8 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
     } else {
       return Question(
         question: param.question,
-        answer1: param.answer1,
-        answer2: param.answer2,
-        correctAnswer: param.correctAnswer,
+        answers: param.answers,
+        correctAnswerIndex: param.correctAnswerIndex,
         hint: param.hint,
         durationInSec: param.durationInSec,
         doubleBoost: param.doubleBoost,

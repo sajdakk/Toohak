@@ -58,4 +58,13 @@ abstract class ThColors {
       Color(0xFFFF4867),
     ],
   );
+
+  static const List<Color> answerColors = [
+    Color(0xffF19C60),
+    Color(0xff8c7cca),
+    Color(0xff6a98dc),
+    Color(0xff3DD174),
+    Color(0xFFFF4867),
+    Color(0xff4456A0),
+  ];
 }

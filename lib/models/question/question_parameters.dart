@@ -5,9 +5,8 @@ class QuestionParameters extends Equatable {
   const QuestionParameters({
     required this.currentQuestion,
     required this.question,
-    required this.answer1,
-    required this.answer2,
-    required this.correctAnswer,
+    required this.answers,
+    required this.correctAnswerIndex,
     required this.hint,
     required this.durationInSec,
     required this.doubleBoost,
@@ -17,11 +16,9 @@ class QuestionParameters extends Equatable {
 
   final String question;
 
-  final String answer1;
+  final List<String> answers;
 
-  final String answer2;
-
-  final int correctAnswer;
+  final int correctAnswerIndex;
 
   final String? hint;
 
@@ -33,9 +30,8 @@ class QuestionParameters extends Equatable {
   List<Object?> get props => <Object?>[
         currentQuestion,
         question,
-        answer1,
-        answer2,
-        correctAnswer,
+        answers,
+        correctAnswerIndex,
         hint,
         durationInSec,
         doubleBoost,

@@ -12,6 +12,7 @@ GameWriteRequest _$GameWriteRequestFromJson(Map<String, dynamic> json) =>
       code: json['code'] as String,
       signUpBlocked: json['sign_up_blocked'] as bool,
       adminToken: json['admin_token'] as String,
+      createdBy: json['created_by'] as String,
     );
 
 Map<String, dynamic> _$GameWriteRequestToJson(GameWriteRequest instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$GameWriteRequestToJson(GameWriteRequest instance) =>
       'code': instance.code,
       'sign_up_blocked': instance.signUpBlocked,
       'admin_token': instance.adminToken,
+      'created_by': instance.createdBy,
     };

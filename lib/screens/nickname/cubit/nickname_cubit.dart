@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:toohak/_toohak.dart';
 
 part 'nickname_state.dart';
@@ -9,21 +8,21 @@ class NicknameCubit extends ThCubit<NicknameState> {
   NicknameCubit() : super(NicknameLoadedState());
 
   final CloudFunctionsManager _cloudFunctionsManager = sl();
+  final CloudEventsManager _cloudEventsManager = sl();
 
-  Future<bool> tmp({
+  Future<String?> joinGame({
     required String code,
     required String username,
   }) async {
     BotToast.showLoading();
-    String? token = await FirebaseMessaging.instance.getToken(
-      vapidKey: 'BDTg3K0NjFgNzNdT4ZJWq8Y4WVmfvNAejGNf5HLRqXvtet0mnLQQmC6pCRGOl2P575ZKQYa1V7OJcx-ewWLua0k',
-    );
+    String? token = await _cloudEventsManager.getToken();
+
     if (token == null) {
       BotToast.closeAllLoading();
-      return false;
+      return null;
     }
 
-    final bool success = await _cloudFunctionsManager.joinGame(
+    final String? success = await _cloudFunctionsManager.joinGame(
       code: code,
       username: username,
       token: token,
@@ -31,10 +30,8 @@ class NicknameCubit extends ThCubit<NicknameState> {
 
     BotToast.closeAllLoading();
 
-    if (success) {
-      return true;
-    }
+   
 
-    return false;
+    return success;
   }
 }

@@ -10,8 +10,6 @@ abstract class CloudEventTypeMapper {
 
       case 'QUESTION_SENT':
         return CloudEventType.questionSent;
-      case 'RANKING_UPDATED':
-        return CloudEventType.rankingUpdated;
       case 'ROUND_FINISHED':
         return CloudEventType.roundFinished;
       case 'GAME_FINISHED':

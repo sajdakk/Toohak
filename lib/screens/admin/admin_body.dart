@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/admin_waiting/admin_waiting_screen.dart';
 import 'package:toohak/screens/template_details/template_details_screen.dart';
 
 import 'cubit/admin_cubit.dart';
@@ -60,12 +61,17 @@ class _AdminBodyState extends State<AdminBody> {
                   template: template,
                   createGame: () async {
                     AdminCubit cubit = context.read();
-                    final bool result = await cubit.createGame(template.id);
-                    if (!result) {
+                    final Game? result = await cubit.createGame(template.id);
+
+                    if (result == null) {
                       return;
                     }
 
-                    thRouter.pushNamed(ThRoutes.adminWaiting.route);
+                    thRouter.pushNamed(AdminWaitingScreen.getRoute(
+                      gameId: result.id,
+                      gameTemplateId: template.id,
+                      code: result.code,
+                    ));
                   },
                   onDelete: () => thShowAlert(
                     context,

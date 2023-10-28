@@ -8,9 +8,8 @@ part 'question_write_request.g.dart';
 class QuestionWriteRequest extends Equatable {
   const QuestionWriteRequest({
     required this.question,
-    required this.answer1,
-    required this.answer2,
-    required this.correctAnswer,
+    required this.answers,
+    required this.correctAnswerIndex,
     required this.hint,
     required this.durationInSec,
     required this.doubleBoost,
@@ -27,14 +26,11 @@ class QuestionWriteRequest extends Equatable {
   @JsonKey(name: QuestionFields.question)
   final String question;
 
-  @JsonKey(name: QuestionFields.answer1)
-  final String answer1;
+  @JsonKey(name: QuestionFields.answers)
+  final List<String> answers;
 
-  @JsonKey(name: QuestionFields.answer2)
-  final String answer2;
-
-  @JsonKey(name: QuestionFields.correctAnswer)
-  final int correctAnswer;
+  @JsonKey(name: QuestionFields.correctAnswerIndex)
+  final int correctAnswerIndex;
 
   @JsonKey(name: QuestionFields.hint)
   final String? hint;
@@ -48,9 +44,8 @@ class QuestionWriteRequest extends Equatable {
   @override
   List<Object?> get props => <Object?>[
         question,
-        answer1,
-        answer2,
-        correctAnswer,
+        answers,
+        correctAnswerIndex,
         hint,
         durationInSec,
         doubleBoost,

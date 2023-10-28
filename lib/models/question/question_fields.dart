@@ -3,11 +3,9 @@ class QuestionFields {
 
   static const String question = 'question';
 
-  static const String answer1 = 'answer_1';
+  static const String answers = 'answers';
 
-  static const String answer2 = 'answer_2';
-
-  static const String correctAnswer = 'correct_answer';
+  static const String correctAnswerIndex = 'correct_answer_index';
 
   static const String hint = 'hint';
 

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/screens/admin_waiting/cubit/admin_waiting_cubit.dart';
+import 'package:toohak/screens/question/question_screen.dart';
 
 class AdminWaitingBody extends StatefulWidget {
   const AdminWaitingBody({
     super.key,
     required this.state,
+    required this.code,
   });
 
   final AdminWaitingLoadedState state;
+  final String code;
 
   @override
   State<AdminWaitingBody> createState() => _AdminWaitingBodyState();
@@ -31,19 +35,67 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
                     color: ThColors.textText1,
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    final String player = widget.state.nicknames[index];
-                    return Text(
-                      "$player\n",
-                      style: ThTextStyles.headlineH2Bold.copyWith(
+                const SizedBox(height: 24.0),
+                Text(
+                  'Kod gry: ${widget.code}',
+                  style: ThTextStyles.headlineH1Bold.copyWith(
+                    color: ThColors.textText1,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Ilość graczy: ${widget.state.nicknames.length}',
+                      style: ThTextStyles.headlineH2Semibold.copyWith(
                         color: ThColors.textText1,
                       ),
-                      textAlign: TextAlign.center,
-                    );
-                  },
-                  itemCount: widget.state.nicknames.length,
+                    ),
+                    const SizedBox(width: 16.0),
+                    ThButton(
+                      title: 'Rozpocznij grę',
+                      onTap: () async {
+                        AdminWaitingCubit cubit = context.read();
+                        if (widget.state.gameTemplate.questions.isEmpty) {
+                          return;
+                        }
+
+                        DateTime? result = await cubit.startGame(
+                          gameId: widget.state.gameId,
+                          question: widget.state.gameTemplate.questions.first,
+                        );
+
+                        if (result != null) {
+                          thRouter.pushNamed(
+                            QuestionScreen.getRoute(
+                              gameId: widget.state.gameId,
+                              gameTemplateId: widget.state.gameTemplate.id,
+                            ),
+                            arguments: result,
+                          );
+                        }
+                      },
+                      size: ThPrimaryButtonSize.small,
+                      style: ThPrimaryButtonStyle.primary,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24.0),
+                Wrap(
+                  spacing: 24.0,
+                  runSpacing: 16.0,
+                  children: [
+                    for (String player in widget.state.nicknames)
+                      Text(
+                        player,
+                        style: ThTextStyles.headlineH2Bold.copyWith(
+                          color: ThColors.textText1,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 24.0),
               ],

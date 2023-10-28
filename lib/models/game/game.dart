@@ -12,6 +12,7 @@ class Game extends Equatable {
     required this.code,
     required this.signUpBlocked,
     required this.adminToken,
+    required this.createdBy,
   });
 
   factory Game.fromJson(Map<String, dynamic> json) {
@@ -37,6 +38,9 @@ class Game extends Equatable {
   @JsonKey(name: GameFields.adminToken)
   final String adminToken;
 
+  @JsonKey(name: GameFields.createdBy)
+  final String createdBy;
+
   @override
   List<Object?> get props => <Object?>[
         id,
@@ -44,5 +48,6 @@ class Game extends Equatable {
         code,
         signUpBlocked,
         adminToken,
+        createdBy,
       ];
 }

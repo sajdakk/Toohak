@@ -1,11 +1,15 @@
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/screens/admin/admin_screen.dart';
 import 'package:toohak/screens/admin_waiting/admin_waiting_screen.dart';
+import 'package:toohak/screens/after_answer_waiting/after_answer_waiting_screen.dart';
+import 'package:toohak/screens/answer/answer_screen.dart';
 import 'package:toohak/screens/auth/login/login_screen.dart';
 import 'package:toohak/screens/auth/registration/registration_screen.dart';
 import 'package:toohak/screens/init/init_screen.dart';
 import 'package:toohak/screens/nickname/nickname_screen.dart';
 import 'package:toohak/screens/player_waiting/player_waiting_screen.dart';
+import 'package:toohak/screens/question/question_screen.dart';
+import 'package:toohak/screens/round_ranking/round_ranking_screen.dart';
 import 'package:toohak/screens/template_details/template_details_screen.dart';
 
 class ThRoutes {
@@ -20,6 +24,10 @@ class ThRoutes {
     nickname,
     playerWaiting,
     adminWaiting,
+    answer,
+    question,
+    afterAnswerWaiting,
+    roundRanking,
   ];
 
   static const String dialogRouteName = '/dialog';
@@ -54,15 +62,38 @@ class ThRoutes {
     handler: RegistrationScreen.routeHandler,
   );
 
+  static final ThRoute answer = ThRoute(
+    name: 'Answer',
+    route: '/answer/:game-id',
+    handler: AnswerScreen.routeHandler,
+  );
+  static final ThRoute roundRanking = ThRoute(
+    name: 'Round ranking',
+    route: '/round-ranking/:game-id',
+    handler: RoundRankingScreen.routeHandler,
+  );
+
+  static final ThRoute question = ThRoute(
+    name: 'Question',
+    route: '/question/:game-id',
+    handler: QuestionScreen.routeHandler,
+  );
+
   static final ThRoute playerWaiting = ThRoute(
     name: 'Player waiting',
-    route: '/player-waiting',
+    route: '/player-waiting/:game-id',
     handler: PlayerWaitingScreen.routeHandler,
+  );
+
+  static final ThRoute afterAnswerWaiting = ThRoute(
+    name: 'After answer waiting',
+    route: '/after-answer-waiting/:game-id',
+    handler: AfterAnswerWaitingScreen.routeHandler,
   );
 
   static final ThRoute adminWaiting = ThRoute(
     name: 'Admin waiting',
-    route: '/admin-waiting',
+    route: '/admin-waiting/:code',
     handler: AdminWaitingScreen.routeHandler,
   );
 

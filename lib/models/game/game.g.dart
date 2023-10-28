@@ -12,6 +12,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
       code: json['code'] as String,
       signUpBlocked: json['sign_up_blocked'] as bool,
       adminToken: json['admin_token'] as String,
+      createdBy: json['created_by'] as String,
     );
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
       'code': instance.code,
       'sign_up_blocked': instance.signUpBlocked,
       'admin_token': instance.adminToken,
+      'created_by': instance.createdBy,
     };

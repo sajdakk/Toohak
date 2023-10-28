@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:toohak/_toohak.dart';
@@ -23,17 +22,17 @@ class PlayersManager {
   }
 
   Future<void> _onEvent(CloudEvent event) async {
-    print(event);
     if (event is! PlayerJoinedCloudEvent) {
-      print('event is not PlayerJoinedCloudEvent');
       return;
     }
 
     List<String> players = _players$.value.toList();
     players.add(event.username);
-    print(players);
-    print(event.username);
 
     _players$.add(players);
+  }
+
+  void clean(){
+    _players$.add(<String>[]);
   }
 }

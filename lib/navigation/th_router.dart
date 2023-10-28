@@ -8,7 +8,7 @@ final ThRouter thRouter = ThRouter.instance;
 class ThRouter {
   static ThRouter get instance => sl<ThRouter>();
 
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   final Logger _logger = Logger('ThRouter');
   final FluroRouter router = FluroRouter();

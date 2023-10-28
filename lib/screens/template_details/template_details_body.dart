@@ -33,9 +33,8 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
         questions.add(QuestionParameters(
           currentQuestion: lesson,
           question: lesson.question,
-          correctAnswer: lesson.correctAnswer,
-          answer1: lesson.answer1,
-          answer2: lesson.answer2,
+          correctAnswerIndex: lesson.correctAnswerIndex,
+          answers: lesson.answers,
           doubleBoost: lesson.doubleBoost,
           durationInSec: lesson.durationInSec,
           hint: lesson.hint,

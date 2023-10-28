@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/screens/nickname/cubit/nickname_cubit.dart';
+import 'package:toohak/screens/player_waiting/player_waiting_screen.dart';
 
 class NicknameBody extends StatefulWidget {
   const NicknameBody({
@@ -53,13 +54,13 @@ class _NicknameBodyState extends State<NicknameBody> {
 
                       final String nickname = _nicknameKey.currentState!.value!;
                       NicknameCubit cubit = context.read<NicknameCubit>();
-                      bool result = await cubit.tmp(
+                      String? result = await cubit.joinGame(
                         code: widget.code,
                         username: nickname,
                       );
 
-                      if (result) {
-                        thRouter.pushNamed(ThRoutes.playerWaiting.route);
+                      if (result != null) {
+                        thRouter.pushNamed(PlayerWaitingScreen.getRoute(result));
                       }
                     },
                     size: ThPrimaryButtonSize.large,

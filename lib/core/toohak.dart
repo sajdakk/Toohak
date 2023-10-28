@@ -26,7 +26,7 @@ class Toohak extends StatelessWidget {
       supportedLocales: const <Locale>[
         Locale('pl'),
       ],
-      navigatorKey: thRouter.navigatorKey,
+      navigatorKey: ThRouter.navigatorKey,
       onGenerateRoute: thRouter.router.generator,
       builder: (BuildContext context, Widget? child) {
         return BotToastInit()(context, child);

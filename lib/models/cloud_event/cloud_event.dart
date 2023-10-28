@@ -16,3 +16,28 @@ class PlayerJoinedCloudEvent extends CloudEvent {
         username,
       ];
 }
+
+class QuestionSentCloudEvent extends CloudEvent {
+  const QuestionSentCloudEvent({
+    required this.question,
+    required this.answers,
+    required this.hint,
+    required this.isDouble,
+    required this.finishWhen,
+  });
+
+  final String question;
+  final String? hint;
+  final List<String> answers;
+  final bool isDouble;
+  final DateTime finishWhen;
+
+  @override
+  List<Object?> get props => <Object?>[
+        question,
+        answers,
+        hint,
+        isDouble,
+        finishWhen,
+      ];
+}

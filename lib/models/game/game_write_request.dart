@@ -11,6 +11,7 @@ class GameWriteRequest extends Equatable {
     required this.code,
     required this.signUpBlocked,
     required this.adminToken,
+    required this.createdBy,
   });
 
   factory GameWriteRequest.fromJson(Map<String, dynamic> json) {
@@ -33,11 +34,15 @@ class GameWriteRequest extends Equatable {
   @JsonKey(name: GameFields.adminToken)
   final String adminToken;
 
+  @JsonKey(name: GameFields.createdBy)
+  final String createdBy;
+
   @override
   List<Object?> get props => <Object?>[
         gameTemplateId,
         code,
         signUpBlocked,
         adminToken,
+        createdBy,
       ];
 }

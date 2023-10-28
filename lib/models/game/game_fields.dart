@@ -8,4 +8,6 @@ class GameFields {
   static const String signUpBlocked = 'sign_up_blocked';
 
   static const String adminToken = 'admin_token';
+
+  static const String createdBy = 'created_by';
 }

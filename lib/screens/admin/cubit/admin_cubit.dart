@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:toohak/_toohak.dart';
 
 part 'admin_state.dart';
@@ -14,6 +13,8 @@ class AdminCubit extends ThCubit<AdminState> {
   final Logger _logger = Logger('AdminCubit');
   final GameTemplateDataManager _gameTemplateDataManager = sl();
   final GameDataManager _gameDataManager = sl();
+  final CloudEventsManager _cloudEventsManager = sl();
+  final PlayersManager _playersManager = sl();
 
   StreamSubscription<dynamic>? _subscription;
 
@@ -57,42 +58,43 @@ class AdminCubit extends ThCubit<AdminState> {
     return success;
   }
 
-  Future<bool> createGame(String id) async {
+  Future<Game?> createGame(String id) async {
     try {
-      final bool isSupported = await FirebaseMessaging.instance.isSupported();
-      if (!isSupported) {
-        print('FirebaseMessaging is not supported on this platform');
-        return false;
+      String? userId = appSession.currentUser?.uid;
+      if (userId == null) {
+        return null;
       }
 
       BotToast.showLoading();
-      String code = Random().nextInt(999999).toString().padLeft(6, '0');
-      String? token = await FirebaseMessaging.instance.getToken(
-        vapidKey: 'BDTg3K0NjFgNzNdT4ZJWq8Y4WVmfvNAejGNf5HLRqXvtet0mnLQQmC6pCRGOl2P575ZKQYa1V7OJcx-ewWLua0k',
-      );
+      String? token = await _cloudEventsManager.getToken();
       if (token == null) {
         BotToast.closeAllLoading();
-        print('Error while getting token');
-        return false;
+        return null;
       }
 
-      final String? success = await _gameDataManager.addGame(
+      String code = Random().nextInt(999999).toString().padLeft(6, '0');
+
+      final String? result = await _gameDataManager.addGame(
         gameWriteRequest: GameWriteRequest(
           gameTemplateId: id,
           code: code,
           signUpBlocked: false,
           adminToken: token,
+          createdBy: userId,
         ),
       );
+
       BotToast.closeAllLoading();
-      if (success == null) {
-        return false;
+
+      if (result == null) {
+        return null;
       }
 
-      return true;
+      _playersManager.clean();
+
+      return _gameDataManager.dataWithId(result);
     } catch (e) {
-      print('Error while creating game: $e');
-      return false;
+      return null;
     }
   }
 }
