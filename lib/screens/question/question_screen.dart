@@ -10,39 +10,24 @@ import 'question_body.dart';
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({
     super.key,
-    required this.gameId,
-    required this.gameTemplateId,
     this.finishWhen,
   });
 
-  final String gameId;
-  final String gameTemplateId;
   final DateTime? finishWhen;
 
-  static String getRoute({
-    required String gameId,
-    required String gameTemplateId,
-  }) {
-    return '/question/$gameId?game-template-id=$gameTemplateId';
+  static String getRoute() {
+    return '/question';
   }
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
-      final String gameId = params['game-id']?.first;
-      final String gameTemplateId = params['game-template-id']?.first;
-
       if (context == null) {
-        return QuestionScreen(
-          gameId: gameId,
-          gameTemplateId: gameTemplateId,
-        );
+        return const QuestionScreen();
       }
 
       DateTime? finishWhen = ModalRoute.of(context)?.settings.arguments as DateTime?;
 
       return QuestionScreen(
-        gameId: gameId,
-        gameTemplateId: gameTemplateId,
         finishWhen: finishWhen,
       );
     },
@@ -58,9 +43,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return BlocProvider<QuestionCubit>(
       create: (_) => sl()
         ..init(
-          gameTemplateId: widget.gameTemplateId,
           finishWhen: widget.finishWhen,
-          gameId: widget.gameId,
         ),
       child: BlocBuilder<QuestionCubit, QuestionState>(
         builder: (_, QuestionState state) {
@@ -74,8 +57,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
           if (state is QuestionLoadedState) {
             return QuestionBody(
-              gameId: widget.gameId,
-              gameTemplate: state.gameTemplate,
+              question: state.question,
               finishWhen: widget.finishWhen!,
             );
           }

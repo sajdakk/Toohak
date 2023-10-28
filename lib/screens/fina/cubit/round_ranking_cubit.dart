@@ -11,14 +11,9 @@ class RoundRankingCubit extends ThCubit<RoundRankingState> {
   final GameManager _gameManager = sl();
 
   Future<void> init() async {
-    List<RankingPlayer> rankingPlayers = _gameManager.rankingPlayers.toList();
-    rankingPlayers.sort((RankingPlayer a, RankingPlayer b) {
-      return -b.points.compareTo(a.points);
-    });
-
     emit(
       RoundRankingLoadedState(
-        players: rankingPlayers,
+        players: _gameManager.rankingPlayers,
       ),
     );
   }

@@ -8,14 +8,14 @@ abstract class QuestionState extends Equatable {
 
 class QuestionLoadedState extends QuestionState {
   const QuestionLoadedState({
-    required this.gameTemplate,
+    required this.question,
   });
 
-  final GameTemplate gameTemplate;
+  final Question question;
 
   @override
   List<Object?> get props => <Object?>[
-        gameTemplate,
+        question,
       ];
 }
 

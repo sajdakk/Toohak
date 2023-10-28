@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/screens/admin_waiting/cubit/admin_waiting_cubit.dart';
 import 'package:toohak/screens/question/question_screen.dart';
@@ -57,22 +56,15 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
                     ThButton(
                       title: 'Rozpocznij grę',
                       onTap: () async {
-                        AdminWaitingCubit cubit = context.read();
                         if (widget.state.gameTemplate.questions.isEmpty) {
                           return;
                         }
 
-                        DateTime? result = await cubit.startGame(
-                          gameId: widget.state.gameId,
-                          question: widget.state.gameTemplate.questions.first,
-                        );
+                        DateTime? result = await sl<GameManager>().sendQuestion();
 
                         if (result != null) {
                           thRouter.pushNamed(
-                            QuestionScreen.getRoute(
-                              gameId: widget.state.gameId,
-                              gameTemplateId: widget.state.gameTemplate.id,
-                            ),
+                            QuestionScreen.getRoute(),
                             arguments: result,
                           );
                         }

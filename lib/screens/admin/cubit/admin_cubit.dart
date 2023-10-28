@@ -15,6 +15,7 @@ class AdminCubit extends ThCubit<AdminState> {
   final GameDataManager _gameDataManager = sl();
   final CloudEventsManager _cloudEventsManager = sl();
   final PlayersManager _playersManager = sl();
+  final GameManager _gameManager = sl();
 
   StreamSubscription<dynamic>? _subscription;
 
@@ -58,7 +59,7 @@ class AdminCubit extends ThCubit<AdminState> {
     return success;
   }
 
-  Future<Game?> createGame(String id) async {
+  Future<Game?> createGame(GameTemplate gameTemplate) async {
     try {
       String? userId = appSession.currentUser?.uid;
       if (userId == null) {
@@ -76,7 +77,7 @@ class AdminCubit extends ThCubit<AdminState> {
 
       final String? result = await _gameDataManager.addGame(
         gameWriteRequest: GameWriteRequest(
-          gameTemplateId: id,
+          gameTemplateId: gameTemplate.id,
           code: code,
           signUpBlocked: false,
           adminToken: token,
@@ -92,7 +93,17 @@ class AdminCubit extends ThCubit<AdminState> {
 
       _playersManager.clean();
 
-      return _gameDataManager.dataWithId(result);
+      Game? game = _gameDataManager.dataWithId(result);
+      if (game == null) {
+        return null;
+      }
+
+      _gameManager.setGame(
+        game,
+        gameTemplate,
+      );
+
+      return game;
     } catch (e) {
       return null;
     }

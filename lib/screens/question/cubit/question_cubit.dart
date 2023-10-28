@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:equatable/equatable.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/final_ranking/final_ranking_screen.dart';
 import 'package:toohak/screens/round_ranking/round_ranking_screen.dart';
 
 part 'question_state.dart';
@@ -10,62 +10,40 @@ part 'question_state.dart';
 class QuestionCubit extends ThCubit<QuestionState> {
   QuestionCubit() : super(const QuestionLoadingState());
 
-  final CloudFunctionsManager _cloudFunctionsManager = sl();
   final CloudEventsManager _cloudEventsManager = sl();
-  final GameTemplateDataManager _gameTemplateDataManager = sl();
-
-  StreamSubscription<dynamic>? _subscription;
-  GameTemplate? _gameTemplate;
-
-  @override
-  Future<void> close() async {
-    await _subscription?.cancel();
-    await super.close();
-  }
+  final GameManager _gameManager = sl();
 
   Future<void> init({
-    required String gameTemplateId,
     required DateTime? finishWhen,
-    required String gameId,
   }) async {
-    await _gameTemplateDataManager.fetchWithId(gameTemplateId);
-    GameTemplate? gameTemplate = _gameTemplateDataManager.dataWithId(gameTemplateId);
+    Question? question = _gameManager.currentQuestion;
 
-    if (gameTemplate == null) {
+    if (question == null) {
       emit(
         const QuestionErrorState(
-          message: 'Cannot find template',
+          message: 'Cannot find question',
         ),
       );
 
       return;
     }
-    _gameTemplate = gameTemplate;
 
     emit(
       QuestionLoadedState(
-        gameTemplate: gameTemplate,
+        question: question,
       ),
     );
 
-    if (finishWhen != null && _gameTemplate != null) {
+    if (finishWhen != null) {
       Duration duration = finishWhen.difference(DateTime.now());
 
       Future.delayed(duration, () {
-        finishRound(
-          correctAnswerIndex: _gameTemplate!.questions[0].correctAnswerIndex,
-          gameId: gameId,
-          doubleBoost: _gameTemplate!.questions[0].doubleBoost,
-        );
+        finishRound();
       });
     }
   }
 
-  Future<void> finishRound({
-    required String gameId,
-    required int correctAnswerIndex,
-    required bool doubleBoost,
-  }) async {
+  Future<void> finishRound() async {
     emit(const QuestionLoadingState());
 
     String? token = await _cloudEventsManager.getToken();
@@ -74,21 +52,23 @@ class QuestionCubit extends ThCubit<QuestionState> {
       return;
     }
 
-    int maxPoints = 1000;
-    if (doubleBoost) {
-      maxPoints *= 2;
+    bool result = await _gameManager.finishRound();
+
+    if (!result) {
+      return;
     }
 
-    List<RankingPlayer> result = await _cloudFunctionsManager.finishRound(
-      gameId: gameId,
-      currentRanking: <RankingPlayer>[],
-      correctAnswerIndex: correctAnswerIndex,
-      maxPoints: maxPoints,
-    );
+    Question? question = _gameManager.currentQuestion;
+    print("game id:" + _gameManager.game!.id);
+    if (question == null) {
+      thRouter.pushNamed(
+        FinalRankingScreen.getRoute(),
+      );
+      return;
+    }
 
     thRouter.pushNamed(
-      RoundRankingScreen.getRoute(gameId),
-      arguments: result,
+      RoundRankingScreen.getRoute(),
     );
   }
 }

@@ -52,10 +52,14 @@ class CloudEventsManager {
         );
         break;
       case CloudEventType.roundFinished:
-        // _cloudEvents$.add(typeRaw);
-        break;
-      case CloudEventType.gameFinished:
-        // _cloudEvents$.add(typeRaw);
+        _cloudEvents$.add(
+          RoundFinishedCloudEvent(
+            wasAnswerCorrect: data['was_answer_correct'] == 'true',
+            pointsForThisRound: int.parse(data['points_for_this_round']),
+            totalPoints: int.parse(data['total_points']),
+            currentPosition: int.parse(data['current_position']),
+          ),
+        );
         break;
     }
   }

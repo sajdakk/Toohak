@@ -5,10 +5,12 @@ import 'package:toohak/screens/after_answer_waiting/after_answer_waiting_screen.
 import 'package:toohak/screens/answer/answer_screen.dart';
 import 'package:toohak/screens/auth/login/login_screen.dart';
 import 'package:toohak/screens/auth/registration/registration_screen.dart';
+import 'package:toohak/screens/final_ranking/final_ranking_screen.dart';
 import 'package:toohak/screens/init/init_screen.dart';
 import 'package:toohak/screens/nickname/nickname_screen.dart';
 import 'package:toohak/screens/player_waiting/player_waiting_screen.dart';
 import 'package:toohak/screens/question/question_screen.dart';
+import 'package:toohak/screens/result/result_screen.dart';
 import 'package:toohak/screens/round_ranking/round_ranking_screen.dart';
 import 'package:toohak/screens/template_details/template_details_screen.dart';
 
@@ -28,6 +30,8 @@ class ThRoutes {
     question,
     afterAnswerWaiting,
     roundRanking,
+    finalRanking,
+    result,
   ];
 
   static const String dialogRouteName = '/dialog';
@@ -69,14 +73,25 @@ class ThRoutes {
   );
   static final ThRoute roundRanking = ThRoute(
     name: 'Round ranking',
-    route: '/round-ranking/:game-id',
+    route: '/round-ranking',
     handler: RoundRankingScreen.routeHandler,
+  );
+  static final ThRoute finalRanking = ThRoute(
+    name: 'Final ranking',
+    route: '/final-ranking',
+    handler: FinalRankingScreen.routeHandler,
   );
 
   static final ThRoute question = ThRoute(
     name: 'Question',
-    route: '/question/:game-id',
+    route: '/question',
     handler: QuestionScreen.routeHandler,
+  );
+
+  static final ThRoute result = ThRoute(
+    name: 'Result',
+    route: '/result/:game-id',
+    handler: ResultScreen.routeHandler,
   );
 
   static final ThRoute playerWaiting = ThRoute(

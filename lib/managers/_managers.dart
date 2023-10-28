@@ -7,3 +7,4 @@ export 'cloud_functions_manager.dart';
 export 'game_data_manager.dart';
 export 'cloud_events_manager.dart';
 export 'players_manager.dart';
+export 'game_manager.dart';

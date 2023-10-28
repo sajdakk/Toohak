@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:toohak/_toohak.dart';
 
-part 'round_ranking_state.dart';
+part 'final_ranking_state.dart';
 
-class RoundRankingCubit extends ThCubit<RoundRankingState> {
-  RoundRankingCubit() : super(RoundRankingLoadingState());
+class FinalRankingCubit extends ThCubit<FinalRankingState> {
+  FinalRankingCubit() : super(FinalRankingLoadingState());
 
   final GameManager _gameManager = sl();
 
@@ -17,7 +17,7 @@ class RoundRankingCubit extends ThCubit<RoundRankingState> {
     });
 
     emit(
-      RoundRankingLoadedState(
+      FinalRankingLoadedState(
         players: rankingPlayers,
       ),
     );

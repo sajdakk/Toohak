@@ -2,46 +2,47 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/fina/round_ranking_body.dart';
 import 'package:toohak/widgets/loading_view.dart';
 
-import 'cubit/round_ranking_cubit.dart';
-import 'round_ranking_body.dart';
+import 'cubit/final_ranking_cubit.dart';
 
-class RoundRankingScreen extends StatefulWidget {
-  const RoundRankingScreen({
+class FinalRankingScreen extends StatefulWidget {
+  const FinalRankingScreen({
     super.key,
   });
 
   static String getRoute() {
-    return '/round-ranking';
+    return '/final-ranking';
   }
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
-      return const RoundRankingScreen();
+      return const FinalRankingScreen();
     },
   );
 
   @override
-  State<RoundRankingScreen> createState() => _RoundRankingScreenState();
+  State<FinalRankingScreen> createState() => _FinalRankingScreenState();
 }
 
-class _RoundRankingScreenState extends State<RoundRankingScreen> {
+class _FinalRankingScreenState extends State<FinalRankingScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RoundRankingCubit>(
+    return BlocProvider<FinalRankingCubit>(
       create: (_) => sl()..init(),
-      child: BlocBuilder<RoundRankingCubit, RoundRankingState>(
-        builder: (_, RoundRankingState state) {
-          if (state is RoundRankingLoadingState) {
+      child: BlocBuilder<FinalRankingCubit, FinalRankingState>(
+        builder: (_, FinalRankingState state) {
+          if (state is FinalRankingLoadingState) {
             return const LoadingView();
           }
-          if (state is RoundRankingErrorState) {
+          if (state is FinalRankingErrorState) {
             return ErrorView.unhandledState(state);
           }
-          if (state is RoundRankingLoadedState) {
+          if (state is FinalRankingLoadedState) {
             return RoundRankingBody(
               ranking: state.players,
+              isFinal: true,
             );
           }
           

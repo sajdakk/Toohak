@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:equatable/equatable.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/result/result_screen.dart';
 
 part 'answer_state.dart';
 
@@ -9,6 +12,28 @@ class AnswerCubit extends ThCubit<AnswerState> {
 
   final CloudFunctionsManager _cloudFunctionsManager = sl();
   final CloudEventsManager _cloudEventsManager = sl();
+
+  StreamSubscription? _subscription;
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+
+    return super.close();
+  }
+
+  Future<void> init(String gameId) async {
+    _subscription = _cloudEventsManager.cloudEvents.listen(
+      (CloudEvent event) {
+        if (event is RoundFinishedCloudEvent) {
+          thRouter.pushNamed(
+            ResultScreen.getRoute(gameId),
+            arguments: event,
+          );
+        }
+      },
+    );
+  }
 
   Future<bool> sendAnswer({
     required String gameId,

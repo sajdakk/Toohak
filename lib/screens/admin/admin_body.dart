@@ -61,15 +61,13 @@ class _AdminBodyState extends State<AdminBody> {
                   template: template,
                   createGame: () async {
                     AdminCubit cubit = context.read();
-                    final Game? result = await cubit.createGame(template.id);
+                    final  result = await cubit.createGame(template);
 
                     if (result == null) {
                       return;
                     }
 
                     thRouter.pushNamed(AdminWaitingScreen.getRoute(
-                      gameId: result.id,
-                      gameTemplateId: template.id,
                       code: result.code,
                     ));
                   },

@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
-import 'package:toohak/screens/question/cubit/question_cubit.dart';
-import 'package:toohak/screens/round_ranking/round_ranking_screen.dart';
 
-import 'timer_builder.dart';
+import '../../widgets/timer_builder.dart';
 
 class QuestionBody extends StatefulWidget {
   const QuestionBody({
     super.key,
-    required this.gameId,
-    required this.gameTemplate,
+    required this.question,
     required this.finishWhen,
   });
 
-  final String gameId;
-  final GameTemplate gameTemplate;
+  final Question question;
   final DateTime finishWhen;
 
   @override
@@ -70,14 +65,14 @@ class _QuestionBodyState extends State<QuestionBody> {
                       ),
                       const SizedBox(height: 24.0),
                       Text(
-                        widget.gameTemplate.questions.first.question,
+                        widget.question.question,
                         style: ThTextStyles.headlineH2Semibold.copyWith(
                           color: ThColors.textText1,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 16.0),
-                      if (widget.gameTemplate.questions.first.doubleBoost)
+                      if (widget.question.doubleBoost)
                         Text(
                           'Double boost!',
                           style: ThTextStyles.headlineH2Semibold.copyWith(
@@ -89,7 +84,7 @@ class _QuestionBodyState extends State<QuestionBody> {
                         spacing: 16.0,
                         runSpacing: 16.0,
                         children: [
-                          for (int i = 0; i < widget.gameTemplate.questions.first.answers.length; i++)
+                          for (int i = 0; i < widget.question.answers.length; i++)
                             Container(
                               padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
@@ -97,7 +92,7 @@ class _QuestionBodyState extends State<QuestionBody> {
                                 color: _getColorForQuestion(i),
                               ),
                               child: Text(
-                                '${i + 1}. ${widget.gameTemplate.questions.first.answers[i]}',
+                                '${i + 1}. ${widget.question.answers[i]}',
                                 style: ThTextStyles.headlineH2Semibold.copyWith(
                                   color: ThColors.textText1,
                                 ),

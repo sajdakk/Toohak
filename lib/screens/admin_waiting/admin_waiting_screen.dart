@@ -10,32 +10,22 @@ class AdminWaitingScreen extends StatefulWidget {
   const AdminWaitingScreen({
     super.key,
     required this.code,
-    required this.gameId,
-    required this.gameTemplateId,
   });
 
   final String code;
-  final String gameId;
-  final String gameTemplateId;
 
   static String getRoute({
     required String code,
-    required String gameId,
-    required String gameTemplateId,
   }) {
-    return '/admin-waiting/$code?game-id=$gameId&game-template-id=$gameTemplateId';
+    return '/admin-waiting/$code';
   }
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       final String code = params['code']?.first;
-      final String gameId = params['game-id']?.first;
-      final String gameTemplateId = params['game-template-id']?.first;
 
       return AdminWaitingScreen(
         code: code,
-        gameId: gameId,
-        gameTemplateId: gameTemplateId,
       );
     },
   );
@@ -50,8 +40,6 @@ class _AdminWaitingScreenState extends State<AdminWaitingScreen> {
     return BlocProvider<AdminWaitingCubit>(
       create: (_) => sl()
         ..init(
-          gameId: widget.gameId,
-          gameTemplateId: widget.gameTemplateId,
         ),
       child: BlocBuilder<AdminWaitingCubit, AdminWaitingState>(
         builder: (_, AdminWaitingState state) {

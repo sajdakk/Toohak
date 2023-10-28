@@ -32,7 +32,10 @@ class CloudFunctionsManager {
         maxPoints: maxPoints,
         currentRanking: currentRanking,
       );
-    } catch (e, _) {
+    } catch (e, stackTrace) {
+      print(e);
+      print(stackTrace);
+
       return <RankingPlayer>[];
     }
   }

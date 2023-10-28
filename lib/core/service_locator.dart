@@ -9,9 +9,11 @@ import 'package:toohak/screens/after_answer_waiting/cubit/after_answer_waiting_c
 import 'package:toohak/screens/answer/cubit/answer_cubit.dart';
 import 'package:toohak/screens/auth/login/cubit/login_cubit.dart';
 import 'package:toohak/screens/auth/registration/cubit/registration_cubit.dart';
+import 'package:toohak/screens/final_ranking/cubit/final_ranking_cubit.dart';
 import 'package:toohak/screens/nickname/cubit/nickname_cubit.dart';
 import 'package:toohak/screens/player_waiting/cubit/player_waiting_cubit.dart';
 import 'package:toohak/screens/question/cubit/question_cubit.dart';
+import 'package:toohak/screens/result/cubit/result_cubit.dart';
 import 'package:toohak/screens/round_ranking/cubit/round_ranking_cubit.dart';
 import 'package:toohak/screens/template_details/cubit/template_details_cubit.dart';
 
@@ -24,7 +26,15 @@ Future<void> setupLocator() async {
   sl.registerSingleton(PackageInfoManager()..init());
   sl.registerSingleton(ThRouter()..init(ThRoutes.allRoutes));
 
-// managers
+  //data providers
+
+  sl.registerFactory(() => GameTemplateDataProvider());
+  sl.registerFactory(() => GameDataProvider());
+  sl.registerFactory(() => AuthProvider());
+  sl.registerFactory(() => ProfilesDataProvider());
+  sl.registerFactory(() => CloudFunctionsDataProvider());
+
+  // managers
 // TODO(sajdakk): Check for error
   await _registerManagers();
 
@@ -35,15 +45,6 @@ Future<void> setupLocator() async {
   sl.registerLazySingleton(() => GameDataManager());
   sl.registerLazySingleton(() => AuthManager());
   sl.registerLazySingleton(() => ProfilesDataManager());
-  sl.registerLazySingleton(() => CloudFunctionsManager());
-
-//data providers
-
-  sl.registerFactory(() => GameTemplateDataProvider());
-  sl.registerFactory(() => GameDataProvider());
-  sl.registerFactory(() => AuthProvider());
-  sl.registerFactory(() => ProfilesDataProvider());
-  sl.registerFactory(() => CloudFunctionsDataProvider());
 
 //cubits
   sl.registerFactory(() => AdminCubit());
@@ -57,7 +58,8 @@ Future<void> setupLocator() async {
   sl.registerFactory(() => QuestionCubit());
   sl.registerFactory(() => AfterAnswerWaitingCubit());
   sl.registerFactory(() => RoundRankingCubit());
-
+  sl.registerFactory(() => FinalRankingCubit());
+  sl.registerFactory(() => ResultCubit());
 
   //app session
   sl.registerSingleton(AppSession());
@@ -92,7 +94,28 @@ Future<bool> _registerManagers() async {
 
   // endregion
 
+  // region CloudFunctionsManager
+  CloudFunctionsManager cloudFunctionsManager = CloudFunctionsManager();
+
+  sl.registerSingleton(cloudFunctionsManager);
+
+  // endregion
+
+  // region GameManager
+  GameManager questionManager = GameManager(
+    cloudFunctionsManager: cloudFunctionsManager,
+  );
+
+  final bool questionSuccess = await questionManager.init();
+  if (!questionSuccess) {
+    // Logger
+    return false;
+  }
+
+  sl.registerSingleton(questionManager);
+
   return true;
+  // endregion
 }
 
 Future<void> fetchAllData() async {}
