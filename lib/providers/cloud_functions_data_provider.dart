@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:toohak/_toohak.dart';
 
@@ -34,7 +36,7 @@ class CloudFunctionsDataProvider {
       'game_id': gameId,
       'correct_answer_index': correctAnswerIndex,
       'max_points': maxPoints,
-      'current_ranking': currentRanking,
+      'current_ranking': jsonDecode(jsonEncode(currentRanking)),
     });
 
     List<dynamic> rankingRaw = result.data['ranking'];

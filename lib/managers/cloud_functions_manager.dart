@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:toohak/_toohak.dart';
 
 class CloudFunctionsManager {

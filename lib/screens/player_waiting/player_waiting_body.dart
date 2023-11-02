@@ -32,6 +32,7 @@ class _PlayerWaitingBodyState extends State<PlayerWaitingBody> {
                   style: ThTextStyles.headlineH1Bold.copyWith(
                     color: ThColors.textText1,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                
                 const SizedBox(height: 24.0),

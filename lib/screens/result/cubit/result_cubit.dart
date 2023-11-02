@@ -7,11 +7,10 @@ import 'package:toohak/screens/answer/answer_screen.dart';
 part 'result_state.dart';
 
 class ResultCubit extends ThCubit<ResultState> {
-  ResultCubit() : super(const ResultLoadingState());
+  ResultCubit() : super(const ResultLoadedState());
 
   final CloudEventsManager _cloudEventsManager = sl();
   StreamSubscription<dynamic>? _subscription;
-  final GameDataManager _gameDataManager = sl();
 
   @override
   Future<void> close() {
@@ -21,23 +20,13 @@ class ResultCubit extends ThCubit<ResultState> {
   }
 
   Future<void> init(String gameId) async {
-    await _gameDataManager.fetchWithId(gameId);
-    Game? game = _gameDataManager.dataWithId(gameId);
 
-    if (game == null) {
-      emit(
-        const ResultErrorState(
-          message: 'Cannot find game',
-        ),
-      );
-      return;
-    }
 
     _subscription = _cloudEventsManager.cloudEvents.listen(
       (CloudEvent event) {
         if (event is QuestionSentCloudEvent) {
           thRouter.pushNamed(
-            AnswerScreen.getRoute(game.id),
+            AnswerScreen.getRoute(gameId),
             arguments: event,
           );
         }
