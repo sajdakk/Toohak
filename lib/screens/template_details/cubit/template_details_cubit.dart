@@ -65,7 +65,8 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
     required GameTemplate? template,
     required String name,
     required List<QuestionParameters> params,
-    required GameType type,
+    required GameType? type,
+    required bool ready,
   }) async {
     String? userId = appSession.currentUser?.uid;
 
@@ -90,6 +91,7 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
           questions: questions,
           name: name,
           type: type,
+          ready: ready,
         ),
       );
 
@@ -110,6 +112,7 @@ class TemplateDetailsCubit extends ThCubit<TemplateDetailsState> {
           questions: questions,
           name: name,
           type: type,
+          ready: ready,
         ),
         id: template.id,
       );

@@ -59,7 +59,6 @@ class QuestionCubit extends ThCubit<QuestionState> {
     }
 
     Question? question = _gameManager.currentQuestion;
-    print("game id:" + _gameManager.game!.id);
     if (question == null) {
       thRouter.pushNamed(
         FinalRankingScreen.getRoute(),

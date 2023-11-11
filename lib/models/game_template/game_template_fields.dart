@@ -8,4 +8,6 @@ class GameTemplateFields {
   static const String type = 'type';
 
   static const String name = 'name';
+
+  static const String ready = 'ready';
 }

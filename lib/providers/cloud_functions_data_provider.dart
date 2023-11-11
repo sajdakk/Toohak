@@ -50,6 +50,7 @@ class CloudFunctionsDataProvider {
     required String question,
     required String? hint,
     required bool isDouble,
+    required bool isHardcore,
     required int timeInSeconds,
     required List<String> answers,
   }) async {
@@ -61,6 +62,7 @@ class CloudFunctionsDataProvider {
       'is_double': isDouble,
       'time_in_seconds': timeInSeconds,
       'answers': answers,
+      'is_hardcore': isHardcore,
     });
 
     return DateTime.parse(result.data['finish_when']);
@@ -78,6 +80,7 @@ class CloudFunctionsDataProvider {
       'token': token,
       'answer_index': answerIndex,
       'was_hint_used': wasHintUsed,
+      'timestamp': DateTime.now().toUtc().toIso8601String(),
     });
   }
 }

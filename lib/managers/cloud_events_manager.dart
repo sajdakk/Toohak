@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:toohak/models/_models.dart';
+import 'package:toohak/_toohak.dart';
 
 class CloudEventsManager {
   final PublishSubject<CloudEvent> _cloudEvents$ = PublishSubject<CloudEvent>();
@@ -61,6 +61,13 @@ class CloudEventsManager {
           ),
         );
         break;
+      case CloudEventType.gameOver:
+        // _cloudEvents$.add(
+        //   GameOverCloudEvent(
+        //     totalPoints: int.parse(data['total_points']),
+        //   ),
+        // );
+        break;
     }
   }
 
@@ -68,16 +75,26 @@ class CloudEventsManager {
 
   Future<String?> getToken() async {
     try {
+      final NotificationSettings settings = await FirebaseMessaging.instance.requestPermission();
+      if (settings.authorizationStatus == AuthorizationStatus.denied) {
+        ThMessage.showError('User has declined notifications');
+        return null;
+      }
+
       final bool isSupported = await FirebaseMessaging.instance.isSupported();
       if (!isSupported) {
+        ThMessage.showError('Firebase messaging is not supported on this device');
+
         return null;
       }
 
       String? token = await FirebaseMessaging.instance.getToken(
         vapidKey: 'BDTg3K0NjFgNzNdT4ZJWq8Y4WVmfvNAejGNf5HLRqXvtet0mnLQQmC6pCRGOl2P575ZKQYa1V7OJcx-ewWLua0k',
       );
+
       return token;
     } catch (e) {
+      ThMessage.showError(e.toString());
       return null;
     }
   }

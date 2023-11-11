@@ -35,19 +35,14 @@ class TemplateRow extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                template.name,
+                template.name ?? 'No name',
                 style: ThTextStyles.headlineH3Regular.copyWith(
                   color: ThColors.textText2,
                 ),
               ),
             ),
             const SizedBox(width: 16.0),
-            ThButton(
-              title: 'Create game',
-              onTap: createGame,
-              size: ThPrimaryButtonSize.small,
-              style: ThPrimaryButtonStyle.primary,
-            ),
+            _buildButton(),
             IconButton(
               padding: EdgeInsets.zero,
               icon: const Icon(
@@ -59,6 +54,24 @@ class TemplateRow extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildButton() {
+    if (!template.ready) {
+      return Text(
+        '(draft)',
+        style: ThTextStyles.paragraphP2Regular.copyWith(
+          color: ThColors.textText2,
+        ),
+      );
+    }
+
+    return ThButton(
+      title: 'Create game',
+      onTap: createGame,
+      size: ThPrimaryButtonSize.small,
+      style: ThPrimaryButtonStyle.primary,
     );
   }
 }

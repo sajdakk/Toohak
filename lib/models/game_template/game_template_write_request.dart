@@ -11,6 +11,7 @@ class GameTemplateWriteRequest extends Equatable {
     required this.questions,
     required this.type,
     required this.name,
+    required this.ready,
   });
 
   factory GameTemplateWriteRequest.fromJson(Map<String, dynamic> json) {
@@ -28,10 +29,13 @@ class GameTemplateWriteRequest extends Equatable {
   final List<Question> questions;
 
   @JsonKey(name: GameTemplateFields.type)
-  final GameType type;
+  final GameType? type;
 
   @JsonKey(name: GameTemplateFields.name)
-  final String name;
+  final String? name;
+
+  @JsonKey(name: GameTemplateFields.ready, defaultValue: true)
+  final bool ready;
 
   @override
   List<Object?> get props => <Object?>[
@@ -39,5 +43,6 @@ class GameTemplateWriteRequest extends Equatable {
         questions,
         type,
         name,
+        ready,
       ];
 }

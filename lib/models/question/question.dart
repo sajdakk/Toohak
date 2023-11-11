@@ -34,16 +34,16 @@ class Question extends Equatable {
   final List<String> answers;
 
   @JsonKey(name: QuestionFields.correctAnswerIndex)
-  final int correctAnswerIndex;
+  final int? correctAnswerIndex;
 
   @JsonKey(name: QuestionFields.hint)
   final String? hint;
 
   @JsonKey(name: QuestionFields.durationInSec)
-  final int durationInSec;
+  final int? durationInSec;
 
   @JsonKey(name: QuestionFields.doubleBoost)
-  final bool doubleBoost;
+  final bool? doubleBoost;
 
   @override
   List<Object?> get props => <Object?>[

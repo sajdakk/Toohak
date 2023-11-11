@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toohak/_toohak.dart';
 
-import '../../widgets/timer_builder.dart';
-
 class QuestionBody extends StatefulWidget {
   const QuestionBody({
     super.key,
@@ -72,7 +70,7 @@ class _QuestionBodyState extends State<QuestionBody> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 16.0),
-                      if (widget.question.doubleBoost)
+                      if (widget.question.doubleBoost==true)
                         Text(
                           'Double boost!',
                           style: ThTextStyles.headlineH2Semibold.copyWith(

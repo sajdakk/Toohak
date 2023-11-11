@@ -18,13 +18,13 @@ class QuestionParameters extends Equatable {
 
   final List<String> answers;
 
-  final int correctAnswerIndex;
+  final int? correctAnswerIndex;
 
   final String? hint;
 
-  final int durationInSec;
+  final int? durationInSec;
 
-  final bool doubleBoost;
+  final bool? doubleBoost;
 
   @override
   List<Object?> get props => <Object?>[

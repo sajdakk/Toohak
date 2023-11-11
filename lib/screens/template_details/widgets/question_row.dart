@@ -9,8 +9,8 @@ class QuestionRow extends StatelessWidget {
     required this.onDelete,
   });
 
-  final String question;
-  final int duration;
+  final String? question;
+  final int? duration;
   final VoidCallback onDelete;
 
   @override

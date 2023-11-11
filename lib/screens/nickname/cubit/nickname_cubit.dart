@@ -30,8 +30,6 @@ class NicknameCubit extends ThCubit<NicknameState> {
 
     BotToast.closeAllLoading();
 
-   
-
     return success;
   }
 }

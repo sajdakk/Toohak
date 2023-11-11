@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:toohak/_toohak.dart';
 
 class CloudFunctionsManager {
@@ -34,10 +32,7 @@ class CloudFunctionsManager {
         maxPoints: maxPoints,
         currentRanking: currentRanking,
       );
-    } catch (e, stackTrace) {
-      print(e);
-      print(stackTrace);
-
+    } catch (e, _) {
       return <RankingPlayer>[];
     }
   }
@@ -47,6 +42,7 @@ class CloudFunctionsManager {
     required String question,
     required String? hint,
     required bool isDouble,
+    required bool isHardcore,
     required int timeInSeconds,
     required List<String> answers,
   }) async {
@@ -56,6 +52,7 @@ class CloudFunctionsManager {
         question: question,
         hint: hint,
         isDouble: isDouble,
+        isHardcore: isHardcore,
         timeInSeconds: timeInSeconds,
         answers: answers,
       );

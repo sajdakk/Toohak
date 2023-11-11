@@ -7,13 +7,16 @@ class QuestionDetailDialog extends StatefulWidget {
   const QuestionDetailDialog({
     Key? key,
     required this.questionParameters,
+    required this.ready,
   }) : super(key: key);
 
   final QuestionParameters? questionParameters;
+  final bool ready;
 
   static Future<QuestionParameters?> show({
     required BuildContext context,
     required QuestionParameters? question,
+    required bool ready,
   }) {
     return showDialog<QuestionParameters?>(
       context: context,
@@ -30,6 +33,7 @@ class QuestionDetailDialog extends StatefulWidget {
             ),
             child: QuestionDetailDialog(
               questionParameters: question,
+              ready: ready,
             ),
           ),
         );
@@ -149,10 +153,11 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                         values: _getIndexValues(),
                         label: 'Correct answer *',
                         formFieldKey: _correctAnswerKey,
-                        isRequired: true,
-                        initialValue: widget.questionParameters == null
-                            ? null
-                            : widget.questionParameters!.correctAnswerIndex + 1,
+                        isRequired: widget.ready ? true : false,
+                        initialValue:
+                            widget.questionParameters == null || widget.questionParameters!.correctAnswerIndex == null
+                                ? null
+                                : widget.questionParameters!.correctAnswerIndex! + 1,
                       ),
                       const SizedBox(height: 8.0),
                       ThTextInput(
@@ -167,8 +172,10 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                       ),
                       const SizedBox(height: 8.0),
                       ThNumberInput(
-                        initialValue: widget.questionParameters?.durationInSec.toString(),
-                        required: true,
+                        initialValue: widget.questionParameters?.durationInSec == null
+                            ? ''
+                            : widget.questionParameters?.durationInSec.toString(),
+                        required: widget.ready ? true : false,
                         formFieldKey: _durationKey,
                         labelText: 'Duration in sec *',
                       ),
@@ -241,7 +248,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
 
     int? readingTimeMins = int.tryParse(_durationKey.currentState!.value!);
 
-    if (readingTimeMins == null) {
+    if (readingTimeMins == null && widget.ready) {
       return;
     }
 
@@ -256,11 +263,13 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
       hint = null;
     }
 
+    int? correctAnswerIndex = _correctAnswerKey.currentState!.value;
+
     QuestionParameters lessonParameters = QuestionParameters(
       currentQuestion: widget.questionParameters?.currentQuestion,
       question: _questionKey.currentState!.value!,
       answers: answers,
-      correctAnswerIndex: _correctAnswerKey.currentState!.value! - 1,
+      correctAnswerIndex: correctAnswerIndex == null ? null : correctAnswerIndex - 1,
       hint: hint,
       durationInSec: readingTimeMins,
       doubleBoost: _doubleBoostKey.currentState?.value ?? false,

@@ -12,8 +12,9 @@ GameTemplate _$GameTemplateFromJson(Map<String, dynamic> json) => GameTemplate(
       questions: (json['questions'] as List<dynamic>)
           .map((e) => Question.fromJson(e as Map<String, dynamic>))
           .toList(),
-      type: $enumDecode(_$GameTypeEnumMap, json['type']),
-      name: json['name'] as String,
+      type: $enumDecodeNullable(_$GameTypeEnumMap, json['type']),
+      name: json['name'] as String?,
+      ready: json['ready'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$GameTemplateToJson(GameTemplate instance) =>
@@ -21,8 +22,9 @@ Map<String, dynamic> _$GameTemplateToJson(GameTemplate instance) =>
       'id': instance.id,
       'user_id': instance.userId,
       'name': instance.name,
+      'ready': instance.ready,
       'questions': instance.questions.map((e) => e.toJson()).toList(),
-      'type': _$GameTypeEnumMap[instance.type]!,
+      'type': _$GameTypeEnumMap[instance.type],
     };
 
 const _$GameTypeEnumMap = {

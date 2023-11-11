@@ -46,7 +46,7 @@ class _NicknameBodyState extends State<NicknameBody> {
                     formFieldKey: _nicknameKey,
                   ),
                   ThButton(
-                    title: 'Dołącz',
+                    title: 'Dołączzzzzz123',
                     onTap: () async {
                       if (_nicknameKey.currentState!.validate() != true) {
                         return;

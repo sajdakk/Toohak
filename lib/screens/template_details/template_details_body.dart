@@ -21,6 +21,7 @@ class TemplateDetailsBody extends StatefulWidget {
 class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<GameType>> _gameTypeKey = GlobalKey<FormFieldState<GameType>>();
+  final GlobalKey<FormFieldState<bool>> _readyKey = GlobalKey<FormFieldState<bool>>();
 
   final GlobalKey<FormFieldState<String>> _nameKey = GlobalKey<FormFieldState<String>>();
 
@@ -64,12 +65,27 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                   ),
                   const SizedBox(height: 16.0),
                   ThDropdownInput(
-                    isRequired: true,
+                    isRequired: _readyKey.currentState?.value == false ? false : true,
                     values: GameType.values.toSet(),
                     formFieldKey: _gameTypeKey,
                     label: 'GameType *',
                     initialValue: widget.state.template?.type,
                     translateItemToString: (GameType? value) => value == null ? '' : GameTypeMapper.getName(value),
+                  ),
+                  const SizedBox(height: 8.0),
+                  ThDropdownInput(
+                    isRequired: false,
+                    values: const <bool>{true, false},
+                    formFieldKey: _readyKey,
+                    label: 'Ready *',
+                    initialValue: widget.state.template == null ? true : widget.state.template?.ready,
+                    translateItemToString: (bool? value) {
+                      if (value == null) {
+                        return '';
+                      }
+                      return value ? 'Yes' : 'No';
+                    },
+                    onChanged: (bool? _) => setState(() {}),
                   ),
                   const SizedBox(height: 8.0),
                   ThTextInput(
@@ -94,6 +110,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                           QuestionParameters? params = await QuestionDetailDialog.show(
                             context: context,
                             question: questions[index],
+                            ready: _readyKey.currentState?.value ?? true,
                           );
 
                           if (params == null) {
@@ -129,6 +146,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                       QuestionParameters? lesson = await QuestionDetailDialog.show(
                         context: context,
                         question: null,
+                        ready: _readyKey.currentState?.value ?? true,
                       );
                       if (lesson == null) {
                         return;
@@ -163,11 +181,24 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
       return;
     }
 
+    bool ready = _readyKey.currentState!.value!;
+
+    for (QuestionParameters question in questions) {
+      if(!ready){
+        break;
+      }
+
+      if ( question.answers.isEmpty || question.correctAnswerIndex == null || question.durationInSec == null) {
+        return;
+      }
+    }
+
     await context.read<TemplateDetailsCubit>().save(
           template: widget.state.template,
           name: _nameKey.currentState!.value!,
           params: questions,
-          type: _gameTypeKey.currentState!.value!,
+          type: _gameTypeKey.currentState?.value,
+          ready: ready,
         );
 
     thRouter.pop();

@@ -34,7 +34,11 @@ class GameManager {
     }
     questionIndex++;
     Question? question = currentQuestion;
-    if (question == null) {
+    if (question == null ||
+        question.doubleBoost == null ||
+        question.durationInSec == null ||
+        question.correctAnswerIndex == null ||
+        question.answers.isEmpty) {
       return null;
     }
 
@@ -44,9 +48,10 @@ class GameManager {
       gameId: _game!.id,
       question: question.question,
       hint: question.hint,
-      isDouble: question.doubleBoost,
-      timeInSeconds: question.durationInSec,
+      isDouble: question.doubleBoost!,
+      timeInSeconds: question.durationInSec!,
       answers: question.answers,
+      isHardcore: gameTemplate!.type == GameType.hardcore,
     );
 
     BotToast.closeAllLoading();
@@ -57,24 +62,27 @@ class GameManager {
     if (_gameTemplate == null || _game == null) {
       return false;
     }
-    BotToast.showLoading();
 
     int maxPoints = 1000;
     Question question = _gameTemplate!.questions[questionIndex];
 
-    if (question.doubleBoost) {
+    if (question.correctAnswerIndex == null) {
+      return false;
+    }
+
+    if (question.doubleBoost == true) {
       maxPoints *= 2;
     }
+    BotToast.showLoading();
 
     List<RankingPlayer> result = await _cloudFunctionsManager.finishRound(
       gameId: _game!.id,
       currentRanking: rankingPlayers,
-      correctAnswerIndex: question.correctAnswerIndex,
+      correctAnswerIndex: question.correctAnswerIndex!,
       maxPoints: maxPoints,
     );
 
     rankingPlayers = result;
-    print("rankingPlayers: " + rankingPlayers.toString());
     BotToast.closeAllLoading();
     return true;
   }
@@ -89,7 +97,7 @@ class GameManager {
       return null;
     }
 
-    if (questionIndex >= _gameTemplate!.questions.length) {
+    if (questionIndex >= _gameTemplate!.questions.length - 1) {
       return null;
     }
 

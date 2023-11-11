@@ -48,7 +48,7 @@ class _InitScreenState extends State<InitScreen> {
                     formFieldKey: _codeKey,
                   ),
                   ThButton(
-                    title: 'Dalej',
+                    title: 'Dalej!',
                     onTap: () {
                       if (_codeKey.currentState!.validate() != true) {
                         return;
