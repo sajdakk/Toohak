@@ -4,58 +4,59 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
 import 'package:toohak/widgets/loading_view.dart';
 
-import 'cubit/result_cubit.dart';
-import 'result_body.dart';
+import 'cubit/game_over_cubit.dart';
+import 'game_over_body.dart';
 
-class ResultScreen extends StatefulWidget {
-  const ResultScreen({
+class GameOverScreen extends StatefulWidget {
+  const GameOverScreen({
     super.key,
-    required this.event,
+    this.event,
   });
 
-  final RoundFinishedCloudEvent? event;
+  final GameOverCloudEvent? event;
 
   static String getRoute() {
-    return '/result';
+    return '/game-over';
   }
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
       if (context == null) {
-        return const ResultScreen(
+        return const GameOverScreen(
           event: null,
         );
       }
 
-      final RoundFinishedCloudEvent? event = context.settings?.arguments as RoundFinishedCloudEvent?;
-      return ResultScreen(
+      GameOverCloudEvent? event = ModalRoute.of(context)?.settings.arguments as GameOverCloudEvent?;
+      return GameOverScreen(
         event: event,
       );
     },
   );
 
   @override
-  State<ResultScreen> createState() => _ResultScreenState();
+  State<GameOverScreen> createState() => _GameOverScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class _GameOverScreenState extends State<GameOverScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ResultCubit>(
+    return BlocProvider<GameOverCubit>(
       create: (_) => sl()..init(),
-      child: BlocBuilder<ResultCubit, ResultState>(
-        builder: (_, ResultState state) {
-          if (state is ResultLoadingState) {
-            return const LoadingView();
-          }
-
+      child: BlocBuilder<GameOverCubit, GameOverState>(
+        builder: (_, GameOverState state) {
           if (widget.event == null) {
             return ErrorView.unhandledState(state);
           }
 
-          if (state is ResultLoadedState) {
-            return ResultBody(
+          if (state is GameOverInitialState) {
+            return const LoadingView();
+          }
+
+          if (state is GameOverLoadedState) {
+            return GameOverBody(
               event: widget.event!,
+              state: state,
             );
           }
 

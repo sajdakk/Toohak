@@ -56,9 +56,9 @@ Future<void> setupLocator() async {
   sl.registerFactory(() => PlayerWaitingCubit());
   sl.registerFactory(() => AnswerCubit());
   sl.registerFactory(() => QuestionCubit());
-  sl.registerFactory(() => AfterAnswerWaitingCubit());
   sl.registerFactory(() => RoundRankingCubit());
   sl.registerFactory(() => FinalRankingCubit());
+  sl.registerFactory(() => AfterAnswerWaitingCubit());
   sl.registerFactory(() => ResultCubit());
 
   //app session

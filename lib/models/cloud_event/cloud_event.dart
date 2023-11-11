@@ -48,12 +48,14 @@ class RoundFinishedCloudEvent extends CloudEvent {
     required this.pointsForThisRound,
     required this.totalPoints,
     required this.currentPosition,
+    required this.answeredNth,
   });
 
-  final bool wasAnswerCorrect;
+  final bool? wasAnswerCorrect;
   final int pointsForThisRound;
   final int totalPoints;
   final int currentPosition;
+  final int? answeredNth;
 
   @override
   List<Object?> get props => <Object?>[
@@ -61,27 +63,34 @@ class RoundFinishedCloudEvent extends CloudEvent {
         pointsForThisRound,
         totalPoints,
         currentPosition,
+        answeredNth,
       ];
 }
 
 class GameOverCloudEvent extends CloudEvent {
   const GameOverCloudEvent({
-    required this.wasAnswerCorrect,
-    required this.pointsForThisRound,
+    required this.didPlayerLost,
     required this.totalPoints,
-    required this.currentPosition,
+    required this.finalPosition,
+    required this.questionsAnswered,
+    required this.questionsAnsweredCorrectly,
+    required this.awarageAnswerTimeInMilis,
   });
 
-  final bool wasAnswerCorrect;
-  final int pointsForThisRound;
+  final bool didPlayerLost;
   final int totalPoints;
-  final int currentPosition;
+  final int? finalPosition;
+  final int questionsAnswered;
+  final int questionsAnsweredCorrectly;
+  final int awarageAnswerTimeInMilis;
 
   @override
   List<Object?> get props => <Object?>[
-        wasAnswerCorrect,
-        pointsForThisRound,
+        didPlayerLost,
         totalPoints,
-        currentPosition,
+        finalPosition,
+        questionsAnswered,
+        questionsAnsweredCorrectly,
+        awarageAnswerTimeInMilis,
       ];
 }

@@ -10,6 +10,7 @@ class PlayerWaitingCubit extends ThCubit<PlayerWaitingState> {
   PlayerWaitingCubit() : super(PlayerWaitingLoadedState());
 
   final CloudEventsManager _cloudEventsManager = sl();
+  final GameManager _gameManager = sl();
 
   StreamSubscription? _subscription;
 
@@ -20,9 +21,17 @@ class PlayerWaitingCubit extends ThCubit<PlayerWaitingState> {
     return super.close();
   }
 
-  Future<void> init(String gameId) async {
+  Future<void> init() async {
+    print('Waiting: ' + _cloudEventsManager.hashCode.toString());
+
     _subscription = _cloudEventsManager.cloudEvents.listen(
       (CloudEvent event) {
+        print("JESTEM");
+        String? gameId = _gameManager.game?.id;
+        if (gameId == null) {
+          return;
+        }
+
         if (event is QuestionSentCloudEvent) {
           thRouter.pushNamed(
             AnswerScreen.getRoute(gameId),

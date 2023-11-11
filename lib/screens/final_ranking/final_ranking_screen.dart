@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
-import 'package:toohak/screens/fina/round_ranking_body.dart';
+import 'package:toohak/screens/round_ranking/round_ranking_body.dart';
 import 'package:toohak/widgets/loading_view.dart';
 
 import 'cubit/final_ranking_cubit.dart';

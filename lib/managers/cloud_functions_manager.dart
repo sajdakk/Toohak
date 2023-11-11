@@ -15,6 +15,7 @@ class CloudFunctionsManager {
         token: token,
       );
     } catch (e, _) {
+      print(e);
       return null;
     }
   }
@@ -34,6 +35,20 @@ class CloudFunctionsManager {
       );
     } catch (e, _) {
       return <RankingPlayer>[];
+    }
+  }
+
+  Future<List<EndGameResult>> finishGame({
+    required String gameId,
+    required List<RankingPlayer> currentRanking,
+  }) async {
+    try {
+      return await _cloudFunctionsDataProvider.finishGame(
+        gameId: gameId,
+        currentRanking: currentRanking,
+      );
+    } catch (e, _) {
+      return <EndGameResult>[];
     }
   }
 

@@ -67,6 +67,14 @@ class _ResultBodyState extends State<ResultBody> {
                           color: ThColors.textText1,
                         ),
                       ),
+                      const SizedBox(height: 16.0),
+                      Text(
+                      _getNthText(),
+                        style: ThTextStyles.headlineH2Semibold.copyWith(
+                          color: ThColors.textText1,
+                        ),
+                      ),
+                     
                     ],
                   ),
                 ],
@@ -78,8 +86,20 @@ class _ResultBodyState extends State<ResultBody> {
     );
   }
 
+  String _getNthText(){
+    if(widget.event.answeredNth==null){
+      return '';
+    }
+
+    return 'Odpowiedziałeś jako ${widget.event.answeredNth}. osoba';
+  }
+
   String _getInfo() {
-    if (widget.event.wasAnswerCorrect) {
+    if (widget.event.wasAnswerCorrect == null) {
+      return 'Niestety, nie zdążyłeś odpowiedzieć na czas :(';
+    }
+
+    if (widget.event.wasAnswerCorrect == true) {
       return 'Gratulacje! Twoja odpowiedź była poprawna!';
     }
 

@@ -11,6 +11,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await setupLocator();
-
+  sl<CloudEventsManager>().getToken();
   runApp(const Toohak());
 }

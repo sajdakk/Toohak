@@ -72,14 +72,12 @@ class _AnswerBodyState extends State<AnswerBody> {
                             AnswerCubit cubit = context.read();
                             bool result = await cubit.sendAnswer(
                               answerIndex: i,
-                              wasHintUsed: false,
+                              wasHintUsed: _showAnswer,
                               gameId: widget.gameId,
                             );
                             if (result) {
                               thRouter.pushNamed(
-                                AfterAnswerWaitingScreen.getRoute(
-                                  widget.gameId,
-                                ),
+                                AfterAnswerWaitingScreen.getRoute(),
                               );
                             }
                           },

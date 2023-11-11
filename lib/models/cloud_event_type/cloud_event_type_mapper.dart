@@ -12,6 +12,8 @@ abstract class CloudEventTypeMapper {
         return CloudEventType.questionSent;
       case 'ROUND_FINISHED':
         return CloudEventType.roundFinished;
+      case 'GAME_OVER':
+        return CloudEventType.gameOver;
 
       default:
         return null;

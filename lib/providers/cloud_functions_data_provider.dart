@@ -9,6 +9,7 @@ class CloudFunctionsDataProvider {
   static const String _sendQuestion = 'send_question';
   static const String _sendAnswer = 'send_answer';
   static const String _finishRound = 'finish_round';
+  static const String _finishGame = 'finish_game';
 
   Future<String> joinGame({
     required String code,
@@ -41,6 +42,22 @@ class CloudFunctionsDataProvider {
 
     List<dynamic> rankingRaw = result.data['ranking'];
     List<RankingPlayer> ranking = rankingRaw.map((e) => RankingPlayer.fromJson(e)).toList();
+
+    return ranking;
+  }
+
+  Future<List<EndGameResult>> finishGame({
+    required String gameId,
+    required List<RankingPlayer> currentRanking,
+  }) async {
+    final HttpsCallable callable = _firebaseFunctions.httpsCallable(_finishGame);
+    HttpsCallableResult result = await callable.call<dynamic>(<String, dynamic>{
+      'game_id': gameId,
+      'current_ranking': jsonDecode(jsonEncode(currentRanking)),
+    });
+
+    List<dynamic> rankingRaw = result.data['results'];
+    List<EndGameResult> ranking = rankingRaw.map((e) => EndGameResult.fromJson(e)).toList();
 
     return ranking;
   }

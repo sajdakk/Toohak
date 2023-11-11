@@ -52,14 +52,20 @@ class QuestionCubit extends ThCubit<QuestionState> {
       return;
     }
 
-    bool result = await _gameManager.finishRound();
+    Question? nextQuestion = _gameManager.nextQuestion;
+    
+    bool result = false;
+    if (nextQuestion == null) {
+      result = await _gameManager.finishGame();
+    } else {
+      result = await _gameManager.finishRound();
+    }
 
     if (!result) {
       return;
     }
 
-    Question? question = _gameManager.currentQuestion;
-    if (question == null) {
+    if (nextQuestion == null) {
       thRouter.pushNamed(
         FinalRankingScreen.getRoute(),
       );

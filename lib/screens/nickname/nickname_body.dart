@@ -46,7 +46,7 @@ class _NicknameBodyState extends State<NicknameBody> {
                     formFieldKey: _nicknameKey,
                   ),
                   ThButton(
-                    title: 'Dołączzzzzz123',
+                    title: 'Dołącz',
                     onTap: () async {
                       if (_nicknameKey.currentState!.validate() != true) {
                         return;
@@ -60,7 +60,7 @@ class _NicknameBodyState extends State<NicknameBody> {
                       );
 
                       if (result != null) {
-                        thRouter.pushNamed(PlayerWaitingScreen.getRoute(result));
+                        thRouter.pushNamed(PlayerWaitingScreen.getRoute());
                       }
                     },
                     size: ThPrimaryButtonSize.large,

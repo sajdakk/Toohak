@@ -10,6 +10,8 @@ class ResultCubit extends ThCubit<ResultState> {
   ResultCubit() : super(const ResultLoadedState());
 
   final CloudEventsManager _cloudEventsManager = sl();
+final GameManager _gameManager = sl();
+
   StreamSubscription<dynamic>? _subscription;
 
   @override
@@ -19,11 +21,16 @@ class ResultCubit extends ThCubit<ResultState> {
     return super.close();
   }
 
-  Future<void> init(String gameId) async {
+  Future<void> init() async {
 
 
     _subscription = _cloudEventsManager.cloudEvents.listen(
       (CloudEvent event) {
+        String? gameId = _gameManager.game?.id;
+        if(gameId == null) {
+          return;
+        }
+        
         if (event is QuestionSentCloudEvent) {
           thRouter.pushNamed(
             AnswerScreen.getRoute(gameId),

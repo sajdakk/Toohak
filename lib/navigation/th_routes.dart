@@ -6,6 +6,7 @@ import 'package:toohak/screens/answer/answer_screen.dart';
 import 'package:toohak/screens/auth/login/login_screen.dart';
 import 'package:toohak/screens/auth/registration/registration_screen.dart';
 import 'package:toohak/screens/final_ranking/final_ranking_screen.dart';
+import 'package:toohak/screens/game_over/game_over_screen.dart';
 import 'package:toohak/screens/init/init_screen.dart';
 import 'package:toohak/screens/nickname/nickname_screen.dart';
 import 'package:toohak/screens/player_waiting/player_waiting_screen.dart';
@@ -32,6 +33,7 @@ class ThRoutes {
     roundRanking,
     finalRanking,
     result,
+    gameOver,
   ];
 
   static const String dialogRouteName = '/dialog';
@@ -90,20 +92,26 @@ class ThRoutes {
 
   static final ThRoute result = ThRoute(
     name: 'Result',
-    route: '/result/:game-id',
+    route: '/result',
     handler: ResultScreen.routeHandler,
   );
 
   static final ThRoute playerWaiting = ThRoute(
     name: 'Player waiting',
-    route: '/player-waiting/:game-id',
+    route: '/player-waiting',
     handler: PlayerWaitingScreen.routeHandler,
   );
 
   static final ThRoute afterAnswerWaiting = ThRoute(
     name: 'After answer waiting',
-    route: '/after-answer-waiting/:game-id',
+    route: '/after-answer-waiting',
     handler: AfterAnswerWaitingScreen.routeHandler,
+  );
+
+  static final ThRoute gameOver = ThRoute(
+    name: 'Game over',
+    route: GameOverScreen.getRoute(),
+    handler: GameOverScreen.routeHandler,
   );
 
   static final ThRoute adminWaiting = ThRoute(

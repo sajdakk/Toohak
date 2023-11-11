@@ -54,21 +54,39 @@ class CloudEventsManager {
       case CloudEventType.roundFinished:
         _cloudEvents$.add(
           RoundFinishedCloudEvent(
-            wasAnswerCorrect: data['was_answer_correct'] == 'true',
+            wasAnswerCorrect: _getWasAnswerCorrect(data['was_answer_correct']),
             pointsForThisRound: int.parse(data['points_for_this_round']),
             totalPoints: int.parse(data['total_points']),
             currentPosition: int.parse(data['current_position']),
+            answeredNth: int.tryParse(data['answered_nth'] ?? ''),
           ),
         );
         break;
       case CloudEventType.gameOver:
-        // _cloudEvents$.add(
-        //   GameOverCloudEvent(
-        //     totalPoints: int.parse(data['total_points']),
-        //   ),
-        // );
+        _cloudEvents$.add(
+          GameOverCloudEvent(
+            didPlayerLost: data['did_player_lost'] == 'true',
+            finalPosition: int.parse(data['final_position']),
+            totalPoints: int.parse(data['total_points']),
+            questionsAnswered: int.parse(data['questions_answered']),
+            questionsAnsweredCorrectly: int.parse(data['questions_answered_correctly']),
+            awarageAnswerTimeInMilis: int.parse(data['awarage_answer_time']),
+          ),
+        );
         break;
     }
+  }
+
+  bool? _getWasAnswerCorrect(String value) {
+    if (value == "null") {
+      return null;
+    }
+
+    if (value == "true") {
+      return true;
+    }
+
+    return false;
   }
 
   // endregion
@@ -94,7 +112,6 @@ class CloudEventsManager {
 
       return token;
     } catch (e) {
-      ThMessage.showError(e.toString());
       return null;
     }
   }

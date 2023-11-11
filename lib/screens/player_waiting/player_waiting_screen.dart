@@ -9,22 +9,15 @@ import 'player_waiting_body.dart';
 class PlayerWaitingScreen extends StatefulWidget {
   const PlayerWaitingScreen({
     super.key,
-    required this.gameId,
   });
 
-  final String gameId;
-
-  static String getRoute(String gameId) {
-    return '/player-waiting/$gameId';
+  static String getRoute() {
+    return '/player-waiting';
   }
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
-      final String gameId = params['game-id']?.first;
-
-      return PlayerWaitingScreen(
-        gameId: gameId,
-      );
+      return const PlayerWaitingScreen();
     },
   );
 
@@ -36,10 +29,7 @@ class _PlayerWaitingScreenState extends State<PlayerWaitingScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PlayerWaitingCubit>(
-      create: (_) => sl()
-        ..init(
-          widget.gameId,
-        ),
+      create: (_) => sl()..init(),
       child: BlocBuilder<PlayerWaitingCubit, PlayerWaitingState>(
         builder: (_, PlayerWaitingState state) {
           return const PlayerWaitingBody();

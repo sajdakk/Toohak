@@ -52,6 +52,7 @@ class _LoginBodyState extends State<LoginBody> {
                 labelText: 'Email Address',
                 isRequired: true,
                 withoutSpaces: true,
+                initialValue: 'anita.sajdak123@gmail.com',
               ),
               const SizedBox(height: 4.0),
               ThPasswordInput(
@@ -62,13 +63,16 @@ class _LoginBodyState extends State<LoginBody> {
               const SizedBox(height: 24.0),
               ThButton(
                 title: 'Sign In with Email',
-                onTap: () {
-                  if (_formKey.currentState?.validate() == true) {
-                    context.read<LoginCubit>().login(
-                          email: _emailInputKey.currentState!.value!,
-                          password: _passwordInputKey.currentState!.value!,
-                        );
+                onTap: () async {
+                  if (_formKey.currentState?.validate() != true) {
+                    return;
                   }
+
+                  final LoginCubit cubit = context.read();
+                  await cubit.login(
+                    email: _emailInputKey.currentState!.value!,
+                    password: _passwordInputKey.currentState!.value!,
+                  );
                 },
                 size: ThPrimaryButtonSize.large,
                 style: ThPrimaryButtonStyle.primary,

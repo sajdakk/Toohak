@@ -47,7 +47,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AnswerCubit>(
-      create: (_) => sl()..init(widget.gameId),
+      create: (_) => sl()..init(),
       child: BlocBuilder<AnswerCubit, AnswerState>(
         builder: (_, AnswerState state) {
           if (widget.event == null) {

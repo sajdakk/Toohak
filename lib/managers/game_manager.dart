@@ -12,10 +12,16 @@ class GameManager {
 
   int questionIndex = -1;
   List<RankingPlayer> rankingPlayers = <RankingPlayer>[];
+  List<EndGameResult> endGameResult = <EndGameResult>[];
   GameTemplate? _gameTemplate;
   Game? _game;
 
   Future<bool> init() async {
+    questionIndex = -1;
+    rankingPlayers = <RankingPlayer>[];
+    endGameResult = <EndGameResult>[];
+    _gameTemplate = null;
+    _game = null;
     return true;
   }
 
@@ -87,9 +93,27 @@ class GameManager {
     return true;
   }
 
+  Future<bool> finishGame() async {
+    if (_gameTemplate == null || _game == null) {
+      return false;
+    }
+
+    BotToast.showLoading();
+
+    List<EndGameResult> result = await _cloudFunctionsManager.finishGame(
+      gameId: _game!.id,
+      currentRanking: rankingPlayers,
+    );
+
+    endGameResult = result;
+    BotToast.closeAllLoading();
+    return true;
+  }
+
   void clean() {
     questionIndex = -1;
     rankingPlayers = <RankingPlayer>[];
+    endGameResult = <EndGameResult>[];
   }
 
   Question? get currentQuestion {
@@ -97,10 +121,22 @@ class GameManager {
       return null;
     }
 
-    if (questionIndex >= _gameTemplate!.questions.length - 1) {
+    if (questionIndex > _gameTemplate!.questions.length - 1) {
       return null;
     }
 
     return _gameTemplate!.questions[questionIndex];
+  }
+
+  Question? get nextQuestion {
+    if (_gameTemplate == null) {
+      return null;
+    }
+
+    if (questionIndex + 1 > _gameTemplate!.questions.length - 1) {
+      return null;
+    }
+
+    return _gameTemplate!.questions[questionIndex + 1];
   }
 }
