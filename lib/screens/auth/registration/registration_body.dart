@@ -81,7 +81,7 @@ class _RegistrationBodyState extends State<RegistrationBody> {
               ),
               const SizedBox(height: 24.0),
                TextButton(
-                onPressed: () => thRouter.pushNamed(ThRoutes.login.route),
+                onPressed: () => thRouter.replace(ThRoutes.login.route),
                 child: Text(
                   'Do you have an account? Sign in',
                   style: ThTextStyles.headlineH6Semibold.copyWith(

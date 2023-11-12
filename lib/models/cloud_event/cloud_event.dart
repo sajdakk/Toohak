@@ -74,7 +74,7 @@ class GameOverCloudEvent extends CloudEvent {
     required this.finalPosition,
     required this.questionsAnswered,
     required this.questionsAnsweredCorrectly,
-    required this.awarageAnswerTimeInMilis,
+    required this.averageAnswerTimeInMilis,
   });
 
   final bool didPlayerLost;
@@ -82,7 +82,7 @@ class GameOverCloudEvent extends CloudEvent {
   final int? finalPosition;
   final int questionsAnswered;
   final int questionsAnsweredCorrectly;
-  final int awarageAnswerTimeInMilis;
+  final int averageAnswerTimeInMilis;
 
   @override
   List<Object?> get props => <Object?>[
@@ -91,6 +91,6 @@ class GameOverCloudEvent extends CloudEvent {
         finalPosition,
         questionsAnswered,
         questionsAnsweredCorrectly,
-        awarageAnswerTimeInMilis,
+        averageAnswerTimeInMilis,
       ];
 }

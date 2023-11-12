@@ -75,8 +75,9 @@ class _AnswerBodyState extends State<AnswerBody> {
                               wasHintUsed: _showAnswer,
                               gameId: widget.gameId,
                             );
+
                             if (result) {
-                              thRouter.pushNamed(
+                              thRouter.replace(
                                 AfterAnswerWaitingScreen.getRoute(),
                               );
                             }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:toohak/screens/answer/answer_screen.dart';
 import 'package:toohak/screens/game_over/game_over_screen.dart';
 import 'package:toohak/screens/result/result_screen.dart';
 
@@ -11,6 +12,7 @@ class AfterAnswerWaitingCubit extends ThCubit<AfterAnswerWaitingState> {
   AfterAnswerWaitingCubit() : super(AfterAnswerWaitingLoadedState());
 
   final CloudEventsManager _cloudEventsManager = sl();
+  final GameManager _gameManager = sl();
 
   StreamSubscription? _subscription;
 
@@ -25,15 +27,27 @@ class AfterAnswerWaitingCubit extends ThCubit<AfterAnswerWaitingState> {
     _subscription = _cloudEventsManager.cloudEvents.listen(
       (CloudEvent event) {
         if (event is RoundFinishedCloudEvent) {
-          thRouter.pushNamed(
+          thRouter.replace(
             ResultScreen.getRoute(),
             arguments: event,
           );
         }
 
-         if (event is GameOverCloudEvent) {
-          thRouter.pushNamed(
+        if (event is GameOverCloudEvent) {
+          thRouter.replace(
             GameOverScreen.getRoute(),
+            arguments: event,
+          );
+        }
+
+        String? gameId = _gameManager.game?.id;
+        if (gameId == null) {
+          return;
+        }
+
+        if (event is QuestionSentCloudEvent) {
+          thRouter.replace(
+            AnswerScreen.getRoute(gameId),
             arguments: event,
           );
         }

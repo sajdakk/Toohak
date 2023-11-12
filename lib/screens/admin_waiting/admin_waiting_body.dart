@@ -63,7 +63,7 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
                         DateTime? result = await sl<GameManager>().sendQuestion();
 
                         if (result != null) {
-                          thRouter.pushNamed(
+                          thRouter.replace(
                             QuestionScreen.getRoute(),
                             arguments: result,
                           );

@@ -70,7 +70,7 @@ class CloudEventsManager {
             totalPoints: int.parse(data['total_points']),
             questionsAnswered: int.parse(data['questions_answered']),
             questionsAnsweredCorrectly: int.parse(data['questions_answered_correctly']),
-            awarageAnswerTimeInMilis: int.parse(data['awarage_answer_time']),
+            averageAnswerTimeInMilis: int.parse(data['average_answer_time']),
           ),
         );
         break;

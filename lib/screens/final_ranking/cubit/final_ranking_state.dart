@@ -11,13 +11,16 @@ class FinalRankingLoadingState extends FinalRankingState {}
 class FinalRankingLoadedState extends FinalRankingState {
   const FinalRankingLoadedState({
     required this.players,
+    required this.endGameResults,
   });
 
   final List<RankingPlayer> players;
+  final List<EndGameResult> endGameResults;
 
   @override
   List<Object?> get props => <dynamic>[
         players,
+        endGameResults,
       ];
 }
 

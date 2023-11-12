@@ -16,9 +16,15 @@ class FinalRankingCubit extends ThCubit<FinalRankingState> {
       return b.points.compareTo(a.points);
     });
 
+    List<EndGameResult> endGameResults = _gameManager.endGameResult.toList();
+    endGameResults.sort((EndGameResult a, EndGameResult b) {
+      return b.points.compareTo(a.points);
+    });
+
     emit(
       FinalRankingLoadedState(
         players: rankingPlayers,
+        endGameResults: endGameResults,
       ),
     );
   }

@@ -10,6 +10,7 @@ import 'package:toohak/screens/answer/cubit/answer_cubit.dart';
 import 'package:toohak/screens/auth/login/cubit/login_cubit.dart';
 import 'package:toohak/screens/auth/registration/cubit/registration_cubit.dart';
 import 'package:toohak/screens/final_ranking/cubit/final_ranking_cubit.dart';
+import 'package:toohak/screens/game_over/cubit/game_over_cubit.dart';
 import 'package:toohak/screens/nickname/cubit/nickname_cubit.dart';
 import 'package:toohak/screens/player_waiting/cubit/player_waiting_cubit.dart';
 import 'package:toohak/screens/question/cubit/question_cubit.dart';
@@ -60,6 +61,7 @@ Future<void> setupLocator() async {
   sl.registerFactory(() => FinalRankingCubit());
   sl.registerFactory(() => AfterAnswerWaitingCubit());
   sl.registerFactory(() => ResultCubit());
+  sl.registerFactory(() => GameOverCubit());
 
   //app session
   sl.registerSingleton(AppSession());

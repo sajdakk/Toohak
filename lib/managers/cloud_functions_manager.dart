@@ -33,7 +33,9 @@ class CloudFunctionsManager {
         maxPoints: maxPoints,
         currentRanking: currentRanking,
       );
-    } catch (e, _) {
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
       return <RankingPlayer>[];
     }
   }
@@ -47,7 +49,10 @@ class CloudFunctionsManager {
         gameId: gameId,
         currentRanking: currentRanking,
       );
-    } catch (e, _) {
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+
       return <EndGameResult>[];
     }
   }

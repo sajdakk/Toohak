@@ -22,18 +22,15 @@ class PlayerWaitingCubit extends ThCubit<PlayerWaitingState> {
   }
 
   Future<void> init() async {
-    print('Waiting: ' + _cloudEventsManager.hashCode.toString());
-
     _subscription = _cloudEventsManager.cloudEvents.listen(
       (CloudEvent event) {
-        print("JESTEM");
         String? gameId = _gameManager.game?.id;
         if (gameId == null) {
           return;
         }
 
         if (event is QuestionSentCloudEvent) {
-          thRouter.pushNamed(
+          thRouter.replace(
             AnswerScreen.getRoute(gameId),
             arguments: event,
           );

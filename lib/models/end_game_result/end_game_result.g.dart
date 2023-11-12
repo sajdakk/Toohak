@@ -12,7 +12,7 @@ EndGameResult _$EndGameResultFromJson(Map<String, dynamic> json) =>
       points: json['points'] as int,
       questionsAnswered: json['questions_answered'] as int,
       questionsAnsweredCorrectly: json['questions_answered_correctly'] as int,
-      awarageAnswerTimeInMilis: json['awarage_answer_time'] as int,
+      averageAnswerTimeInMilis: json['average_answer_time'] as int,
     );
 
 Map<String, dynamic> _$EndGameResultToJson(EndGameResult instance) =>
@@ -21,5 +21,5 @@ Map<String, dynamic> _$EndGameResultToJson(EndGameResult instance) =>
       'points': instance.points,
       'questions_answered': instance.questionsAnswered,
       'questions_answered_correctly': instance.questionsAnsweredCorrectly,
-      'awarage_answer_time': instance.awarageAnswerTimeInMilis,
+      'average_answer_time': instance.averageAnswerTimeInMilis,
     };

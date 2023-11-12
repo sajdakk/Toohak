@@ -53,12 +53,20 @@ class QuestionCubit extends ThCubit<QuestionState> {
     }
 
     Question? nextQuestion = _gameManager.nextQuestion;
-    
+
     bool result = false;
+    result = await _gameManager.finishRound();
+    if (!result) {
+      return;
+    }
+
+    thRouter.replace(
+      RoundRankingScreen.getRoute(),
+    );
+
     if (nextQuestion == null) {
+      await Future.delayed(const Duration(seconds: 5));
       result = await _gameManager.finishGame();
-    } else {
-      result = await _gameManager.finishRound();
     }
 
     if (!result) {
@@ -66,14 +74,10 @@ class QuestionCubit extends ThCubit<QuestionState> {
     }
 
     if (nextQuestion == null) {
-      thRouter.pushNamed(
+      thRouter.replace(
         FinalRankingScreen.getRoute(),
       );
       return;
     }
-
-    thRouter.pushNamed(
-      RoundRankingScreen.getRoute(),
-    );
   }
 }

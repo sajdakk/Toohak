@@ -7,7 +7,7 @@ class EndGameResultFields {
 
   static const String questionsAnsweredCorrectly = 'questions_answered_correctly';
 
-  static const String awarageAnswerTimeInMilis = 'awarage_answer_time';
+  static const String averageAnswerTimeInMilis = 'average_answer_time';
 
 }
 

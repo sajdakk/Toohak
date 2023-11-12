@@ -38,7 +38,7 @@ class _NicknameScreenState extends State<NicknameScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<NicknameCubit>(
-      create: (_) => sl(),
+      create: (_) => sl()..init(),
       child: BlocBuilder<NicknameCubit, NicknameState>(
         builder: (_, NicknameState state) {
           if (state is NicknameLoadedState) {

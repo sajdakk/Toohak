@@ -11,7 +11,7 @@ class EndGameResult extends Equatable {
     required this.points,
     required this.questionsAnswered,
     required this.questionsAnsweredCorrectly,
-    required this.awarageAnswerTimeInMilis,
+    required this.averageAnswerTimeInMilis,
   });
 
   factory EndGameResult.fromJson(Map<String, dynamic> json) => _$EndGameResultFromJson(json);
@@ -28,8 +28,8 @@ class EndGameResult extends Equatable {
   @JsonKey(name: EndGameResultFields.questionsAnsweredCorrectly)
   final int questionsAnsweredCorrectly;
 
-  @JsonKey(name: EndGameResultFields.awarageAnswerTimeInMilis)
-  final int awarageAnswerTimeInMilis;
+  @JsonKey(name: EndGameResultFields.averageAnswerTimeInMilis)
+  final int averageAnswerTimeInMilis;
 
   @override
   List<Object?> get props => <Object?>[
@@ -37,6 +37,6 @@ class EndGameResult extends Equatable {
         points,
         questionsAnswered,
         questionsAnsweredCorrectly,
-        awarageAnswerTimeInMilis,
+        averageAnswerTimeInMilis,
       ];
 }

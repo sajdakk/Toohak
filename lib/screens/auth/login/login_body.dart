@@ -79,7 +79,7 @@ class _LoginBodyState extends State<LoginBody> {
               ),
               const SizedBox(height: 24.0),
               TextButton(
-                onPressed: () => thRouter.pushNamed(ThRoutes.registration.route),
+                onPressed: () => thRouter.replace(ThRoutes.registration.route),
                 child: Text(
                   'Don\'t have an account? Get started',
                   style: ThTextStyles.headlineH6Semibold.copyWith(

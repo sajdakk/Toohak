@@ -36,6 +36,19 @@ class ThRoutes {
     gameOver,
   ];
 
+  static String getUniversalRouteName(String routeName) {
+    final List<String> parts = routeName.split('/');
+    if (parts.isEmpty) {
+      return routeName;
+    }
+
+    if (parts.last.startsWith(':')) {
+      parts.removeLast();
+    }
+
+    return parts.join('/');
+  }
+
   static const String dialogRouteName = '/dialog';
 
   static final ThRoute init = ThRoute(

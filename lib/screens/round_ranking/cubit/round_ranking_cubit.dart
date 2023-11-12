@@ -16,9 +16,17 @@ class RoundRankingCubit extends ThCubit<RoundRankingState> {
       return b.points.compareTo(a.points);
     });
 
+    List<EndGameResult> endGameResults = _gameManager.endGameResult.toList();
+    endGameResults.sort((EndGameResult a, EndGameResult b) {
+      return b.points.compareTo(a.points);
+    });
+
+
+
     emit(
       RoundRankingLoadedState(
         players: rankingPlayers,
+        endGameResults: endGameResults,
       ),
     );
   }

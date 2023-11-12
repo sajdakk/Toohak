@@ -59,8 +59,19 @@ class _NicknameBodyState extends State<NicknameBody> {
                         username: nickname,
                       );
 
+                      final String rawRoute = ThRoutes.getUniversalRouteName(ThRoutes.answer.route);
+                      print(rawRoute);
+                      print(NavigationManager.history);
+                      final int index = NavigationManager.history
+                          .indexWhere((String? route) => route != null && route.contains(rawRoute));
+                      print(index);
+
+                      if (index != -1) {
+                        return;
+                      }
+
                       if (result != null) {
-                        thRouter.pushNamed(PlayerWaitingScreen.getRoute());
+                        thRouter.removeAllAndPush(PlayerWaitingScreen.getRoute());
                       }
                     },
                     size: ThPrimaryButtonSize.large,
