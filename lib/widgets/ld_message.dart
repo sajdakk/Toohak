@@ -27,15 +27,14 @@ class ThMessage {
                     Flexible(
                       child: Text(
                         message,
-                        style: ThTextStyles.headlineH1Regular.copyWith(
+                        style: ThTextStyles.paragraphP2Regular.copyWith(
                           color: ThColors.highlightColorLightGreyGreenShade,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     const Icon(
                       Icons.cancel,
-                      color: ThColors.highlightColorLightGreyGreenShade,
+                      color: Colors.redAccent,
                     ),
                   ],
                 ),
