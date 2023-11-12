@@ -49,8 +49,7 @@ class AnswerCubit extends ThCubit<AnswerState> {
     required bool wasHintUsed,
   }) async {
     BotToast.showLoading();
-    String? token = await _cloudEventsManager.getToken();
-
+    String? token = _cloudEventsManager.getToken();
     if (token == null) {
       return false;
     }

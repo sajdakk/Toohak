@@ -1,118 +1,105 @@
 import 'dart:convert';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:toohak/_toohak.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class CloudEventsManager {
   final PublishSubject<CloudEvent> _cloudEvents$ = PublishSubject<CloudEvent>();
+
+  String? _token;
+  WebSocketChannel? _channel;
 
   Stream<CloudEvent> get cloudEvents {
     return _cloudEvents$;
   }
 
   Future<bool> init() async {
-    FirebaseMessaging.onMessage.listen(_onMessage);
     return true;
+  }
+
+  Future<bool> connect({
+    required String token,
+    required String gameId,
+  }) async {
+    await _channel?.sink.close();
+
+    final Uri websocketUri = Uri.parse('wss://toohak.hexagonale.net/connect');
+    WebSocketChannel? channel = _channel = WebSocketChannel.connect(websocketUri);
+    _channel = channel;
+
+    channel.stream.listen(_onMessage);
+    await channel.ready;
+    await Future.delayed(const Duration(seconds: 1));
+    channel.sink.add('$token\n$gameId');
+
+    _token = token;
+
+    return true;
+  }
+
+  String? getToken() {
+    return _token;
   }
 
   // region Private
 
-  Future<void> _onMessage(RemoteMessage message) async {
-    final Map<String, dynamic> data = message.data;
+  Future<void> _onMessage(dynamic rawData) async {
+    if (rawData is! String) {
+      print('data is not a string!');
+
+      return;
+    }
+
+    final Map<String, dynamic> data = jsonDecode(rawData);
 
     final dynamic typeRaw = data['type'];
     if (typeRaw is! String) {
+      print('type is not a string!');
+
       return;
     }
 
     final CloudEventType? type = CloudEventTypeMapper.fromName(typeRaw);
     if (type == null) {
+      print('type is null!');
+
+      return;
+    }
+
+    final dynamic payload = data['data'];
+    if (payload is! Map<String, dynamic>) {
+      print('payload is not a map!');
+
       return;
     }
 
     switch (type) {
       case CloudEventType.playerJoined:
         _cloudEvents$.add(
-          PlayerJoinedCloudEvent(
-            username: data['username'],
-          ),
+          PlayerJoinedCloudEvent.fromJson(payload),
         );
         break;
 
       case CloudEventType.questionSent:
         _cloudEvents$.add(
-          QuestionSentCloudEvent(
-            question: data['question'],
-            answers: (jsonDecode(data['answers']) as List<dynamic>).cast(),
-            hint: data['hint'],
-            isDouble: data['is_double'] == 'true',
-            finishWhen: DateTime.parse(data['finish_when']),
-          ),
+          QuestionSentCloudEvent.fromJson(payload),
         );
         break;
+
       case CloudEventType.roundFinished:
         _cloudEvents$.add(
-          RoundFinishedCloudEvent(
-            wasAnswerCorrect: _getWasAnswerCorrect(data['was_answer_correct']),
-            pointsForThisRound: int.parse(data['points_for_this_round']),
-            totalPoints: int.parse(data['total_points']),
-            currentPosition: int.parse(data['current_position']),
-            answeredNth: int.tryParse(data['answered_nth'] ?? ''),
-          ),
+          RoundFinishedCloudEvent.fromJson(payload),
         );
         break;
+
       case CloudEventType.gameOver:
         _cloudEvents$.add(
-          GameOverCloudEvent(
-            didPlayerLost: data['did_player_lost'] == 'true',
-            finalPosition: int.parse(data['final_position']),
-            totalPoints: int.parse(data['total_points']),
-            questionsAnswered: int.parse(data['questions_answered']),
-            questionsAnsweredCorrectly: int.parse(data['questions_answered_correctly']),
-            averageAnswerTimeInMilis: int.parse(data['average_answer_time']),
-          ),
+          GameOverCloudEvent.fromJson(payload),
         );
         break;
     }
-  }
-
-  bool? _getWasAnswerCorrect(String value) {
-    if (value == "null") {
-      return null;
-    }
-
-    if (value == "true") {
-      return true;
-    }
-
-    return false;
   }
 
   // endregion
-
-  Future<String?> getToken() async {
-    try {
-      final NotificationSettings settings = await FirebaseMessaging.instance.requestPermission();
-      if (settings.authorizationStatus == AuthorizationStatus.denied) {
-        ThMessage.showError('User has declined notifications');
-        return null;
-      }
-
-      final bool isSupported = await FirebaseMessaging.instance.isSupported();
-      if (!isSupported) {
-        ThMessage.showError('Firebase messaging is not supported on this device');
-
-        return null;
-      }
-
-      String? token = await FirebaseMessaging.instance.getToken(
-        vapidKey: 'BDTg3K0NjFgNzNdT4ZJWq8Y4WVmfvNAejGNf5HLRqXvtet0mnLQQmC6pCRGOl2P575ZKQYa1V7OJcx-ewWLua0k',
-      );
-
-      return token;
-    } catch (e) {
-      return null;
-    }
-  }
 }

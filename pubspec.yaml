@@ -31,6 +31,8 @@ dependencies:
   chalk: ^1.2.1
   firebase_messaging: ^14.6.9
   cloud_functions: ^4.4.2
+  dio: ^5.3.3
+  web_socket_channel: ^2.4.0
 
 
 dev_dependencies:

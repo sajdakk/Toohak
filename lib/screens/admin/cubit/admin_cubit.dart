@@ -13,7 +13,6 @@ class AdminCubit extends ThCubit<AdminState> {
   final Logger _logger = Logger('AdminCubit');
   final GameTemplateDataManager _gameTemplateDataManager = sl();
   final GameDataManager _gameDataManager = sl();
-  final CloudEventsManager _cloudEventsManager = sl();
   final PlayersManager _playersManager = sl();
   final GameManager _gameManager = sl();
 
@@ -67,11 +66,6 @@ class AdminCubit extends ThCubit<AdminState> {
       }
 
       BotToast.showLoading();
-      String? token = await _cloudEventsManager.getToken();
-      if (token == null) {
-        BotToast.closeAllLoading();
-        return null;
-      }
 
       String code = Random().nextInt(999999).toString().padLeft(6, '0');
 
@@ -80,7 +74,7 @@ class AdminCubit extends ThCubit<AdminState> {
           gameTemplateId: gameTemplate.id,
           code: code,
           signUpBlocked: false,
-          adminToken: token,
+          adminToken: '',
           createdBy: userId,
         ),
       );

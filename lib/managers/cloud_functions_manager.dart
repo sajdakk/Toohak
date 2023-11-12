@@ -7,19 +7,19 @@ class CloudFunctionsManager {
   Future<String?> joinGame({
     required String code,
     required String username,
-    required String token,
   }) async {
     try {
       return await _cloudFunctionsDataProvider.joinGame(
         code: code,
         username: username,
-        token: token,
       );
     } catch (e, _) {
       if (e is FirebaseFunctionsException && e.code == "permission-denied" && e.message == 'Username already taken') {
         ThMessage.showError('Nazwa użytkownika jest już zajęta.');
       }
-      if (e is FirebaseFunctionsException && e.code == "permission-denied" && e.message == 'You are already in this game') {
+      if (e is FirebaseFunctionsException &&
+          e.code == "permission-denied" &&
+          e.message == 'You are already in this game') {
         ThMessage.showError('Już jesteś w tej grze.');
       }
       return null;

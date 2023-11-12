@@ -1,29 +1,27 @@
 import 'dart:convert';
 
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:dio/dio.dart';
 import 'package:toohak/_toohak.dart';
 
 class CloudFunctionsDataProvider {
-  final FirebaseFunctions _firebaseFunctions = sl();
-  static const String _joinGame = 'join_game';
-  static const String _sendQuestion = 'send_question';
-  static const String _sendAnswer = 'send_answer';
-  static const String _finishRound = 'finish_round';
-  static const String _finishGame = 'finish_game';
-
   Future<String> joinGame({
     required String code,
     required String username,
-    required String token,
   }) async {
-    final HttpsCallable callable = _firebaseFunctions.httpsCallable(_joinGame);
-    HttpsCallableResult result = await callable.call<dynamic>(<String, dynamic>{
-      'code': code,
-      'username': username,
-      'token': token,
-    });
+    final Response response = await Dio().post(
+      '$serverUrl/join_game',
+      data: <String, dynamic>{
+        'code': code,
+        'username': username,
+      },
+    );
 
-    return result.data['game_id'];
+    sl<CloudEventsManager>().connect(
+      token: response.data['token'],
+      gameId: response.data['game_id'],
+    );
+
+    return response.data['game_id'];
   }
 
   Future<List<RankingPlayer>> finishRound({
@@ -32,15 +30,17 @@ class CloudFunctionsDataProvider {
     required int maxPoints,
     required List<RankingPlayer> currentRanking,
   }) async {
-    final HttpsCallable callable = _firebaseFunctions.httpsCallable(_finishRound);
-    HttpsCallableResult result = await callable.call<dynamic>(<String, dynamic>{
-      'game_id': gameId,
-      'correct_answer_index': correctAnswerIndex,
-      'max_points': maxPoints,
-      'current_ranking': jsonDecode(jsonEncode(currentRanking)),
-    });
+    final Response response = await Dio().post(
+      '$serverUrl/finish_round',
+      data: <String, dynamic>{
+        'game_id': gameId,
+        'correct_answer_index': correctAnswerIndex,
+        'max_points': maxPoints,
+        'current_ranking': jsonDecode(jsonEncode(currentRanking)),
+      },
+    );
 
-    List<dynamic> rankingRaw = result.data['ranking'];
+    List<dynamic> rankingRaw = response.data['ranking'];
     List<RankingPlayer> ranking = rankingRaw.map((e) => RankingPlayer.fromJson(e)).toList();
 
     return ranking;
@@ -50,13 +50,15 @@ class CloudFunctionsDataProvider {
     required String gameId,
     required List<RankingPlayer> currentRanking,
   }) async {
-    final HttpsCallable callable = _firebaseFunctions.httpsCallable(_finishGame);
-    HttpsCallableResult result = await callable.call<dynamic>(<String, dynamic>{
-      'game_id': gameId,
-      'current_ranking': jsonDecode(jsonEncode(currentRanking)),
-    });
+    final Response response = await Dio().post(
+      '$serverUrl/finish_game',
+      data: <String, dynamic>{
+        'game_id': gameId,
+        'current_ranking': jsonDecode(jsonEncode(currentRanking)),
+      },
+    );
 
-    List<dynamic> rankingRaw = result.data['results'];
+    List<dynamic> rankingRaw = response.data['results'];
     List<EndGameResult> ranking = rankingRaw.map((e) => EndGameResult.fromJson(e)).toList();
 
     return ranking;
@@ -71,18 +73,20 @@ class CloudFunctionsDataProvider {
     required int timeInSeconds,
     required List<String> answers,
   }) async {
-    final HttpsCallable callable = _firebaseFunctions.httpsCallable(_sendQuestion);
-    HttpsCallableResult result = await callable.call<dynamic>(<String, dynamic>{
-      'game_id': gameId,
-      'question': question,
-      'hint': hint,
-      'is_double': isDouble,
-      'time_in_seconds': timeInSeconds,
-      'answers': answers,
-      'is_hardcore': isHardcore,
-    });
+    final Response response = await Dio().post(
+      '$serverUrl/send_question',
+      data: <String, dynamic>{
+        'game_id': gameId,
+        'question': question,
+        'hint': hint,
+        'is_double': isDouble,
+        'time_in_seconds': timeInSeconds,
+        'answers': answers,
+        'is_hardcore': isHardcore,
+      },
+    );
 
-    return DateTime.parse(result.data['finish_when']);
+    return DateTime.parse(response.data['finish_when']);
   }
 
   Future<void> sendAnswer({
@@ -91,13 +95,15 @@ class CloudFunctionsDataProvider {
     required int answerIndex,
     required bool wasHintUsed,
   }) async {
-    final HttpsCallable callable = _firebaseFunctions.httpsCallable(_sendAnswer);
-    await callable.call<dynamic>(<String, dynamic>{
-      'game_id': gameId,
-      'token': token,
-      'answer_index': answerIndex,
-      'was_hint_used': wasHintUsed,
-      'timestamp': DateTime.now().toUtc().toIso8601String(),
-    });
+    await Dio().post(
+      '$serverUrl/send_answer',
+      data: <String, dynamic>{
+        'game_id': gameId,
+        'token': token,
+        'answer_index': answerIndex,
+        'was_hint_used': wasHintUsed,
+        'timestamp': DateTime.now().toUtc().toIso8601String(),
+      },
+    );
   }
 }

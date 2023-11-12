@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:toohak/_toohak.dart';
 
 class GameDataProvider {
@@ -34,14 +35,34 @@ class GameDataProvider {
   Future<String> addGame({
     required GameWriteRequest gameWriteRequest,
   }) async {
-    final DocumentReference<dynamic> result =
-        await _firebaseFirestore.collection(Collections.games).add(jsonDecode(jsonEncode(gameWriteRequest)));
-
-    _logger.info(
-      'addGame, New game created with id: ${result.id}',
+    final Response response = await Dio().post(
+      '$serverUrl/create_game',
+      data: {
+        'template_id': gameWriteRequest.gameTemplateId,
+      },
     );
 
-    return result.id;
+    if (response.statusCode != 200) {
+      _logger.info(
+        'addGame, Could not create game, status code: ${response.statusCode}',
+      );
+
+      throw Exception('Could not create game');
+    }
+
+    String gameId = response.data['game_id'];
+    String token = response.data['token'];
+
+    sl<CloudEventsManager>().connect(
+      token: token,
+      gameId: gameId,
+    );
+
+    _logger.info(
+      'addGame, New game created with id: $gameId',
+    );
+
+    return gameId;
   }
 
   Future<void> updateGame({
