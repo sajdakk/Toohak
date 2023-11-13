@@ -28,54 +28,70 @@ class _ResultBodyState extends State<ResultBody> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Toohak',
-                        style: ThTextStyles.headlineH1Bold.copyWith(
-                          color: ThColors.textText1,
-                        ),
-                      ),
-                      const SizedBox(height: 24.0),
-                      Text(
-                        _getInfo(),
-                        style: ThTextStyles.headlineH2Semibold.copyWith(
-                          color: ThColors.textText1,
-                        ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      Text(
-                        'Obecna pozycja: ${widget.event.currentPosition}',
-                        style: ThTextStyles.headlineH2Semibold.copyWith(
-                          color: ThColors.textText1,
-                        ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      if (widget.event.pointsForThisRound != 0)
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         Text(
-                          '+: ${widget.event.pointsForThisRound} punktów',
-                          style: ThTextStyles.headlineH2Semibold.copyWith(
+                          'Toohak',
+                          style: ThTextStyles.headlineH1Bold.copyWith(
                             color: ThColors.textText1,
                           ),
                         ),
-                      const SizedBox(height: 16.0),
-                      Text(
-                        'Suma punktów: ${widget.event.totalPoints}',
-                        style: ThTextStyles.headlineH2Semibold.copyWith(
-                          color: ThColors.textText1,
+                        const SizedBox(height: 24.0),
+                        Text(
+                          _getInfo(),
+                          style: ThTextStyles.headlineH2Semibold.copyWith(
+                            color: ThColors.textText1,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      const SizedBox(height: 16.0),
-                      Text(
-                      _getNthText(),
-                        style: ThTextStyles.headlineH2Semibold.copyWith(
-                          color: ThColors.textText1,
+                        const SizedBox(height: 16.0),
+                        if (widget.event.wasAnswerCorrect != null)
+                          Column(
+                            children: [
+                              Text(
+                                'Twoja pozycja w rankingu: ${widget.event.currentPosition}',
+                                style: ThTextStyles.headlineH2Semibold.copyWith(
+                                  color: ThColors.textText1,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16.0),
+                            ],
+                          ),
+                        if (widget.event.pointsForThisRound != 0)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Otrzymano: ${widget.event.pointsForThisRound} punktów',
+                                style: ThTextStyles.headlineH2Semibold.copyWith(
+                                  color: ThColors.textText1,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16.0),
+                            ],
+                          ),
+                        Text(
+                          'Suma punktów: ${widget.event.totalPoints}',
+                          style: ThTextStyles.headlineH2Semibold.copyWith(
+                            color: ThColors.textText1,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                     
-                    ],
+                        const SizedBox(height: 16.0),
+                        Text(
+                          _getNthText(),
+                          style: ThTextStyles.headlineH2Semibold.copyWith(
+                            color: ThColors.textText1,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -86,8 +102,8 @@ class _ResultBodyState extends State<ResultBody> {
     );
   }
 
-  String _getNthText(){
-    if(widget.event.answeredNth==null){
+  String _getNthText() {
+    if (widget.event.answeredNth == null) {
       return '';
     }
 

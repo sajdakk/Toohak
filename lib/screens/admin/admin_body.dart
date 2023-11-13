@@ -67,7 +67,7 @@ class _AdminBodyState extends State<AdminBody> {
                       return;
                     }
 
-                    thRouter.pushNamed(AdminWaitingScreen.getRoute(
+                    thRouter.removeAllAndPush(AdminWaitingScreen.getRoute(
                       code: result.code,
                     ));
                   },

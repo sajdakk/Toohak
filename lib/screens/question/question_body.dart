@@ -27,80 +27,80 @@ class _QuestionBodyState extends State<QuestionBody> {
               constraints: const BoxConstraints(
                 maxWidth: 700.0,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TimerBuilder(
-                    endTime: widget.finishWhen,
-                    builder: (context, duration) {
-                      return Container(
-                        width: 80.0,
-                        height: 80.0,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: ThColors.textText2,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${duration.inSeconds}',
-                            style: ThTextStyles.headlineH1Bold.copyWith(
-                              color: ThColors.textText1,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Toohak',
+                      style: ThTextStyles.headlineH1Bold.copyWith(
+                        color: ThColors.textText1,
+                      ),
+                    ),
+                    const SizedBox(height: 24.0),
+                    TimerBuilder(
+                      endTime: widget.finishWhen,
+                      builder: (context, duration) {
+                        return Container(
+                          width: 80.0,
+                          height: 80.0,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ThColors.textText2,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${duration.inSeconds}',
+                              style: ThTextStyles.headlineH1Bold.copyWith(
+                                color: ThColors.textText1,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Toohak',
-                        style: ThTextStyles.headlineH1Bold.copyWith(
-                          color: ThColors.textText1,
-                        ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24.0),
+                    Text(
+                      widget.question.question,
+                      style: ThTextStyles.headlineH2Semibold.copyWith(
+                        color: ThColors.textText1,
                       ),
-                      const SizedBox(height: 24.0),
+                      textAlign: TextAlign.center,
+                    ),
+                  
+                    const SizedBox(height: 16.0),
+                    if (widget.question.doubleBoost == true)
                       Text(
-                        widget.question.question,
+                        'Double boost!',
                         style: ThTextStyles.headlineH2Semibold.copyWith(
-                          color: ThColors.textText1,
+                          color: ThColors.ascentAscent,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 16.0),
-                      if (widget.question.doubleBoost==true)
-                        Text(
-                          'Double boost!',
-                          style: ThTextStyles.headlineH2Semibold.copyWith(
-                            color: ThColors.ascentAscent,
-                          ),
-                        ),
-                      const SizedBox(height: 16.0),
-                      Wrap(
-                        spacing: 16.0,
-                        runSpacing: 16.0,
-                        children: [
-                          for (int i = 0; i < widget.question.answers.length; i++)
-                            Container(
-                              padding: const EdgeInsets.all(16.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                color: _getColorForQuestion(i),
-                              ),
-                              child: Text(
-                                '${i + 1}. ${widget.question.answers[i]}',
-                                style: ThTextStyles.headlineH2Semibold.copyWith(
-                                  color: ThColors.textText1,
-                                ),
+                    const SizedBox(height: 16.0),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 16.0,
+                      runSpacing: 16.0,
+                      children: [
+                        for (int i = 0; i < widget.question.answers.length; i++)
+                          Container(
+                            padding: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.0),
+                              color: _getColorForQuestion(i),
+                            ),
+                            child: Text(
+                              '${i + 1}. ${widget.question.answers[i]}',
+                              style: ThTextStyles.headlineH2Semibold.copyWith(
+                                color: ThColors.textText1,
                               ),
                             ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

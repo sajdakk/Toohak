@@ -46,7 +46,7 @@ class QuestionCubit extends ThCubit<QuestionState> {
   Future<void> finishRound() async {
     emit(const QuestionLoadingState());
 
-    String? token = await _cloudEventsManager.getToken();
+    String? token = _cloudEventsManager.getToken();
 
     if (token == null) {
       return;

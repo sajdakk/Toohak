@@ -14,7 +14,7 @@ class ThAppScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.leadingWidget,
     this.floatingActionButtonLocation,
-    this.resizeToAvoidBottomInset = false,
+    this.resizeToAvoidBottomInset = true,
     this.showBorderLine = false,
     this.backgroundColor = ThColors.backgroundBG0,
   });

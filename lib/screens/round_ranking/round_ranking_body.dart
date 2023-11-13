@@ -65,6 +65,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                                   ],
                                 ),
                               ),
+                            const SizedBox(height: 32.0),
                             Text(
                               'Toohak',
                               style: ThTextStyles.headlineH1Bold.copyWith(
@@ -110,41 +111,68 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
 
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'No.',
+              style: ThTextStyles.headlineH3Bold.copyWith(
+                color: ThColors.textText1,
+              ),
+            ),
+            Text(
+              'Nazwa',
+              style: ThTextStyles.headlineH3Bold.copyWith(
+                color: ThColors.textText1,
+              ),
+            ),
+            Text(
+              'Pkt',
+              style: ThTextStyles.headlineH3Bold.copyWith(
+                color: ThColors.textText1,
+              ),
+            ),
+          ],
+        ),
         ListView.builder(
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
             final RankingPlayer player = widget.ranking[index];
 
-            return ListTile(
-              leading: Text(
-                '${index + 1}',
-                style: ThTextStyles.headlineH1Bold.copyWith(
-                  color: ThColors.textText1,
-                ),
-              ),
-              title: Column(
-                children: [
-                  Text(
-                    player.username,
-                    style: ThTextStyles.headlineH1Bold.copyWith(
-                      color: ThColors.textText1,
-                    ),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${index + 1}',
+                  style: ThTextStyles.headlineH3Bold.copyWith(
+                    color: ThColors.textText1,
                   ),
-                  if (player.roundLost != null)
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                     Text(
-                      ' (odpadł w rundzie: ${player.roundLost})',
-                      style: ThTextStyles.headlineH2Semibold.copyWith(
-                        color: ThColors.textText2,
+                      player.username,
+                      style: ThTextStyles.headlineH3Bold.copyWith(
+                        color: ThColors.textText1,
                       ),
                     ),
-                ],
-              ),
-              trailing: Text(
-                '${player.points}',
-                style: ThTextStyles.headlineH1Bold.copyWith(
-                  color: ThColors.textText1,
+                    if (player.roundLost != null)
+                      Text(
+                        ' (odpadł w rundzie: ${player.roundLost})',
+                        style: ThTextStyles.headlineH2Semibold.copyWith(
+                          color: ThColors.textText2,
+                        ),
+                      ),
+                  ],
                 ),
-              ),
+                Text(
+                  '${player.points}',
+                  style: ThTextStyles.headlineH3Bold.copyWith(
+                    color: ThColors.textText1,
+                  ),
+                ),
+              ],
             );
           },
           itemCount: widget.ranking.length,

@@ -106,6 +106,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                       const SizedBox(height: 8.0),
                       ListView.builder(
                         shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return Row(
                             children: [
