@@ -30,6 +30,11 @@ class CloudFunctionsDataProvider {
     required int maxPoints,
     required List<RankingPlayer> currentRanking,
   }) async {
+    String? adminToken = await appSession.currentUser?.getIdToken();
+    if (adminToken == null) {
+      throw Exception('Could not get adminToken');
+    }
+
     final Response response = await Dio().post(
       '$serverUrl/finish_round',
       data: <String, dynamic>{
@@ -38,6 +43,11 @@ class CloudFunctionsDataProvider {
         'max_points': maxPoints,
         'current_ranking': jsonDecode(jsonEncode(currentRanking)),
       },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $adminToken',
+        },
+      ),
     );
 
     List<dynamic> rankingRaw = response.data['ranking'];
@@ -50,12 +60,22 @@ class CloudFunctionsDataProvider {
     required String gameId,
     required List<RankingPlayer> currentRanking,
   }) async {
+    String? adminToken = await appSession.currentUser?.getIdToken();
+    if (adminToken == null) {
+      throw Exception('Could not get adminToken');
+    }
+
     final Response response = await Dio().post(
       '$serverUrl/finish_game',
       data: <String, dynamic>{
         'game_id': gameId,
         'current_ranking': jsonDecode(jsonEncode(currentRanking)),
       },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $adminToken',
+        },
+      ),
     );
 
     List<dynamic> rankingRaw = response.data['results'];
@@ -73,6 +93,11 @@ class CloudFunctionsDataProvider {
     required int timeInSeconds,
     required List<String> answers,
   }) async {
+    String? adminToken = await appSession.currentUser?.getIdToken();
+    if (adminToken == null) {
+      throw Exception('Could not get adminToken');
+    }
+
     final Response response = await Dio().post(
       '$serverUrl/send_question',
       data: <String, dynamic>{
@@ -84,6 +109,11 @@ class CloudFunctionsDataProvider {
         'answers': answers,
         'is_hardcore': isHardcore,
       },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $adminToken',
+        },
+      ),
     );
 
     return DateTime.parse(response.data['finish_when']);

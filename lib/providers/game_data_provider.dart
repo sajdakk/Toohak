@@ -35,11 +35,21 @@ class GameDataProvider {
   Future<String> addGame({
     required GameWriteRequest gameWriteRequest,
   }) async {
+    String? adminToken = await appSession.currentUser?.getIdToken();
+    if (adminToken == null) {
+      throw Exception('Could not get adminToken');
+    }
+
     final Response response = await Dio().post(
       '$serverUrl/create_game',
       data: {
         'template_id': gameWriteRequest.gameTemplateId,
       },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $adminToken',
+        },
+      ),
     );
 
     if (response.statusCode != 200) {
