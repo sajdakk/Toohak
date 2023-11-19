@@ -81,7 +81,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Procentowa wartość poprawnie udzielonych odpowiedzi: ${(widget.event.questionsAnsweredCorrectly / widget.state.gameTemplate.questions.length * 100).toStringAsFixed(1)}%',
+                    'Poprawnie udzielone odpowiedzi (w skali całego quizu): ${(widget.event.questionsAnsweredCorrectly / widget.state.gameTemplate.questions.length * 100).toStringAsFixed(1)}%',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
