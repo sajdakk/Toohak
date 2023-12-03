@@ -60,11 +60,8 @@ class _NicknameBodyState extends State<NicknameBody> {
                       );
 
                       final String rawRoute = ThRoutes.getUniversalRouteName(ThRoutes.answer.route);
-                      print(rawRoute);
-                      print(NavigationManager.history);
                       final int index = NavigationManager.history
                           .indexWhere((String? route) => route != null && route.contains(rawRoute));
-                      print(index);
 
                       if (index != -1) {
                         return;

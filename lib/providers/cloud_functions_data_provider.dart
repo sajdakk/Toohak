@@ -116,7 +116,7 @@ class CloudFunctionsDataProvider {
       ),
     );
 
-    return DateTime.parse(response.data['finish_when']);
+    return DateTime.parse(response.data['finish_when']).toLocal();
   }
 
   Future<void> sendAnswer({

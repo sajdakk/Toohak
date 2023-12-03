@@ -80,12 +80,19 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
                   runSpacing: 16.0,
                   children: [
                     for (String player in widget.state.nicknames)
-                      Text(
-                        player,
-                        style: ThTextStyles.headlineH2Bold.copyWith(
-                          color: ThColors.textText1,
+                      Container(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: ThColors.ascentAscent,
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        textAlign: TextAlign.center,
+                        child: Text(
+                          player,
+                          style: ThTextStyles.headlineH2Bold.copyWith(
+                            color: ThColors.textText1,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                   ],
                 ),

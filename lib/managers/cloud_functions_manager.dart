@@ -1,4 +1,4 @@
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:dio/dio.dart';
 import 'package:toohak/_toohak.dart';
 
 class CloudFunctionsManager {
@@ -14,12 +14,11 @@ class CloudFunctionsManager {
         username: username,
       );
     } catch (e, _) {
-      if (e is FirebaseFunctionsException && e.code == "permission-denied" && e.message == 'Username already taken') {
+      if (e is DioException && e.response?.data["error"] == 'Username already taken') {
         ThMessage.showError('Nazwa użytkownika jest już zajęta.');
       }
-      if (e is FirebaseFunctionsException &&
-          e.code == "permission-denied" &&
-          e.message == 'You are already in this game') {
+      if (e is DioException &&
+         e.response?.data["error"]  == 'You are already in this game') {
         ThMessage.showError('Już jesteś w tej grze.');
       }
       return null;
