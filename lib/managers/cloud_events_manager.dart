@@ -28,7 +28,15 @@ class CloudEventsManager {
     WebSocketChannel? channel = _channel = WebSocketChannel.connect(websocketUri);
     _channel = channel;
 
-    channel.stream.listen(_onMessage);
+    channel.stream.listen(
+      _onMessage,
+      onDone: () {
+        connect(
+          token: token,
+          gameId: gameId,
+        );
+      },
+    );
     await channel.ready;
     await Future.delayed(const Duration(seconds: 1));
     channel.sink.add('$token\n$gameId');
