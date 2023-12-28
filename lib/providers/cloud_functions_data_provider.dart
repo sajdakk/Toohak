@@ -132,7 +132,6 @@ class CloudFunctionsDataProvider {
         'token': token,
         'answer_index': answerIndex,
         'was_hint_used': wasHintUsed,
-        'timestamp': DateTime.now().toUtc().toIso8601String(),
       },
     );
   }
