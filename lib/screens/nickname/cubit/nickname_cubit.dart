@@ -10,7 +10,7 @@ part 'nickname_state.dart';
 class NicknameCubit extends ThCubit<NicknameState> {
   NicknameCubit() : super(NicknameLoadedState());
 
-  final CloudFunctionsManager _cloudFunctionsManager = sl();
+  final FunctionsManager _functionsManager = sl();
   final CloudEventsManager _cloudEventsManager = sl();
   final GameTemplateDataManager _gameTemplateDataManager = sl();
   final GameDataManager _gameDataManager = sl();
@@ -49,7 +49,7 @@ class NicknameCubit extends ThCubit<NicknameState> {
   }) async {
     BotToast.showLoading();
 
-    final String? success = await _cloudFunctionsManager.joinGame(
+    final String? success = await _functionsManager.joinGame(
       code: code,
       username: username,
     );

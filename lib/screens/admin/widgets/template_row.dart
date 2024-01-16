@@ -35,7 +35,7 @@ class TemplateRow extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                template.name ?? 'No name',
+                template.name ?? 'Brak nazwy',
                 style: ThTextStyles.headlineH3Regular.copyWith(
                   color: ThColors.textText2,
                 ),
@@ -68,7 +68,7 @@ class TemplateRow extends StatelessWidget {
     }
 
     return ThButton(
-      title: 'Create game',
+      title: 'Utwórz grę',
       onTap: createGame,
       size: ThPrimaryButtonSize.small,
       style: ThPrimaryButtonStyle.primary,

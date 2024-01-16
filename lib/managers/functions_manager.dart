@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:toohak/_toohak.dart';
 
-class CloudFunctionsManager {
-  final CloudFunctionsDataProvider _cloudFunctionsDataProvider = sl();
+class FunctionsManager {
+  final FunctionsDataProvider _functionsDataProvider = sl();
 
   Future<String?> joinGame({
     required String code,
     required String username,
   }) async {
     try {
-      return await _cloudFunctionsDataProvider.joinGame(
+      return await _functionsDataProvider.joinGame(
         code: code,
         username: username,
       );
@@ -32,7 +32,7 @@ class CloudFunctionsManager {
     required List<RankingPlayer> currentRanking,
   }) async {
     try {
-      return await _cloudFunctionsDataProvider.finishRound(
+      return await _functionsDataProvider.finishRound(
         gameId: gameId,
         correctAnswerIndex: correctAnswerIndex,
         maxPoints: maxPoints,
@@ -50,7 +50,7 @@ class CloudFunctionsManager {
     required List<RankingPlayer> currentRanking,
   }) async {
     try {
-      return await _cloudFunctionsDataProvider.finishGame(
+      return await _functionsDataProvider.finishGame(
         gameId: gameId,
         currentRanking: currentRanking,
       );
@@ -72,7 +72,7 @@ class CloudFunctionsManager {
     required List<String> answers,
   }) async {
     try {
-      return await _cloudFunctionsDataProvider.sendQuestion(
+      return await _functionsDataProvider.sendQuestion(
         gameId: gameId,
         question: question,
         hint: hint,
@@ -93,7 +93,7 @@ class CloudFunctionsManager {
     required bool wasHintUsed,
   }) async {
     try {
-      await _cloudFunctionsDataProvider.sendAnswer(
+      await _functionsDataProvider.sendAnswer(
         gameId: gameId,
         token: token,
         answerIndex: answerIndex,

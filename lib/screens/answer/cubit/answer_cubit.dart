@@ -11,7 +11,7 @@ part 'answer_state.dart';
 class AnswerCubit extends ThCubit<AnswerState> {
   AnswerCubit() : super(AnswerLoadedState());
 
-  final CloudFunctionsManager _cloudFunctionsManager = sl();
+  final FunctionsManager _functionsManager = sl();
   final CloudEventsManager _cloudEventsManager = sl();
 
   StreamSubscription? _subscription;
@@ -54,7 +54,7 @@ class AnswerCubit extends ThCubit<AnswerState> {
       return false;
     }
 
-    bool result = await _cloudFunctionsManager.sendAnswer(
+    bool result = await _functionsManager.sendAnswer(
       gameId: gameId,
       token: token,
       answerIndex: answerIndex,

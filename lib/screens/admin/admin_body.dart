@@ -29,10 +29,10 @@ class _AdminBodyState extends State<AdminBody> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ThButton(
-            title: 'Log out',
+            title: 'Wyloguj się',
             onTap: () => thShowAlert(
               context,
-              content: 'Would you like to log out?',
+              content: 'Jesteś pewien, że chcesz się wylogować?',
               onConfirm: () async {
                 BotToast.showLoading();
                 await appSession.signOut();
@@ -73,7 +73,7 @@ class _AdminBodyState extends State<AdminBody> {
                   },
                   onDelete: () => thShowAlert(
                     context,
-                    content: 'Are you sure, that you want to delete this template?',
+                    content: 'Jesteś pewien, że chcesz usunąć ten quiz?',
                     onConfirm: () async {
                       AdminCubit cubit = context.read();
                       await cubit.deleteTemplate(template.id);

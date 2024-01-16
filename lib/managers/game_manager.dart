@@ -5,10 +5,10 @@ import 'package:toohak/_toohak.dart';
 
 class GameManager {
   GameManager({
-    required CloudFunctionsManager cloudFunctionsManager,
-  }) : _cloudFunctionsManager = cloudFunctionsManager;
+    required FunctionsManager cloudFunctionsManager,
+  }) : _functionsManager = cloudFunctionsManager;
 
-  final CloudFunctionsManager _cloudFunctionsManager;
+  final FunctionsManager _functionsManager;
 
   int questionIndex = -1;
   List<RankingPlayer> rankingPlayers = <RankingPlayer>[];
@@ -50,7 +50,7 @@ class GameManager {
 
     BotToast.showLoading();
 
-    DateTime? finishWhen = await _cloudFunctionsManager.sendQuestion(
+    DateTime? finishWhen = await _functionsManager.sendQuestion(
       gameId: _game!.id,
       question: question.question,
       hint: question.hint,
@@ -81,7 +81,7 @@ class GameManager {
     }
     BotToast.showLoading();
 
-    List<RankingPlayer> result = await _cloudFunctionsManager.finishRound(
+    List<RankingPlayer> result = await _functionsManager.finishRound(
       gameId: _game!.id,
       currentRanking: rankingPlayers,
       correctAnswerIndex: question.correctAnswerIndex!,
@@ -100,7 +100,7 @@ class GameManager {
 
     BotToast.showLoading();
 
-    List<EndGameResult> result = await _cloudFunctionsManager.finishGame(
+    List<EndGameResult> result = await _functionsManager.finishGame(
       gameId: _game!.id,
       currentRanking: rankingPlayers,
     );

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:toohak/_toohak.dart';
 
-class CloudFunctionsDataProvider {
+class FunctionsDataProvider {
   Future<String> joinGame({
     required String code,
     required String username,

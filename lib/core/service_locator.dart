@@ -24,7 +24,6 @@ Future<void> setupLocator() async {
   sl.registerSingleton(FirebaseFirestore.instance);
   sl.registerSingleton(FirebaseAuth.instance);
   sl.registerSingleton(FirebaseFunctions.instance);
-  sl.registerSingleton(PackageInfoManager()..init());
   sl.registerSingleton(ThRouter()..init(ThRoutes.allRoutes));
 
   //data providers
@@ -33,10 +32,9 @@ Future<void> setupLocator() async {
   sl.registerFactory(() => GameDataProvider());
   sl.registerFactory(() => AuthProvider());
   sl.registerFactory(() => ProfilesDataProvider());
-  sl.registerFactory(() => CloudFunctionsDataProvider());
+  sl.registerFactory(() => FunctionsDataProvider());
 
   // managers
-// TODO(sajdakk): Check for error
   await _registerManagers();
 
 //data managers
@@ -97,7 +95,7 @@ Future<bool> _registerManagers() async {
   // endregion
 
   // region CloudFunctionsManager
-  CloudFunctionsManager cloudFunctionsManager = CloudFunctionsManager();
+  FunctionsManager cloudFunctionsManager = FunctionsManager();
 
   sl.registerSingleton(cloudFunctionsManager);
 
@@ -119,5 +117,3 @@ Future<bool> _registerManagers() async {
   return true;
   // endregion
 }
-
-Future<void> fetchAllData() async {}

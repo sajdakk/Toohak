@@ -48,7 +48,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                                   children: [
                                     const SizedBox(),
                                     ThButton(
-                                      title: 'Next question',
+                                      title: 'Następne pytanie',
                                       onTap: () async {
                                         DateTime? result = await sl<GameManager>().sendQuestion();
 
@@ -74,7 +74,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                             ),
                             const SizedBox(height: 32.0),
                             Text(
-                              widget.isFinal ? 'Final Ranking, congratulations!' : 'Ranking',
+                              widget.isFinal ? 'Finałowy ranking, gratulacje!' : 'Ranking',
                               style: ThTextStyles.headlineH1Bold.copyWith(
                                 color: ThColors.textText1,
                               ),
@@ -184,7 +184,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
   Widget _buildFinalRanking() {
     if (widget.endGameResults.isEmpty) {
       return Text(
-        'Ranking is empty',
+        'Ranking jest pusty',
         style: ThTextStyles.headlineH2Semibold.copyWith(
           color: ThColors.textText1,
         ),

@@ -58,7 +58,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Game template details',
+                    'Szczegóły szablonu',
                     style: ThTextStyles.headlineH2Semibold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -68,7 +68,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     isRequired: _readyKey.currentState?.value == false ? false : true,
                     values: GameType.values.toSet(),
                     formFieldKey: _gameTypeKey,
-                    label: 'GameType *',
+                    label: 'Typ gry *',
                     initialValue: widget.state.template?.type,
                     translateItemToString: (GameType? value) => value == null ? '' : GameTypeMapper.getName(value),
                   ),
@@ -77,7 +77,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     isRequired: false,
                     values: const <bool>{true, false},
                     formFieldKey: _readyKey,
-                    label: 'Ready *',
+                    label: 'Gotowy *',
                     initialValue: widget.state.template == null ? true : widget.state.template?.ready,
                     translateItemToString: (bool? value) {
                       if (value == null) {
@@ -92,12 +92,12 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     initialValue: widget.state.template?.name,
                     isRequired: true,
                     formFieldKey: _nameKey,
-                    labelText: 'Name *',
+                    labelText: 'Nazwa *',
                     maxLines: null,
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Questions',
+                    'Pytania',
                     style: ThTextStyles.headlineH2Semibold.copyWith(
                       color: ThColors.textText2,
                     ),
@@ -126,7 +126,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                           duration: questions[index].durationInSec,
                           onDelete: () => thShowAlert(
                             context,
-                            content: 'Are you sure, that you want to delete this lesson?',
+                            content: 'Jesteś pewien, że chcesz usunąć to pytanie?',
                             onConfirm: () {
                               questions.removeAt(index);
                               setState(() {});
@@ -141,7 +141,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                   ),
                   const SizedBox(height: 16.0),
                   ThButton(
-                    title: 'Add question',
+                    title: 'Dodaj pytanie',
                     onTap: () async {
                       QuestionParameters? lesson = await QuestionDetailDialog.show(
                         context: context,
@@ -161,7 +161,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                   ),
                   const SizedBox(height: 32.0),
                   ThButton(
-                    title: widget.state.template == null ? 'Publish template' : 'Update template ',
+                    title: widget.state.template == null ? 'Dodaj szablon' : 'Zapisz szablon',
                     onTap: () async => await _submit(context),
                     size: ThPrimaryButtonSize.large,
                     style: ThPrimaryButtonStyle.primary,
