@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:equatable/equatable.dart';
@@ -67,16 +66,8 @@ class AdminCubit extends ThCubit<AdminState> {
 
       BotToast.showLoading();
 
-      String code = Random().nextInt(999999).toString().padLeft(6, '0');
-
-      final String? result = await _gameDataManager.addGame(
-        gameWriteRequest: GameWriteRequest(
-          gameTemplateId: gameTemplate.id,
-          code: code,
-          signUpBlocked: false,
-          adminToken: '',
-          createdBy: userId,
-        ),
+      final String? result = await _gameDataManager.createGame(
+        templateId: gameTemplate.id,
       );
 
       BotToast.closeAllLoading();

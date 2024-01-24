@@ -6,12 +6,12 @@ class RoundRankingBody extends StatefulWidget {
   const RoundRankingBody({
     super.key,
     required this.ranking,
-    required this.endGameResults,
+    required this.somebodyStillPlaying,
     this.isFinal = false,
   });
 
   final List<RankingPlayer> ranking;
-  final List<EndGameResult> endGameResults;
+  final bool somebodyStillPlaying;
   final bool isFinal;
 
   @override
@@ -40,7 +40,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            if (!widget.isFinal)
+                            if (!widget.isFinal && widget.somebodyStillPlaying)
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Row(
@@ -65,7 +65,6 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                                   ],
                                 ),
                               ),
-                            const SizedBox(height: 32.0),
                             Text(
                               'Toohak',
                               style: ThTextStyles.headlineH1Bold.copyWith(
@@ -73,6 +72,19 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                               ),
                             ),
                             const SizedBox(height: 32.0),
+                            if (!widget.isFinal && !widget.somebodyStillPlaying)
+                              Column(
+                                children: [
+                                  Text(
+                                    'Wszyscy gracze zakończyli już grę!',
+                                    style: ThTextStyles.headlineH2Bold.copyWith(
+                                      color: ThColors.textText1,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 32.0),
+                                ],
+                              ),
+                            const SizedBox(height: 24.0),
                             Text(
                               widget.isFinal ? 'Finałowy ranking, gratulacje!' : 'Ranking',
                               style: ThTextStyles.headlineH1Bold.copyWith(
@@ -96,10 +108,6 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
   }
 
   Widget _buildRanking() {
-    if (widget.isFinal) {
-      return _buildFinalRanking();
-    }
-
     if (widget.ranking.isEmpty) {
       return Text(
         'Ranking is empty',
@@ -117,22 +125,26 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
             Text(
               'No.',
               style: ThTextStyles.headlineH3Bold.copyWith(
-                color: ThColors.textText1,
+                color: ThColors.statusColorDangerDark,
               ),
             ),
             Text(
               'Nazwa',
               style: ThTextStyles.headlineH3Bold.copyWith(
-                color: ThColors.textText1,
+                color: ThColors.statusColorDangerDark,
               ),
             ),
             Text(
               'Pkt',
               style: ThTextStyles.headlineH3Bold.copyWith(
-                color: ThColors.textText1,
+                color: ThColors.statusColorDangerDark,
               ),
             ),
           ],
+        ),
+        const Divider(
+          color: ThColors.textText5,
+          thickness: 1.0,
         ),
         ListView.builder(
           shrinkWrap: true,
@@ -159,8 +171,8 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                     ),
                     if (player.roundLost != null)
                       Text(
-                        ' (odpadł w rundzie: ${player.roundLost})',
-                        style: ThTextStyles.headlineH2Semibold.copyWith(
+                        ' (odpadł/a w rundzie: ${player.roundLost})',
+                        style: ThTextStyles.paragraphP2Regular.copyWith(
                           color: ThColors.textText2,
                         ),
                       ),
@@ -173,50 +185,6 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                   ),
                 ),
               ],
-            );
-          },
-          itemCount: widget.ranking.length,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFinalRanking() {
-    if (widget.endGameResults.isEmpty) {
-      return Text(
-        'Ranking jest pusty',
-        style: ThTextStyles.headlineH2Semibold.copyWith(
-          color: ThColors.textText1,
-        ),
-      );
-    }
-
-    return Column(
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            final EndGameResult result = widget.endGameResults[index];
-
-            return ListTile(
-              leading: Text(
-                '${index + 1}',
-                style: ThTextStyles.headlineH1Bold.copyWith(
-                  color: ThColors.textText1,
-                ),
-              ),
-              title: Text(
-                result.playerUsername,
-                style: ThTextStyles.headlineH1Bold.copyWith(
-                  color: ThColors.textText1,
-                ),
-              ),
-              trailing: Text(
-                '${result.points}',
-                style: ThTextStyles.headlineH1Bold.copyWith(
-                  color: ThColors.textText1,
-                ),
-              ),
             );
           },
           itemCount: widget.ranking.length,

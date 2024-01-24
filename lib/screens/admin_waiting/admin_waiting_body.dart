@@ -25,79 +25,81 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Toohak',
-                  style: ThTextStyles.headlineH1Bold.copyWith(
-                    color: ThColors.textText1,
-                  ),
-                ),
-                const SizedBox(height: 24.0),
-                Text(
-                  'Kod gry: ${widget.code}',
-                  style: ThTextStyles.headlineH1Bold.copyWith(
-                    color: ThColors.textText1,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Ilość graczy: ${widget.state.nicknames.length}',
-                      style: ThTextStyles.headlineH2Semibold.copyWith(
-                        color: ThColors.textText1,
-                      ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Toohak',
+                    style: ThTextStyles.headlineH1Bold.copyWith(
+                      color: ThColors.textText1,
                     ),
-                    const SizedBox(width: 16.0),
-                    ThButton(
-                      title: 'Rozpocznij grę',
-                      onTap: () async {
-                        if (widget.state.gameTemplate.questions.isEmpty) {
-                          return;
-                        }
-
-                        DateTime? result = await sl<GameManager>().sendQuestion();
-
-                        if (result != null) {
-                          thRouter.replace(
-                            QuestionScreen.getRoute(),
-                            arguments: result,
-                          );
-                        }
-                      },
-                      size: ThPrimaryButtonSize.small,
-                      style: ThPrimaryButtonStyle.primary,
+                  ),
+                  const SizedBox(height: 24.0),
+                  Text(
+                    'Kod gry: ${widget.code}',
+                    style: ThTextStyles.headlineH1Bold.copyWith(
+                      color: ThColors.textText1,
                     ),
-                  ],
-                ),
-                const SizedBox(height: 24.0),
-                Wrap(
-                  spacing: 24.0,
-                  runSpacing: 16.0,
-                  children: [
-                    for (String player in widget.state.nicknames)
-                      Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: ThColors.ascentAscent,
-                          borderRadius: BorderRadius.circular(8.0),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Ilość graczy: ${widget.state.nicknames.length}',
+                        style: ThTextStyles.headlineH2Semibold.copyWith(
+                          color: ThColors.textText1,
                         ),
-                        child: Text(
-                          player,
-                          style: ThTextStyles.headlineH2Bold.copyWith(
-                            color: ThColors.textText1,
+                      ),
+                      const SizedBox(width: 16.0),
+                      ThButton(
+                        title: 'Rozpocznij grę',
+                        onTap: () async {
+                          if (widget.state.gameTemplate.questions.isEmpty) {
+                            return;
+                          }
+
+                          DateTime? result = await sl<GameManager>().sendQuestion();
+
+                          if (result != null) {
+                            thRouter.replace(
+                              QuestionScreen.getRoute(),
+                              arguments: result,
+                            );
+                          }
+                        },
+                        size: ThPrimaryButtonSize.small,
+                        style: ThPrimaryButtonStyle.primary,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24.0),
+                  Wrap(
+                    spacing: 24.0,
+                    runSpacing: 16.0,
+                    children: [
+                      for (String player in widget.state.nicknames)
+                        Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: ThColors.ascentAscent,
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          textAlign: TextAlign.center,
+                          child: Text(
+                            player,
+                            style: ThTextStyles.headlineH2Bold.copyWith(
+                              color: ThColors.textText1,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 24.0),
-              ],
+                    ],
+                  ),
+                  const SizedBox(height: 24.0),
+                ],
+              ),
             ),
           ),
         ),

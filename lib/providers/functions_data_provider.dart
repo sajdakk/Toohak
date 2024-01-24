@@ -56,7 +56,7 @@ class FunctionsDataProvider {
     return ranking;
   }
 
-  Future<List<EndGameResult>> finishGame({
+  Future<void> finishGame({
     required String gameId,
     required List<RankingPlayer> currentRanking,
   }) async {
@@ -65,7 +65,7 @@ class FunctionsDataProvider {
       throw Exception('Could not get adminToken');
     }
 
-    final Response response = await Dio().post(
+    await Dio().post(
       '$serverUrl/finish_game',
       data: <String, dynamic>{
         'game_id': gameId,
@@ -77,11 +77,6 @@ class FunctionsDataProvider {
         },
       ),
     );
-
-    List<dynamic> rankingRaw = response.data['results'];
-    List<EndGameResult> ranking = rankingRaw.map((e) => EndGameResult.fromJson(e)).toList();
-
-    return ranking;
   }
 
   Future<DateTime> sendQuestion({

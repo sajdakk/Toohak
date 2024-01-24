@@ -43,7 +43,7 @@ class _FinalRankingScreenState extends State<FinalRankingScreen> {
             return RoundRankingBody(
               ranking: state.players,
               isFinal: true,
-              endGameResults: state.endGameResults,
+              somebodyStillPlaying: state.somebodyStillPlaying,
             );
           }
 

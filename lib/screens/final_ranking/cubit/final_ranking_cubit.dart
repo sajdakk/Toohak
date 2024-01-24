@@ -16,15 +16,18 @@ class FinalRankingCubit extends ThCubit<FinalRankingState> {
       return b.points.compareTo(a.points);
     });
 
-    List<EndGameResult> endGameResults = _gameManager.endGameResult.toList();
-    endGameResults.sort((EndGameResult a, EndGameResult b) {
-      return b.points.compareTo(a.points);
-    });
+    bool somebodyStillPlaying = false;
+    for (RankingPlayer player in rankingPlayers) {
+      if (player.roundLost == null) {
+        somebodyStillPlaying = true;
+        break;
+      }
+    }
 
     emit(
       FinalRankingLoadedState(
         players: rankingPlayers,
-        endGameResults: endGameResults,
+        somebodyStillPlaying: somebodyStillPlaying,
       ),
     );
   }

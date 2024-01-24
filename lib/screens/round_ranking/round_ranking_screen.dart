@@ -42,7 +42,7 @@ class _RoundRankingScreenState extends State<RoundRankingScreen> {
           if (state is RoundRankingLoadedState) {
             return RoundRankingBody(
               ranking: state.players,
-              endGameResults: state.endGameResults,
+              somebodyStillPlaying: state.somebodyStillPlaying,
             );
           }
           

@@ -26,12 +26,12 @@ class GameDataManager extends DataManager<Game, NoFetchingParams> {
     }
   }
 
-  Future<String?> addGame({
-    required GameWriteRequest gameWriteRequest,
+  Future<String?> createGame({
+    required String templateId,
   }) async {
     try {
-      final String id = await _gameDataProvider.addGame(
-        gameWriteRequest: gameWriteRequest,
+      final String id = await _gameDataProvider.createGame(
+        templateId: templateId,
       );
       await fetchWithId(id);
       return id;
@@ -42,44 +42,6 @@ class GameDataManager extends DataManager<Game, NoFetchingParams> {
         stackTrace: stacktrace,
       );
       return null;
-    }
-  }
-
-  Future<bool> updateGame({
-    required String id,
-    required GameWriteRequest gameWriteRequest,
-  }) async {
-    try {
-      await _gameDataProvider.updateGame(
-        id: id,
-        gameWriteRequest: gameWriteRequest,
-      );
-      await fetchWithId(id);
-      return true;
-    } catch (error, stacktrace) {
-      _logger.error(
-        'updateGame, could not update game',
-        error: error,
-        stackTrace: stacktrace,
-      );
-      return false;
-    }
-  }
-
-  Future<bool> deleteGame({
-    required String id,
-  }) async {
-    try {
-      await _gameDataProvider.deleteGame(id);
-      await fetchWithId(id);
-      return true;
-    } catch (error, stacktrace) {
-      _logger.error(
-        'deleteGame, could not delete game',
-        error: error,
-        stackTrace: stacktrace,
-      );
-      return false;
     }
   }
 }

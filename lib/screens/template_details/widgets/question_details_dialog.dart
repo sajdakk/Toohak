@@ -168,7 +168,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                         maxLines: null,
                       ),
                       ThCheckboxInput(
-                        label: 'Double boost',
+                        label: 'Podwójne punkty',
                         formFieldKey: _doubleBoostKey,
                       ),
                       const SizedBox(height: 8.0),

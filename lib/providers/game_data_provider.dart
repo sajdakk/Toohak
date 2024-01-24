@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:toohak/_toohak.dart';
@@ -32,8 +30,8 @@ class GameDataProvider {
     return Game.fromJson(result.data()!..['id'] = result.id);
   }
 
-  Future<String> addGame({
-    required GameWriteRequest gameWriteRequest,
+  Future<String> createGame({
+    required String templateId,
   }) async {
     String? adminToken = await appSession.currentUser?.getIdToken();
     if (adminToken == null) {
@@ -43,7 +41,7 @@ class GameDataProvider {
     final Response response = await Dio().post(
       '$serverUrl/create_game',
       data: {
-        'template_id': gameWriteRequest.gameTemplateId,
+        'template_id': templateId,
       },
       options: Options(
         headers: {
@@ -73,16 +71,5 @@ class GameDataProvider {
     );
 
     return gameId;
-  }
-
-  Future<void> updateGame({
-    required String id,
-    required GameWriteRequest gameWriteRequest,
-  }) async {
-    await _firebaseFirestore.collection(Collections.games).doc(id).update(jsonDecode(jsonEncode(gameWriteRequest)));
-  }
-
-  Future<void> deleteGame(String id) async {
-    await _firebaseFirestore.collection(Collections.games).doc(id).delete();
   }
 }

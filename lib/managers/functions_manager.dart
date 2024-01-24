@@ -4,6 +4,8 @@ import 'package:toohak/_toohak.dart';
 class FunctionsManager {
   final FunctionsDataProvider _functionsDataProvider = sl();
 
+  final Logger _logger = Logger('FunctionsManager');
+
   Future<String?> joinGame({
     required String code,
     required String username,
@@ -13,13 +15,23 @@ class FunctionsManager {
         code: code,
         username: username,
       );
-    } catch (e, _) {
+    } catch (e, stacktrace) {
       if (e is DioException && e.response?.data["error"] == 'Username already taken') {
         ThMessage.showError('Nazwa użytkownika jest już zajęta.');
+
+        _logger.error(
+          'joinGame, username already taken',
+          error: e,
+          stackTrace: stacktrace,
+        );
       }
-      if (e is DioException &&
-         e.response?.data["error"]  == 'You are already in this game') {
+      if (e is DioException && e.response?.data["error"] == 'You are already in this game') {
         ThMessage.showError('Już jesteś w tej grze.');
+        _logger.error(
+          'joinGame, you are already in this game',
+          error: e,
+          stackTrace: stacktrace,
+        );
       }
       return null;
     }
@@ -39,26 +51,32 @@ class FunctionsManager {
         currentRanking: currentRanking,
       );
     } catch (e, stacktrace) {
-      print(e);
-      print(stacktrace);
+      _logger.error(
+        'finishRound, could not finish round',
+        error: e,
+        stackTrace: stacktrace,
+      );
       return <RankingPlayer>[];
     }
   }
 
-  Future<List<EndGameResult>> finishGame({
+  Future<void> finishGame({
     required String gameId,
     required List<RankingPlayer> currentRanking,
   }) async {
     try {
-      return await _functionsDataProvider.finishGame(
+      await _functionsDataProvider.finishGame(
         gameId: gameId,
         currentRanking: currentRanking,
       );
     } catch (e, stacktrace) {
-      print(e);
-      print(stacktrace);
+      _logger.error(
+        'finishGame, could not finish game',
+        error: e,
+        stackTrace: stacktrace,
+      );
 
-      return <EndGameResult>[];
+      return;
     }
   }
 
@@ -81,7 +99,13 @@ class FunctionsManager {
         timeInSeconds: timeInSeconds,
         answers: answers,
       );
-    } catch (e, _) {
+    } catch (e, stacktrace) {
+      _logger.error(
+        'sendQuestion, could not send question',
+        error: e,
+        stackTrace: stacktrace,
+      );
+
       return null;
     }
   }
@@ -100,7 +124,13 @@ class FunctionsManager {
         wasHintUsed: wasHintUsed,
       );
       return true;
-    } catch (e, _) {
+    } catch (e, stacktrace) {
+      _logger.error(
+        'sendAnswer, could not send answer',
+        error: e,
+        stackTrace: stacktrace,
+      );
+
       return false;
     }
   }

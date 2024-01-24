@@ -60,24 +60,23 @@ class QuestionCubit extends ThCubit<QuestionState> {
       return;
     }
 
-    thRouter.replace(
-      RoundRankingScreen.getRoute(),
-    );
+    if (nextQuestion != null) {
+      thRouter.replace(
+        RoundRankingScreen.getRoute(),
+      );
 
-    if (nextQuestion == null) {
-      await Future.delayed(const Duration(seconds: 5));
-      result = await _gameManager.finishGame();
+      return;
     }
+
+    result = await _gameManager.finishGame();
 
     if (!result) {
       return;
     }
 
-    if (nextQuestion == null) {
-      thRouter.replace(
-        FinalRankingScreen.getRoute(),
-      );
-      return;
-    }
+    thRouter.replace(
+      FinalRankingScreen.getRoute(),
+    );
+    return;
   }
 }

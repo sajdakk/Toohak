@@ -56,7 +56,7 @@ class _AnswerBodyState extends State<AnswerBody> {
                   const SizedBox(height: 16.0),
                   if (widget.event.isDouble)
                     Text(
-                      'Double boost!',
+                      'Podwójne punkty!',
                       style: ThTextStyles.headlineH2Semibold.copyWith(
                         color: ThColors.ascentAscent,
                       ),

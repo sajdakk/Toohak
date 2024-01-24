@@ -6,4 +6,3 @@ export 'game/_game.dart';
 export 'cloud_event_type/_cloud_event_type.dart';
 export 'cloud_event/_cloud_event.dart';
 export 'ranking_player/_ranking_player.dart';
-export 'end_game_result/_end_game_result.dart';

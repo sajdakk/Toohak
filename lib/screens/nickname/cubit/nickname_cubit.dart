@@ -49,18 +49,18 @@ class NicknameCubit extends ThCubit<NicknameState> {
   }) async {
     BotToast.showLoading();
 
-    final String? success = await _functionsManager.joinGame(
+    final String? gameId = await _functionsManager.joinGame(
       code: code,
       username: username,
     );
 
-    if (success == null) {
+    if (gameId == null) {
       BotToast.closeAllLoading();
       return null;
     }
 
-    await _gameDataManager.fetchWithId(success);
-    Game? game = _gameDataManager.dataWithId(success);
+    await _gameDataManager.fetchWithId(gameId);
+    Game? game = _gameDataManager.dataWithId(gameId);
 
     if (game == null) {
       BotToast.closeAllLoading();
@@ -81,6 +81,6 @@ class NicknameCubit extends ThCubit<NicknameState> {
 
     BotToast.closeAllLoading();
 
-    return success;
+    return gameId;
   }
 }

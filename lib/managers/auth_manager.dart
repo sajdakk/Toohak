@@ -30,29 +30,6 @@ class AuthManager {
     }
   }
 
-  Future<String?> signInAnonymously() async {
-    try {
-      return await _authDataProvider.signInAnonymously();
-    } on FirebaseAuthException catch (e, stacktrace) {
-      switch (e.code) {
-        case "operation-not-allowed":
-          _logger.error(
-            "signInAnonymously, Anonymous auth hasn't been enabled for this project.",
-            error: e,
-            stackTrace: stacktrace,
-          );
-          return null;
-        default:
-          _logger.error(
-            "signInAnonymously, unknown error",
-            error: e,
-            stackTrace: stacktrace,
-          );
-          return null;
-      }
-    }
-  }
-
   Future<bool> register({
     required String email,
     required String password,
@@ -93,22 +70,6 @@ class AuthManager {
     } catch (e, stacktrace) {
       _logger.error(
         'createProfileIfNotExist, error',
-        error: e,
-        stackTrace: stacktrace,
-      );
-      return false;
-    }
-  }
-
-  Future<bool> delete() async {
-    try {
-      await _authDataProvider.delete();
-      return true;
-    } on FirebaseAuthException catch (_) {
-      return false;
-    } catch (e, stacktrace) {
-      _logger.error(
-        'delete, error',
         error: e,
         stackTrace: stacktrace,
       );

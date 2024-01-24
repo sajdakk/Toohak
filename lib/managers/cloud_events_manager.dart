@@ -7,6 +7,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class CloudEventsManager {
   final PublishSubject<CloudEvent> _cloudEvents$ = PublishSubject<CloudEvent>();
 
+  final Logger _logger = Logger('CloudEventsManager');
+
   String? _token;
   WebSocketChannel? _channel;
 
@@ -54,7 +56,7 @@ class CloudEventsManager {
 
   Future<void> _onMessage(dynamic rawData) async {
     if (rawData is! String) {
-      print('data is not a string!');
+      _logger.warning('onMessage, rawData is not a string!');
 
       return;
     }
@@ -63,21 +65,21 @@ class CloudEventsManager {
 
     final dynamic typeRaw = data['type'];
     if (typeRaw is! String) {
-      print('type is not a string!');
+      _logger.warning('onMessage, type is not a string!');
 
       return;
     }
 
     final CloudEventType? type = CloudEventTypeMapper.fromName(typeRaw);
     if (type == null) {
-      print('type is null!');
+      _logger.warning('onMessage, type is null!');
 
       return;
     }
 
     final dynamic payload = data['data'];
     if (payload is! Map<String, dynamic>) {
-      print('payload is not a map!');
+      _logger.warning('onMessage, payload is not a map!');
 
       return;
     }

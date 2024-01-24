@@ -11,16 +11,16 @@ class RoundRankingLoadingState extends RoundRankingState {}
 class RoundRankingLoadedState extends RoundRankingState {
   const RoundRankingLoadedState({
     required this.players,
-    required this.endGameResults,
+    required this.somebodyStillPlaying,
   });
 
   final List<RankingPlayer> players;
-  final List<EndGameResult> endGameResults;
+  final bool somebodyStillPlaying;
 
   @override
   List<Object?> get props => <dynamic>[
         players,
-        endGameResults,
+        somebodyStillPlaying,
       ];
 }
 

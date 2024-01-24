@@ -12,14 +12,12 @@ class GameManager {
 
   int questionIndex = -1;
   List<RankingPlayer> rankingPlayers = <RankingPlayer>[];
-  List<EndGameResult> endGameResult = <EndGameResult>[];
   GameTemplate? _gameTemplate;
   Game? _game;
 
   Future<bool> init() async {
     questionIndex = -1;
     rankingPlayers = <RankingPlayer>[];
-    endGameResult = <EndGameResult>[];
     _gameTemplate = null;
     _game = null;
     return true;
@@ -88,7 +86,7 @@ class GameManager {
       maxPoints: maxPoints,
     );
 
-    rankingPlayers = result;
+    rankingPlayers = result.toList();
     BotToast.closeAllLoading();
     return true;
   }
@@ -100,12 +98,11 @@ class GameManager {
 
     BotToast.showLoading();
 
-    List<EndGameResult> result = await _functionsManager.finishGame(
+   await _functionsManager.finishGame(
       gameId: _game!.id,
       currentRanking: rankingPlayers,
     );
 
-    endGameResult = result;
     BotToast.closeAllLoading();
     return true;
   }
@@ -113,7 +110,6 @@ class GameManager {
   void clean() {
     questionIndex = -1;
     rankingPlayers = <RankingPlayer>[];
-    endGameResult = <EndGameResult>[];
   }
 
   Question? get currentQuestion {

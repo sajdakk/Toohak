@@ -18,6 +18,7 @@ abstract class ThColors {
   static const Color statusColorInfo = Color(0xff48b5f7);
   static const Color statusColorWarning = Color(0xfff1dd77);
   static const Color statusColorDanger = Color(0xffe38c87);
+  static const Color statusColorDangerDark = Color(0xFFFF4867);
 
   static const Color backgroundBG0 = Color(0xff4456A0);
   static const Color backgroundBG1 = Color(0xff6979BA);

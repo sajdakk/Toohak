@@ -46,25 +46,4 @@ class RegistrationHelper {
 
     BotToast.closeAllLoading();
   }
-
-  Future<void> signInAnonymously() async {
-    BotToast.showLoading();
-    await _authManager.signInAnonymously();
-
-    final User? user = _firebaseAuth.currentUser;
-    if (user == null) {
-      BotToast.closeAllLoading();
-      return;
-    }
-
-    bool result = await _authManager.createOrReplaceProfile();
-    if (!result) {
-      BotToast.closeAllLoading();
-      return;
-    }
-
-    await appSession.init();
-
-    BotToast.closeAllLoading();
-  }
 }
