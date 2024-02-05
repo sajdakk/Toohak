@@ -6,17 +6,11 @@ class ThCheckboxInput extends StatelessWidget {
     super.key,
     required this.label,
     required this.formFieldKey,
-    this.onChanged,
-    this.checkRequired = false,
-    this.enabled = true,
     this.initialValue = false,
   });
 
   final String label;
   final GlobalKey<FormFieldState<bool>>? formFieldKey;
-  final ValueChanged<bool>? onChanged;
-  final bool checkRequired;
-  final bool enabled;
   final bool? initialValue;
 
   @override
@@ -24,13 +18,6 @@ class ThCheckboxInput extends StatelessWidget {
     return FormField<bool>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: formFieldKey,
-      validator: (bool? value) {
-        if (checkRequired && (value == null || value == false)) {
-          return 'Required field';
-        }
-
-        return null;
-      },
       initialValue: initialValue ?? false,
       builder: (FormFieldState<bool> field) {
         return _buildBody(field, context);
@@ -49,13 +36,8 @@ class ThCheckboxInput extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  if (enabled == false) {
-                    return;
-                  }
-
                   final bool value = !field.value!;
                   field.didChange(value);
-                  onChanged?.call(value);
                 },
                 behavior: HitTestBehavior.translucent,
                 child: _buildCheckbox(field, context),
@@ -83,16 +65,11 @@ class ThCheckboxInput extends StatelessWidget {
     return Row(
       children: <Widget>[
         SizedBox(
-          child: BhCheckbox(
+          child: ThCheckbox(
             value: field.value ?? false,
             onChanged: (bool? value) {
-              if (enabled == false) {
-                return;
-              }
-
               value ??= true;
               field.didChange(value);
-              onChanged?.call(value);
             },
           ),
         ),

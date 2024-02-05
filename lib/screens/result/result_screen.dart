@@ -2,7 +2,6 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toohak/_toohak.dart';
-import 'package:toohak/widgets/loading_view.dart';
 
 import 'cubit/result_cubit.dart';
 import 'result_body.dart';
@@ -15,9 +14,7 @@ class ResultScreen extends StatefulWidget {
 
   final RoundFinishedCloudEvent? event;
 
-  static String getRoute() {
-    return '/result';
-  }
+  static const String route = '/result';
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
@@ -42,24 +39,26 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ResultCubit>(
-      create: (_) => sl()..init(),
+      create: (_) => ResultCubit()..init(),
       child: BlocBuilder<ResultCubit, ResultState>(
         builder: (_, ResultState state) {
-          if (state is ResultLoadingState) {
-            return const LoadingView();
-          }
-
           if (widget.event == null) {
-            return ErrorView.unhandledState(state);
-          }
-
-          if (state is ResultLoadedState) {
-            return ResultBody(
-              event: widget.event!,
+            return const ErrorView(
+              error: 'Event is null',
             );
           }
 
-          return ErrorView.unhandledState(state);
+          switch (state) {
+            case ResultLoadedState():
+              return ResultBody(
+                event: widget.event!,
+              );
+
+            case ResultErrorState():
+              return ErrorView(
+                error: state.error,
+              );
+          }
         },
       ),
     );

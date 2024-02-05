@@ -38,23 +38,24 @@ class _AdminWaitingScreenState extends State<AdminWaitingScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdminWaitingCubit>(
-      create: (_) => sl()
-        ..init(
-        ),
+      create: (_) => AdminWaitingCubit()..init(),
       child: BlocBuilder<AdminWaitingCubit, AdminWaitingState>(
         builder: (_, AdminWaitingState state) {
-          if (state is AdminWaitingLoadedState) {
-            return AdminWaitingBody(
-              state: state,
-              code: widget.code,
-            );
-          }
+          switch (state) {
+            case AdminWaitingLoadedState():
+              return AdminWaitingBody(
+                state: state,
+                code: widget.code,
+              );
 
-          if (state is AdminWaitingLoadingState) {
-            return const LoadingView();
-          }
+            case AdminWaitingLoadingState():
+              return const LoadingView();
 
-          return ErrorView.unhandledState(state);
+            case AdminWaitingErrorState():
+              return ErrorView(
+                error: state.error,
+              );
+          }
         },
       ),
     );

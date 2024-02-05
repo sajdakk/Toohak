@@ -12,9 +12,7 @@ class FinalRankingScreen extends StatefulWidget {
     super.key,
   });
 
-  static String getRoute() {
-    return '/final-ranking';
-  }
+  static const String route = '/final-ranking';
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
@@ -30,24 +28,25 @@ class _FinalRankingScreenState extends State<FinalRankingScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<FinalRankingCubit>(
-      create: (_) => sl()..init(),
+      create: (_) => FinalRankingCubit()..init(),
       child: BlocBuilder<FinalRankingCubit, FinalRankingState>(
         builder: (_, FinalRankingState state) {
-          if (state is FinalRankingLoadingState) {
-            return const LoadingView();
-          }
-          if (state is FinalRankingErrorState) {
-            return ErrorView.unhandledState(state);
-          }
-          if (state is FinalRankingLoadedState) {
-            return RoundRankingBody(
-              ranking: state.players,
-              isFinal: true,
-              somebodyStillPlaying: state.somebodyStillPlaying,
-            );
-          }
+          switch (state) {
+            case FinalRankingLoadedState():
+              return RoundRankingBody(
+                ranking: state.players,
+                isFinal: true,
+                somebodyStillPlaying: state.somebodyStillPlaying,
+              );
 
-          return ErrorView.unhandledState(state);
+            case FinalRankingLoadingState():
+              return const LoadingView();
+
+            case FinalRankingErrorState():
+              return ErrorView(
+                error: state.error,
+              );
+          }
         },
       ),
     );

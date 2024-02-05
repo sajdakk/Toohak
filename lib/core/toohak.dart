@@ -25,6 +25,7 @@ class Toohak extends StatelessWidget {
       ),
       supportedLocales: const <Locale>[
         Locale('pl'),
+        Locale('en'),
       ],
       navigatorKey: ThRouter.navigatorKey,
       onGenerateRoute: thRouter.router.generator,

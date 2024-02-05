@@ -11,11 +11,7 @@ import 'cubit/admin_cubit.dart';
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
 
-  static const String rawRoute = '/admin';
-
-  static String getRoute() {
-    return rawRoute;
-  }
+  static const String route = '/admin';
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
@@ -28,7 +24,7 @@ class AdminScreen extends StatelessWidget {
     return ThAppScaffold(
       body: SafeArea(
         child: BlocProvider<AdminCubit>(
-          create: (_) => sl()..init(),
+          create: (_) => AdminCubit()..init(),
           child: BlocBuilder<AdminCubit, AdminState>(
             builder: (BuildContext context, AdminState state) {
               switch (state) {
@@ -36,12 +32,17 @@ class AdminScreen extends StatelessWidget {
                   return AdminBody(
                     state: state,
                   );
+
                 case AdminNoDataState():
                   return const NoDataView();
+
                 case AdminLoadingState():
                   return const LoadingView();
-                  case AdminErrorState():
-                  return  ErrorView.unhandledState(state);
+
+                case AdminErrorState():
+                  return ErrorView(
+                    error: state.error,
+                  );
               }
             },
           ),

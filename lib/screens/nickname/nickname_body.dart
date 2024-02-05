@@ -41,12 +41,12 @@ class _NicknameBodyState extends State<NicknameBody> {
                   ),
                   const SizedBox(height: 32.0),
                   ThTextInput(
-                    hintText: 'Podaj pseudonim',
+                    hintText: 'Nickname',
                     isRequired: true,
                     formFieldKey: _nicknameKey,
                   ),
-                  ThButton(
-                    title: 'Dołącz',
+                  PrimaryButton(
+                    title: 'Join game',
                     onTap: () async {
                       if (_nicknameKey.currentState!.validate() != true) {
                         return;
@@ -68,7 +68,7 @@ class _NicknameBodyState extends State<NicknameBody> {
                       }
 
                       if (result != null) {
-                        thRouter.removeAllAndPush(PlayerWaitingScreen.getRoute());
+                        thRouter.removeAllAndPush(PlayerWaitingScreen.route);
                       }
                     },
                     size: ThPrimaryButtonSize.large,

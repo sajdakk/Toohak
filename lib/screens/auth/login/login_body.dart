@@ -40,7 +40,7 @@ class _LoginBodyState extends State<LoginBody> {
             children: <Widget>[
               const SizedBox(height: 16.0),
               Text(
-                'Zaloguj się',
+                'Sign in',
                 style: ThTextStyles.headlineH2Regular.copyWith(
                   color: ThColors.textText1,
                   fontWeight: FontWeight.w500,
@@ -49,19 +49,19 @@ class _LoginBodyState extends State<LoginBody> {
               const SizedBox(height: 24.0),
               ThTextInput(
                 formFieldKey: _emailInputKey,
-                labelText: 'Adres email',
+                labelText: 'Email address',
                 isRequired: true,
                 withoutSpaces: true,
               ),
               const SizedBox(height: 4.0),
               ThPasswordInput(
                 formFieldKey: _passwordInputKey,
-                labelText: 'hasło',
+                labelText: 'Password',
                 required: true,
               ),
               const SizedBox(height: 24.0),
-              ThButton(
-                title: 'Zaloguj się',
+              PrimaryButton(
+                title: 'Sign in',
                 onTap: () async {
                   if (_formKey.currentState?.validate() != true) {
                     return;
@@ -80,7 +80,7 @@ class _LoginBodyState extends State<LoginBody> {
               TextButton(
                 onPressed: () => thRouter.replace(ThRoutes.registration.route),
                 child: Text(
-                  'Nie masz jeszcze konta? Zarejestruj się!',
+                  'Don\'t have an account? Sign up',
                   style: ThTextStyles.headlineH6Semibold.copyWith(
                     color: ThColors.ascentAscent,
                   ),

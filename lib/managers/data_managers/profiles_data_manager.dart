@@ -1,6 +1,6 @@
 import 'package:toohak/_toohak.dart';
 
-class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
+class ProfilesDataManager extends DataManager<Profile> {
   final ProfilesDataProvider _profilesDataProvider = sl();
   final Logger _logger = Logger('ProfilesDataManager');
 
@@ -8,15 +8,11 @@ class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
         (Profile profile) => profile.id == userId,
       );
 
-  @override
-  Future<Map<String, Profile>> fetch(NoFetchingParams params) {
-    return _profilesDataProvider.fetchAll();
-  }
-
   Future<bool> fetchWithId(String id) async {
     try {
       final Profile? profile = await _profilesDataProvider.getWithId(id);
       updateStreamWith(<String, Profile?>{id: profile});
+
       return true;
     } catch (e, stacktrace) {
       _logger.error(
@@ -24,21 +20,7 @@ class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
         error: e,
         stackTrace: stacktrace,
       );
-      return false;
-    }
-  }
 
-  Future<bool> persistentDelete({required String id}) async {
-    try {
-      await _profilesDataProvider.persistentDelete(id);
-
-      return true;
-    } catch (e, stacktrace) {
-      _logger.error(
-        'persistentDelete, could not delete profile',
-        error: e,
-        stackTrace: stacktrace,
-      );
       return false;
     }
   }
@@ -52,6 +34,7 @@ class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
         id: id,
         profileWriteRequest: profileWriteRequest,
       );
+
       return fetchWithId(id);
     } catch (e, stacktrace) {
       _logger.error(
@@ -59,6 +42,7 @@ class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
         error: e,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -72,6 +56,7 @@ class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
         id: id,
         gameTemplateId: gameTemplateId,
       );
+
       await fetchWithId(id);
       return true;
     } catch (error, stacktrace) {
@@ -80,6 +65,7 @@ class ProfilesDataManager extends DataManager<Profile, NoFetchingParams> {
         error: error,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }

@@ -1,6 +1,6 @@
 part of 'final_ranking_cubit.dart';
 
-abstract class FinalRankingState extends Equatable {
+sealed class FinalRankingState extends Equatable {
   const FinalRankingState();
   @override
   List<Object?> get props => <dynamic>[];
@@ -17,7 +17,6 @@ class FinalRankingLoadedState extends FinalRankingState {
   final List<RankingPlayer> players;
   final bool somebodyStillPlaying;
 
-
   @override
   List<Object?> get props => <dynamic>[
         players,
@@ -27,13 +26,13 @@ class FinalRankingLoadedState extends FinalRankingState {
 
 class FinalRankingErrorState extends FinalRankingState {
   const FinalRankingErrorState({
-    required this.message,
+    required this.error,
   });
 
-  final String message;
+  final String error;
 
   @override
   List<Object?> get props => <dynamic>[
-        message,
+        error,
       ];
 }

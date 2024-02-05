@@ -4,16 +4,8 @@ class ErrorView extends StatelessWidget {
   const ErrorView({
     super.key,
     required this.error,
-    this.title = 'Wystąpił błąd',
   });
 
-  factory ErrorView.unhandledState(Object state) {
-    return ErrorView(
-      error: 'Nieznany stan: $state',
-    );
-  }
-
-  final String title;
   final String error;
 
   @override
@@ -22,9 +14,9 @@ class ErrorView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
+          const Text(
+            'Error occurred',
+            style: TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.w600,
             ),

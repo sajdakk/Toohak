@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toohak/_toohak.dart';
 
-class ThButton extends StatelessWidget {
-  const ThButton({
+class PrimaryButton extends StatelessWidget {
+  const PrimaryButton({
     super.key,
     required this.title,
     required this.onTap,

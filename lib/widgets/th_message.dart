@@ -69,7 +69,7 @@ class ThMessage {
                       child: Text(
                         message,
                         style: ThTextStyles.headlineH1Regular.copyWith(
-                          color: ThColors.categoriesNutrition,
+                          color: const Color(0xff8EE111),
                           fontWeight: FontWeight.w600,
                         ),
                       ),

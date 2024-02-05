@@ -17,6 +17,7 @@ class AuthManager {
         email: email,
         password: password,
       );
+
       return true;
     } on FirebaseAuthException catch (_) {
       return false;
@@ -26,6 +27,7 @@ class AuthManager {
         error: e,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -39,6 +41,7 @@ class AuthManager {
         email: email,
         password: password,
       );
+
       return true;
     } on FirebaseAuthException catch (_) {
       return false;
@@ -48,6 +51,7 @@ class AuthManager {
         error: e,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -73,6 +77,7 @@ class AuthManager {
         error: e,
         stackTrace: stacktrace,
       );
+      
       return false;
     }
   }

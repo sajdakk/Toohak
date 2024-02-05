@@ -1,6 +1,6 @@
 part of 'game_over_cubit.dart';
 
-abstract class GameOverState extends Equatable {
+sealed class GameOverState extends Equatable {
   const GameOverState();
   @override
   List<Object?> get props => <dynamic>[];
@@ -25,13 +25,13 @@ class GameOverLoadedState extends GameOverState {
 
 class GameOverErrorState extends GameOverState {
   const GameOverErrorState({
-    required this.message,
+    required this.error,
   });
 
-  final String message;
+  final String error;
 
   @override
   List<Object?> get props => <Object?>[
-        message,
+        error,
       ];
 }

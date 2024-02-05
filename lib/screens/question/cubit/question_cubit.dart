@@ -21,7 +21,7 @@ class QuestionCubit extends ThCubit<QuestionState> {
     if (question == null) {
       emit(
         const QuestionErrorState(
-          message: 'Cannot find question',
+          error: 'Cannot find question',
         ),
       );
 
@@ -62,7 +62,7 @@ class QuestionCubit extends ThCubit<QuestionState> {
 
     if (nextQuestion != null) {
       thRouter.replace(
-        RoundRankingScreen.getRoute(),
+        RoundRankingScreen.route,
       );
 
       return;
@@ -75,7 +75,7 @@ class QuestionCubit extends ThCubit<QuestionState> {
     }
 
     thRouter.replace(
-      FinalRankingScreen.getRoute(),
+      FinalRankingScreen.route,
     );
     return;
   }

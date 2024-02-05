@@ -11,7 +11,7 @@ class LoadingView extends StatelessWidget {
         children: <Widget>[
           LinearProgressIndicator(
             minHeight: 1.5,
-            color: ThColors.statusColorSuccess,
+            color: ThColors.ascentAscent,
           ),
           Expanded(
             child: Stack(

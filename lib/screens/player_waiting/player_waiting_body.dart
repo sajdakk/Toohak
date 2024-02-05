@@ -9,7 +9,6 @@ class PlayerWaitingBody extends StatefulWidget {
 }
 
 class _PlayerWaitingBodyState extends State<PlayerWaitingBody> {
-
   @override
   Widget build(BuildContext context) {
     return ThAppScaffold(
@@ -27,16 +26,14 @@ class _PlayerWaitingBodyState extends State<PlayerWaitingBody> {
                   ),
                 ),
                 const SizedBox(height: 32.0),
-               Text(
-                  'Udało się! Sprawdź czy widzisz swój pseudonim na ekranie',
+                Text(
+                  'Got it! Check your nickname on the screen!',
                   style: ThTextStyles.headlineH1Bold.copyWith(
                     color: ThColors.textText1,
                   ),
                   textAlign: TextAlign.center,
                 ),
-               
                 const SizedBox(height: 24.0),
-             
               ],
             ),
           ),

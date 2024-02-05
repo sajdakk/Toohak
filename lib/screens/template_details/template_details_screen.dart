@@ -41,18 +41,21 @@ class TemplateDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ThAppScaffold(
       body: BlocProvider<TemplateDetailsCubit>(
-        create: (_) => sl()..init(id),
+        create: (_) => TemplateDetailsCubit()..init(id),
         child: BlocBuilder<TemplateDetailsCubit, TemplateDetailsState>(
           builder: (_, TemplateDetailsState state) {
-            if (state is TemplateDetailsLoadingState) {
-              return const LoadingView();
-            }
+            switch (state) {
+              case TemplateDetailsLoadingState():
+                return const LoadingView();
 
-            if (state is TemplateDetailsLoadedState) {
-              return TemplateDetailsBody(state: state);
-            }
+              case TemplateDetailsLoadedState():
+                return TemplateDetailsBody(state: state);
 
-            return ErrorView.unhandledState(state);
+              case TemplateDetailsErrorState():
+                return ErrorView(
+                  error: state.error,
+                );
+            }
           },
         ),
       ),

@@ -14,13 +14,3 @@ extension ListExtensions<T> on List<T> {
     return first;
   }
 }
-
-extension NullableListExtensions<T> on List<T>? {
-  bool get isNullOrEmpty {
-    if (this == null) {
-      return true;
-    }
-
-    return this!.isEmpty;
-  }
-}

@@ -139,7 +139,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                         },
                         itemCount: _answersKey.length,
                       ),
-                      ThButton(
+                      PrimaryButton(
                         title: 'Add answer',
                         onTap: () {
                           setState(() {
@@ -181,7 +181,7 @@ class _QuestionDetailDialogState extends State<QuestionDetailDialog> {
                         labelText: 'Duration in sec *',
                       ),
                       const SizedBox(height: 32.0),
-                      ThButton(
+                      PrimaryButton(
                         title: widget.questionParameters == null ? 'Add question' : 'Update question ',
                         onTap: () async => await _submit(context),
                         size: ThPrimaryButtonSize.large,

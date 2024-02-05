@@ -37,7 +37,7 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Kod gry: ${widget.code}',
+                    'Game code: ${widget.code}',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -48,14 +48,14 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Ilość graczy: ${widget.state.nicknames.length}',
+                        'Players count: ${widget.state.nicknames.length}',
                         style: ThTextStyles.headlineH2Semibold.copyWith(
                           color: ThColors.textText1,
                         ),
                       ),
                       const SizedBox(width: 16.0),
-                      ThButton(
-                        title: 'Rozpocznij grę',
+                      PrimaryButton(
+                        title: 'Start game',
                         onTap: () async {
                           if (widget.state.gameTemplate.questions.isEmpty) {
                             return;
@@ -65,7 +65,7 @@ class _AdminWaitingBodyState extends State<AdminWaitingBody> {
 
                           if (result != null) {
                             thRouter.replace(
-                              QuestionScreen.getRoute(),
+                              QuestionScreen.route,
                               arguments: result,
                             );
                           }

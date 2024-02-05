@@ -28,18 +28,6 @@ class ProfilesDataProvider {
     return Profile.fromJson(result.data()!..[ProfileFields.id] = result.id);
   }
 
-  Future<void> persistentDelete(String id) async {
-    await _firebaseFirestore.collection(Collections.profiles).doc(id).delete();
-
-    final CollectionReference<Map<String, dynamic>> profilesRef = _firebaseFirestore.collection(Collections.profiles);
-
-    final WriteBatch batch = _firebaseFirestore.batch();
-
-    batch.delete(profilesRef.doc(id));
-
-    await batch.commit();
-  }
-
   Future<void> createWithId({
     required String id,
     required ProfileWriteRequest profileWriteRequest,

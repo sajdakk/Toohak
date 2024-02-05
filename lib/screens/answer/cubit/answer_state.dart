@@ -1,6 +1,6 @@
 part of 'answer_cubit.dart';
 
-abstract class AnswerState extends Equatable {
+sealed class AnswerState extends Equatable {
   @override
   List<Object?> get props => <dynamic>[];
 }

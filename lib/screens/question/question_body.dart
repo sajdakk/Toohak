@@ -68,11 +68,10 @@ class _QuestionBodyState extends State<QuestionBody> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                  
                     const SizedBox(height: 16.0),
                     if (widget.question.doubleBoost == true)
                       Text(
-                        'Podwójne punkty!',
+                        'Double boost!',
                         style: ThTextStyles.headlineH2Semibold.copyWith(
                           color: ThColors.ascentAscent,
                         ),

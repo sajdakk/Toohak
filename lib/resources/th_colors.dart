@@ -11,7 +11,6 @@ abstract class ThColors {
   static const Color textText4 = Color(0xffa8bac4);
   static const Color textText5 = Color.fromRGBO(255, 255, 255, 0.2);
 
-  static const Color highlightColorLightGreyGreen = Color(0xff516d44);
   static const Color highlightColorLightGreyGreenShade = Color(0xff3b4338);
 
   static const Color statusColorSuccess = Color(0xff82E282);
@@ -25,9 +24,7 @@ abstract class ThColors {
   static const Color backgroundBG2 = Color(0xff9AABEF);
   static const Color textFormBg = Color.fromRGBO(255, 255, 255, 0.05);
 
-  static const Color categoriesNutrition = Color(0xff3DD174);
-
-  static const Color elementsButtonSecondaryBackground = Color.fromRGBO(255, 255, 255, 0.1);
+  static const Color elementsButtonSecondaryBackground = Color.fromRGBO(255, 255, 255, 0.098);
   static const Color elementsButtonSecondaryText = Colors.white;
 
   static const LinearGradient lightElementsButtonPrimaryActiveBackground = LinearGradient(

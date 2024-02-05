@@ -12,9 +12,7 @@ class RoundRankingScreen extends StatefulWidget {
     super.key,
   });
 
-  static String getRoute() {
-    return '/round-ranking';
-  }
+  static const String route = '/round-ranking';
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
@@ -30,23 +28,24 @@ class _RoundRankingScreenState extends State<RoundRankingScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RoundRankingCubit>(
-      create: (_) => sl()..init(),
+      create: (_) => RoundRankingCubit()..init(),
       child: BlocBuilder<RoundRankingCubit, RoundRankingState>(
         builder: (_, RoundRankingState state) {
-          if (state is RoundRankingLoadingState) {
-            return const LoadingView();
+          switch (state) {
+            case RoundRankingLoadingState():
+              return const LoadingView();
+
+            case RoundRankingLoadedState():
+              return RoundRankingBody(
+                ranking: state.players,
+                somebodyStillPlaying: state.somebodyStillPlaying,
+              );
+
+            case RoundRankingErrorState():
+              return ErrorView(
+                error: state.error,
+              );
           }
-          if (state is RoundRankingErrorState) {
-            return ErrorView.unhandledState(state);
-          }
-          if (state is RoundRankingLoadedState) {
-            return RoundRankingBody(
-              ranking: state.players,
-              somebodyStillPlaying: state.somebodyStillPlaying,
-            );
-          }
-          
-          return ErrorView.unhandledState(state);
         },
       ),
     );

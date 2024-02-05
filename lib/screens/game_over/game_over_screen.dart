@@ -15,9 +15,7 @@ class GameOverScreen extends StatefulWidget {
 
   final GameOverCloudEvent? event;
 
-  static String getRoute() {
-    return '/game-over';
-  }
+  static const String route = '/game-over';
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
@@ -42,25 +40,30 @@ class _GameOverScreenState extends State<GameOverScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GameOverCubit>(
-      create: (_) => sl()..init(),
+      create: (_) => GameOverCubit()..init(),
       child: BlocBuilder<GameOverCubit, GameOverState>(
         builder: (_, GameOverState state) {
           if (widget.event == null) {
-            return ErrorView.unhandledState(state);
-          }
-
-          if (state is GameOverInitialState) {
-            return const LoadingView();
-          }
-
-          if (state is GameOverLoadedState) {
-            return GameOverBody(
-              event: widget.event!,
-              state: state,
+            return const ErrorView(
+              error: 'Event is null',
             );
           }
 
-          return ErrorView.unhandledState(state);
+          switch (state) {
+            case GameOverLoadedState():
+              return GameOverBody(
+                event: widget.event!,
+                state: state,
+              );
+
+            case GameOverInitialState():
+              return const LoadingView();
+
+            case GameOverErrorState():
+              return ErrorView(
+                error: state.error,
+              );
+          }
         },
       ),
     );

@@ -1,20 +1,16 @@
 import 'package:toohak/_toohak.dart';
 
-class GameDataManager extends DataManager<Game, NoFetchingParams> {
+class GameDataManager extends DataManager<Game> {
   final GameDataProvider _gameDataProvider = sl();
   final Logger _logger = Logger('GameDataManager');
 
   Game? dataWithId(String id) => lastKnownValues.firstWhereOrNull((Game game) => game.id == id);
 
-  @override
-  Future<Map<String, Game>> fetch(NoFetchingParams params) {
-    return _gameDataProvider.fetchAll();
-  }
-
   Future<bool> fetchWithId(String id) async {
     try {
       final Game? result = await _gameDataProvider.getWithId(id);
       updateStreamWith(<String, Game?>{id: result});
+
       return true;
     } catch (e, stacktrace) {
       _logger.error(
@@ -22,6 +18,7 @@ class GameDataManager extends DataManager<Game, NoFetchingParams> {
         error: e,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -34,6 +31,7 @@ class GameDataManager extends DataManager<Game, NoFetchingParams> {
         templateId: templateId,
       );
       await fetchWithId(id);
+
       return id;
     } catch (error, stacktrace) {
       _logger.error(
@@ -41,6 +39,7 @@ class GameDataManager extends DataManager<Game, NoFetchingParams> {
         error: error,
         stackTrace: stacktrace,
       );
+
       return null;
     }
   }

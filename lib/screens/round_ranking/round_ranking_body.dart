@@ -47,14 +47,14 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     const SizedBox(),
-                                    ThButton(
-                                      title: 'Następne pytanie',
+                                    PrimaryButton(
+                                      title: 'Next question',
                                       onTap: () async {
                                         DateTime? result = await sl<GameManager>().sendQuestion();
 
                                         if (result != null) {
                                           thRouter.replace(
-                                            QuestionScreen.getRoute(),
+                                            QuestionScreen.route,
                                             arguments: result,
                                           );
                                         }
@@ -76,7 +76,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                               Column(
                                 children: [
                                   Text(
-                                    'Wszyscy gracze zakończyli już grę!',
+                                    'All players have finished the game!',
                                     style: ThTextStyles.headlineH2Bold.copyWith(
                                       color: ThColors.textText1,
                                     ),
@@ -86,7 +86,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                               ),
                             const SizedBox(height: 24.0),
                             Text(
-                              widget.isFinal ? 'Finałowy ranking, gratulacje!' : 'Ranking',
+                              widget.isFinal ? 'Final ranking, congratulations!' : 'Ranking',
                               style: ThTextStyles.headlineH1Bold.copyWith(
                                 color: ThColors.textText1,
                               ),
@@ -129,13 +129,13 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
               ),
             ),
             Text(
-              'Nazwa',
+              'Nickname',
               style: ThTextStyles.headlineH3Bold.copyWith(
                 color: ThColors.statusColorDangerDark,
               ),
             ),
             Text(
-              'Pkt',
+              'Points',
               style: ThTextStyles.headlineH3Bold.copyWith(
                 color: ThColors.statusColorDangerDark,
               ),
@@ -171,7 +171,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                     ),
                     if (player.roundLost != null)
                       Text(
-                        ' (odpadł/a w rundzie: ${player.roundLost})',
+                        ' (lost in round: ${player.roundLost})',
                         style: ThTextStyles.paragraphP2Regular.copyWith(
                           color: ThColors.textText2,
                         ),

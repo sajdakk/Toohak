@@ -1,6 +1,6 @@
 part of 'result_cubit.dart';
 
-abstract class ResultState extends Equatable {
+sealed class ResultState extends Equatable {
   const ResultState();
   @override
   List<Object?> get props => <dynamic>[];
@@ -13,19 +13,15 @@ class ResultLoadedState extends ResultState {
   List<Object?> get props => <Object?>[];
 }
 
-class ResultLoadingState extends ResultState {
-  const ResultLoadingState();
-}
-
 class ResultErrorState extends ResultState {
   const ResultErrorState({
-    required this.message,
+    required this.error,
   });
 
-  final String message;
+  final String error;
 
   @override
   List<Object?> get props => <Object?>[
-        message,
+        error,
       ];
 }

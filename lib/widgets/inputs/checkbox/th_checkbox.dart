@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toohak/_toohak.dart';
 
-class BhCheckbox extends StatefulWidget {
-  const BhCheckbox({
+class ThCheckbox extends StatefulWidget {
+  const ThCheckbox({
     super.key,
     required this.value,
     this.onChanged,
@@ -12,17 +12,18 @@ class BhCheckbox extends StatefulWidget {
   final void Function(bool?)? onChanged;
 
   @override
-  State<BhCheckbox> createState() => _BhCheckboxState();
+  State<ThCheckbox> createState() => _ThCheckboxState();
 }
 
-class _BhCheckboxState extends State<BhCheckbox> {
+class _ThCheckboxState extends State<ThCheckbox> {
+  late bool _isSelected = widget.value;
+
   @override
-  void didUpdateWidget(covariant BhCheckbox oldWidget) {
-    isSelected = widget.value;
+  void didUpdateWidget(covariant ThCheckbox oldWidget) {
+    _isSelected = widget.value;
     super.didUpdateWidget(oldWidget);
   }
 
-  late bool isSelected = widget.value;
   @override
   Widget build(BuildContext context) {
     return Checkbox(
@@ -31,7 +32,7 @@ class _BhCheckboxState extends State<BhCheckbox> {
       ),
       visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      value: isSelected,
+      value: _isSelected,
       activeColor: ThColors.ascentAscent,
       side: const BorderSide(
         color: ThColors.textText5,
@@ -39,8 +40,8 @@ class _BhCheckboxState extends State<BhCheckbox> {
       ),
       checkColor: Colors.white,
       onChanged: (bool? value) {
-        isSelected = !isSelected;
-        widget.onChanged?.call(isSelected);
+        _isSelected = !_isSelected;
+        widget.onChanged?.call(_isSelected);
         setState(() {});
       },
     );

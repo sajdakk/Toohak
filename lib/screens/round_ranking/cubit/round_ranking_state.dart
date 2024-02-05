@@ -1,6 +1,6 @@
 part of 'round_ranking_cubit.dart';
 
-abstract class RoundRankingState extends Equatable {
+sealed class RoundRankingState extends Equatable {
   const RoundRankingState();
   @override
   List<Object?> get props => <dynamic>[];
@@ -26,13 +26,13 @@ class RoundRankingLoadedState extends RoundRankingState {
 
 class RoundRankingErrorState extends RoundRankingState {
   const RoundRankingErrorState({
-    required this.message,
+    required this.error,
   });
 
-  final String message;
+  final String error;
 
   @override
   List<Object?> get props => <dynamic>[
-        message,
+        error,
       ];
 }

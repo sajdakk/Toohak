@@ -1,6 +1,6 @@
 part of 'template_details_cubit.dart';
 
-abstract class TemplateDetailsState extends Equatable {
+sealed class TemplateDetailsState extends Equatable {
   const TemplateDetailsState();
 
   @override

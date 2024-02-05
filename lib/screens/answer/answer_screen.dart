@@ -47,11 +47,13 @@ class _AnswerScreenState extends State<AnswerScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AnswerCubit>(
-      create: (_) => sl()..init(),
+      create: (_) => AnswerCubit()..init(),
       child: BlocBuilder<AnswerCubit, AnswerState>(
         builder: (_, AnswerState state) {
           if (widget.event == null) {
-            return ErrorView.unhandledState(state);
+            return const ErrorView(
+              error: 'Event is null',
+            );
           }
 
           return AnswerBody(

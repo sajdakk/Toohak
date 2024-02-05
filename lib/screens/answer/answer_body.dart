@@ -56,7 +56,7 @@ class _AnswerBodyState extends State<AnswerBody> {
                   const SizedBox(height: 16.0),
                   if (widget.event.isDouble)
                     Text(
-                      'Podwójne punkty!',
+                      'Double boost!',
                       style: ThTextStyles.headlineH2Semibold.copyWith(
                         color: ThColors.ascentAscent,
                       ),
@@ -78,7 +78,7 @@ class _AnswerBodyState extends State<AnswerBody> {
 
                             if (result) {
                               thRouter.replace(
-                                AfterAnswerWaitingScreen.getRoute(),
+                                AfterAnswerWaitingScreen.route,
                               );
                             }
                           },
@@ -122,13 +122,13 @@ class _AnswerBodyState extends State<AnswerBody> {
     }
     if (_showAnswer) {
       return Text(
-        'Podpowiedź: ${widget.event.hint}',
+        'Hint: ${widget.event.hint}',
         style: ThTextStyles.headlineH2Semibold.copyWith(color: ThColors.textText1),
       );
     }
 
-    return ThButton(
-      title: 'Pokaz podpowiedź',
+    return PrimaryButton(
+      title: 'Show hint',
       onTap: () {
         _showAnswer = true;
         setState(() {});

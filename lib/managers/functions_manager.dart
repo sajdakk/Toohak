@@ -17,7 +17,7 @@ class FunctionsManager {
       );
     } catch (e, stacktrace) {
       if (e is DioException && e.response?.data["error"] == 'Username already taken') {
-        ThMessage.showError('Nazwa użytkownika jest już zajęta.');
+        ThMessage.showError('Username already taken. Please choose another one.');
 
         _logger.error(
           'joinGame, username already taken',
@@ -26,7 +26,7 @@ class FunctionsManager {
         );
       }
       if (e is DioException && e.response?.data["error"] == 'You are already in this game') {
-        ThMessage.showError('Już jesteś w tej grze.');
+        ThMessage.showError('You are already in this game.');
         _logger.error(
           'joinGame, you are already in this game',
           error: e,
@@ -56,6 +56,7 @@ class FunctionsManager {
         error: e,
         stackTrace: stacktrace,
       );
+
       return <RankingPlayer>[];
     }
   }
@@ -123,6 +124,7 @@ class FunctionsManager {
         answerIndex: answerIndex,
         wasHintUsed: wasHintUsed,
       );
+      
       return true;
     } catch (e, stacktrace) {
       _logger.error(

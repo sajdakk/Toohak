@@ -24,7 +24,7 @@ class GameOverCubit extends ThCubit<GameOverState> {
     if (template == null) {
       emit(
         const GameOverErrorState(
-          message: 'Cannot find game template',
+          error: 'Cannot find game template',
         ),
       );
 

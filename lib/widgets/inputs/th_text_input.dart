@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:toohak/_toohak.dart';
 
 class ThTextInput extends StatelessWidget {
@@ -47,77 +48,99 @@ class ThTextInput extends StatelessWidget {
   final Color fillColor;
   final Color textColor;
 
-
-
   @override
   Widget build(BuildContext context) {
-    return ImTextInput(
-      maxLines: maxLines,
-      minLines: minLines,
-      labelText: labelText,
-      hintText: hintText,
-      enabled: enabled,
-      autofillHints: autofillHints,
-      withoutSpaces: withoutSpaces,
-      suffixText: suffixText,
-      onSubmit: onSubmit,
-      obscureText: obscureText,
-      initialValue: initialValue,
-      formFieldKey: formFieldKey,
-      onChanged: onChanged,
-      focusNode: focusNode,
-      controller: controller,
-      textStyle: ThTextStyles.textCategory.copyWith(
-        color: textColor,
-      ),
-      errorStyle: ThTextStyles.paragraphP3Medium.copyWith(
-        color: ThColors.statusColorDanger,
-      ),
-      errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.statusColorDanger,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: SizedBox(
+        height: 70.0,
+        child: TextFormField(
+          style: ThTextStyles.textCategory.copyWith(
+            color: textColor,
+          ),
+          autofillHints: autofillHints,
+          keyboardType: TextInputType.multiline,
+          initialValue: initialValue,
+          minLines: minLines ?? 1,
+          maxLines: maxLines,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: controller,
+          enabled: enabled,
+          onFieldSubmitted: (String value) => onSubmit?.call(),
+          validator: (String? value) {
+            if (isRequired && (value == null || value.isEmpty)) {
+              return 'Required field';
+            }
+
+            if (validator != null) {
+              return validator!(value);
+            }
+
+            return null;
+          },
+          focusNode: focusNode,
+          onChanged: onChanged,
+          key: formFieldKey,
+          obscureText: obscureText,
+          inputFormatters: withoutSpaces
+              ? <TextInputFormatter>[
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                ]
+              : null,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(16.0),
+            errorStyle: ThTextStyles.paragraphP3Medium.copyWith(
+              color: ThColors.statusColorDanger,
+            ),
+            suffixText: suffixText,
+            hintText: hintText,
+            focusColor: ThColors.ascentAscent,
+            errorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.statusColorDanger,
+              ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.statusColorDanger,
+              ),
+            ),
+            filled: true,
+            fillColor: fillColor,
+            alignLabelWithHint: false,
+            labelText: labelText,
+            hintStyle: ThTextStyles.textCategory.copyWith(
+              color: ThColors.textText4,
+            ),
+            labelStyle: ThTextStyles.textCategory.copyWith(
+              color: ThColors.textText4,
+            ),
+            floatingLabelStyle: ThTextStyles.textCategory.copyWith(
+              color: ThColors.textText1,
+            ),
+            enabledBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.textFormBg,
+              ),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.textFormBg,
+              ),
+            ),
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.textFormBg,
+              ),
+            ),
+          ),
         ),
       ),
-      focusedErrorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.statusColorDanger,
-        ),
-      ),
-      fillColor: fillColor,
-      hintStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
-      ),
-      labelStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
-      ),
-      floatingLabelStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText1,
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.textFormBg,
-        ),
-      ),
-      focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.textFormBg,
-        ),
-      ),
-      border: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.textFormBg,
-        ),
-      ),
-      focusColor: ThColors.ascentAscent,
-      isRequired: isRequired,
-      validator: validator,
-      finalHeight: 70.0,
-      contentPadding: const EdgeInsets.all(16.0),
     );
   }
 }

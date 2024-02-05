@@ -58,7 +58,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Szczegóły szablonu',
+                    'Template Details',
                     style: ThTextStyles.headlineH2Semibold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -68,7 +68,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     isRequired: _readyKey.currentState?.value == false ? false : true,
                     values: GameType.values.toSet(),
                     formFieldKey: _gameTypeKey,
-                    label: 'Typ gry *',
+                    label: 'Game Type*',
                     initialValue: widget.state.template?.type,
                     translateItemToString: (GameType? value) => value == null ? '' : GameTypeMapper.getName(value),
                   ),
@@ -77,7 +77,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     isRequired: false,
                     values: const <bool>{true, false},
                     formFieldKey: _readyKey,
-                    label: 'Gotowy *',
+                    label: 'Ready *',
                     initialValue: widget.state.template == null ? true : widget.state.template?.ready,
                     translateItemToString: (bool? value) {
                       if (value == null) {
@@ -92,12 +92,12 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     initialValue: widget.state.template?.name,
                     isRequired: true,
                     formFieldKey: _nameKey,
-                    labelText: 'Nazwa *',
+                    labelText: 'Name *',
                     maxLines: null,
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Pytania',
+                    'Questions',
                     style: ThTextStyles.headlineH2Semibold.copyWith(
                       color: ThColors.textText2,
                     ),
@@ -126,7 +126,7 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                           duration: questions[index].durationInSec,
                           onDelete: () => thShowAlert(
                             context,
-                            content: 'Jesteś pewien, że chcesz usunąć to pytanie?',
+                            content: 'Are you sure you want to delete this question?',
                             onConfirm: () {
                               questions.removeAt(index);
                               setState(() {});
@@ -140,8 +140,8 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     shrinkWrap: true,
                   ),
                   const SizedBox(height: 16.0),
-                  ThButton(
-                    title: 'Dodaj pytanie',
+                  PrimaryButton(
+                    title: 'Add question',
                     onTap: () async {
                       QuestionParameters? lesson = await QuestionDetailDialog.show(
                         context: context,
@@ -160,8 +160,8 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
                     style: ThPrimaryButtonStyle.justText,
                   ),
                   const SizedBox(height: 32.0),
-                  ThButton(
-                    title: widget.state.template == null ? 'Dodaj szablon' : 'Zapisz szablon',
+                  PrimaryButton(
+                    title: widget.state.template == null ? 'Add template' : 'Save template',
                     onTap: () async => await _submit(context),
                     size: ThPrimaryButtonSize.large,
                     style: ThPrimaryButtonStyle.primary,
@@ -184,11 +184,11 @@ class _TemplateDetailsBodyState extends State<TemplateDetailsBody> {
     bool ready = _readyKey.currentState!.value!;
 
     for (QuestionParameters question in questions) {
-      if(!ready){
+      if (!ready) {
         break;
       }
 
-      if ( question.answers.isEmpty || question.correctAnswerIndex == null || question.durationInSec == null) {
+      if (question.answers.isEmpty || question.correctAnswerIndex == null || question.durationInSec == null) {
         return;
       }
     }

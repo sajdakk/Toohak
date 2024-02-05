@@ -15,9 +15,7 @@ class QuestionScreen extends StatefulWidget {
 
   final DateTime? finishWhen;
 
-  static String getRoute() {
-    return '/question';
-  }
+  static const String route = '/question';
 
   static final Handler routeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) {
@@ -41,28 +39,33 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<QuestionCubit>(
-      create: (_) => sl()
+      create: (_) => QuestionCubit()
         ..init(
           finishWhen: widget.finishWhen,
         ),
       child: BlocBuilder<QuestionCubit, QuestionState>(
         builder: (_, QuestionState state) {
-          if (state is QuestionLoadingState) {
-            return const LoadingView();
-          }
-
           if (widget.finishWhen == null) {
-            return ErrorView.unhandledState(state);
-          }
-
-          if (state is QuestionLoadedState) {
-            return QuestionBody(
-              question: state.question,
-              finishWhen: widget.finishWhen!,
+            return const ErrorView(
+              error: 'Finish when is null',
             );
           }
 
-          return ErrorView.unhandledState(state);
+          switch (state) {
+            case QuestionLoadingState():
+              return const LoadingView();
+
+            case QuestionLoadedState():
+              return QuestionBody(
+                question: state.question,
+                finishWhen: widget.finishWhen!,
+              );
+
+            case QuestionErrorState():
+              return ErrorView(
+                error: state.error,
+              );
+          }
         },
       ),
     );

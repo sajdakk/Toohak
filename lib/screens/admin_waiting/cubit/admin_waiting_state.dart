@@ -1,6 +1,6 @@
 part of 'admin_waiting_cubit.dart';
 
-abstract class AdminWaitingState extends Equatable {
+sealed class AdminWaitingState extends Equatable {
   const AdminWaitingState();
   @override
   List<Object?> get props => <dynamic>[];
@@ -27,7 +27,6 @@ class AdminWaitingLoadedState extends AdminWaitingState {
         gameId,
       ];
 }
-
 
 class AdminWaitingErrorState extends AdminWaitingState {
   const AdminWaitingErrorState({

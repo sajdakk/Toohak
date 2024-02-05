@@ -1,6 +1,6 @@
 import 'package:toohak/_toohak.dart';
 
-class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams> {
+class GameTemplateDataManager extends DataManager<GameTemplate> {
   final GameTemplateDataProvider _gameTemplateDataProvider = sl();
   final Logger _logger = Logger('GameTemplateDataManager');
 
@@ -15,11 +15,6 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
             gameTemplates.where((GameTemplate gameTemplate) => gameTemplate.userId == userId).toList(),
       );
 
-  @override
-  Future<Map<String, GameTemplate>> fetch(NoFetchingParams params) {
-    return _gameTemplateDataProvider.fetchAll();
-  }
-
   Future<bool> fetchWithId(String id) async {
     try {
       final GameTemplate? result = await _gameTemplateDataProvider.getWithId(id);
@@ -31,6 +26,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         error: e,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -42,6 +38,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         result,
         deleteWhere: (GameTemplate template) => template.userId == userId,
       );
+
       return true;
     } catch (e, stacktrace) {
       _logger.error(
@@ -49,6 +46,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         error: e,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -61,6 +59,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         gameTemplateWriteRequest: gameTemplateWriteRequest,
       );
       await fetchWithId(id);
+
       return id;
     } catch (error, stacktrace) {
       _logger.error(
@@ -68,6 +67,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         error: error,
         stackTrace: stacktrace,
       );
+
       return null;
     }
   }
@@ -82,6 +82,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         gameTemplateWriteRequest: gameTemplateWriteRequest,
       );
       await fetchWithId(id);
+
       return true;
     } catch (error, stacktrace) {
       _logger.error(
@@ -89,6 +90,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         error: error,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }
@@ -99,6 +101,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
     try {
       await _gameTemplateDataProvider.deleteGameTemplate(id);
       await fetchWithId(id);
+
       return true;
     } catch (error, stacktrace) {
       _logger.error(
@@ -106,6 +109,7 @@ class GameTemplateDataManager extends DataManager<GameTemplate, NoFetchingParams
         error: error,
         stackTrace: stacktrace,
       );
+
       return false;
     }
   }

@@ -14,12 +14,6 @@ class AuthProvider {
     );
   }
 
-  Future<String?> signInAnonymously() async {
-    UserCredential cred = await FirebaseAuth.instance.signInAnonymously();
-
-    return cred.additionalUserInfo?.username ?? 'anonymous';
-  }
-
   Future<void> register({
     required String email,
     required String password,
@@ -28,9 +22,5 @@ class AuthProvider {
       email: email,
       password: password,
     );
-  }
-
-  Future<void> delete() async {
-    await _firebaseAuth.currentUser!.delete();
   }
 }

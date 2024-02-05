@@ -1,6 +1,6 @@
 part of 'registration_cubit.dart';
 
-abstract class RegistrationState extends Equatable {
+sealed class RegistrationState extends Equatable {
   @override
   List<Object?> get props => <dynamic>[];
 }

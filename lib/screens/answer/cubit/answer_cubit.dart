@@ -28,14 +28,14 @@ class AnswerCubit extends ThCubit<AnswerState> {
       (CloudEvent event) {
         if (event is RoundFinishedCloudEvent) {
           thRouter.replace(
-            ResultScreen.getRoute(),
+            ResultScreen.route,
             arguments: event,
           );
         }
 
         if (event is GameOverCloudEvent) {
           thRouter.replace(
-            GameOverScreen.getRoute(),
+            GameOverScreen.route,
             arguments: event,
           );
         }

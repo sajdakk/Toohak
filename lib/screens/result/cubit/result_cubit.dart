@@ -39,7 +39,7 @@ class ResultCubit extends ThCubit<ResultState> {
 
         if (event is GameOverCloudEvent) {
           thRouter.replace(
-            GameOverScreen.getRoute(),
+            GameOverScreen.route,
             arguments: event,
           );
         }

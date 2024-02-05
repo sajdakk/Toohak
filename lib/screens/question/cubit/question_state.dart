@@ -1,6 +1,6 @@
 part of 'question_cubit.dart';
 
-abstract class QuestionState extends Equatable {
+sealed class QuestionState extends Equatable {
   const QuestionState();
   @override
   List<Object?> get props => <dynamic>[];
@@ -25,13 +25,13 @@ class QuestionLoadingState extends QuestionState {
 
 class QuestionErrorState extends QuestionState {
   const QuestionErrorState({
-    required this.message,
+    required this.error,
   });
 
-  final String message;
+  final String error;
 
   @override
   List<Object?> get props => <Object?>[
-        message,
+        error,
       ];
 }

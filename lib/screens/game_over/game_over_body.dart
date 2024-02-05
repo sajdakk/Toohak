@@ -36,7 +36,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 32.0),
                   Text(
-                    widget.event.didPlayerLost ? 'Niestety, odpadłeś z gry (tryb gry hardcore)' : 'Koniec gry',
+                    widget.event.didPlayerLost ? 'Unfortunately, you lost (hardcore mode)' : 'Game over!',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -47,7 +47,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                     Column(
                       children: [
                         Text(
-                          'Ostateczna pozycja w rankingu: ${widget.event.finalPosition}',
+                          'Final position: ${widget.event.finalPosition}',
                           style: ThTextStyles.headlineH1Bold.copyWith(
                             color: ThColors.textText1,
                           ),
@@ -57,7 +57,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                       ],
                     ),
                   Text(
-                    'Końcowa ilość punktów: ${widget.event.totalPoints}',
+                    'Total points: ${widget.event.totalPoints}',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -65,7 +65,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Ilość udzielonych odpowiedzi: ${widget.event.questionsAnswered}',
+                    'Question answered: ${widget.event.questionsAnswered}',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -73,7 +73,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Ilość poprawnie udzielonych odpowiedzi: ${widget.event.questionsAnsweredCorrectly}',
+                    'Question answered correctly: ${widget.event.questionsAnsweredCorrectly}',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -81,7 +81,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Poprawnie udzielone odpowiedzi (w skali całego quizu): ${(widget.event.questionsAnsweredCorrectly / widget.state.gameTemplate.questions.length * 100).toStringAsFixed(1)}%',
+                    'Question answered correctly in whole quiz: ${(widget.event.questionsAnsweredCorrectly / widget.state.gameTemplate.questions.length * 100).toStringAsFixed(1)}%',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
@@ -89,7 +89,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Średni czas odpowiedzi: ${(widget.event.averageAnswerTimeInMilis / 1000).toStringAsFixed(1)} sekund',
+                    'Average answer time: ${(widget.event.averageAnswerTimeInMilis / 1000).toStringAsFixed(1)} sekund',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),

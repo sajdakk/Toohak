@@ -46,7 +46,7 @@ class _RegistrationBodyState extends State<RegistrationBody> {
             children: <Widget>[
               const SizedBox(height: 16.0),
               Text(
-                'Utwórz konto',
+                'Create an account',
                 style: ThTextStyles.headlineH2Regular.copyWith(
                   color: ThColors.textText1,
                   fontWeight: FontWeight.w500,
@@ -55,19 +55,19 @@ class _RegistrationBodyState extends State<RegistrationBody> {
               const SizedBox(height: 24.0),
               ThTextInput(
                 formFieldKey: _emailInputKey,
-                labelText: 'Adres email',
+                labelText: 'Email address',
                 isRequired: true,
                 withoutSpaces: true,
               ),
               const SizedBox(height: 2.0),
               ThPasswordInput(
                 formFieldKey: _passwordInputKey,
-                labelText: 'hasło',
+                labelText: 'Password',
                 required: true,
               ),
               const SizedBox(height: 24.0),
-              ThButton(
-                title: 'Utwórz konto',
+              PrimaryButton(
+                title: 'Create an account',
                 onTap: () {
                   if (_formKey.currentState?.validate() == true) {
                     context.read<RegistrationCubit>().register(
@@ -80,10 +80,10 @@ class _RegistrationBodyState extends State<RegistrationBody> {
                 style: ThPrimaryButtonStyle.primary,
               ),
               const SizedBox(height: 24.0),
-               TextButton(
+              TextButton(
                 onPressed: () => thRouter.replace(ThRoutes.login.route),
                 child: Text(
-                  'Masz już konto? Zaloguj się',
+                  'Already have an account? Login',
                   style: ThTextStyles.headlineH6Semibold.copyWith(
                     color: ThColors.ascentAscent,
                   ),

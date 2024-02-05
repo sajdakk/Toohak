@@ -52,7 +52,7 @@ class _ResultBodyState extends State<ResultBody> {
                           Column(
                             children: [
                               Text(
-                                'Twoja pozycja w rankingu: ${widget.event.currentPosition}',
+                                'Current position ${widget.event.currentPosition}',
                                 style: ThTextStyles.headlineH2Semibold.copyWith(
                                   color: ThColors.textText1,
                                 ),
@@ -66,7 +66,7 @@ class _ResultBodyState extends State<ResultBody> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Otrzymano: ${widget.event.pointsForThisRound} punktów',
+                                '${widget.event.pointsForThisRound} points scored',
                                 style: ThTextStyles.headlineH2Semibold.copyWith(
                                   color: ThColors.textText1,
                                 ),
@@ -76,7 +76,7 @@ class _ResultBodyState extends State<ResultBody> {
                             ],
                           ),
                         Text(
-                          'Suma punktów: ${widget.event.totalPoints}',
+                          'Total points: ${widget.event.totalPoints}',
                           style: ThTextStyles.headlineH2Semibold.copyWith(
                             color: ThColors.textText1,
                           ),
@@ -107,18 +107,18 @@ class _ResultBodyState extends State<ResultBody> {
       return '';
     }
 
-    return 'Odpowiedziałeś jako ${widget.event.answeredNth}. osoba';
+    return 'You answered as ${widget.event.answeredNth}. person';
   }
 
   String _getInfo() {
     if (widget.event.wasAnswerCorrect == null) {
-      return 'Niestety, nie zdążyłeś odpowiedzieć na czas :(';
+      return 'Unfortunately, you did not answer the question in time.';
     }
 
     if (widget.event.wasAnswerCorrect == true) {
-      return 'Gratulacje! Twoja odpowiedź była poprawna!';
+      return 'Congratulations, you answered correctly!';
     }
 
-    return 'Niestety, pomyliłeś się :(';
+    return 'Unfortunately, you answered incorrectly.';
   }
 }

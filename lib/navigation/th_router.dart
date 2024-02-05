@@ -23,15 +23,6 @@ class ThRouter {
     }
   }
 
-  bool routeExists(String? routeName) {
-    if (routeName == null) {
-      return false;
-    }
-
-    final AppRouteMatch? appRouteMatch = router.match(routeName);
-    return appRouteMatch != null;
-  }
-
   void pop<T extends Object?>([T? result]) {
     navigatorKey.currentState?.pop(result);
   }

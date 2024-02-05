@@ -17,9 +17,10 @@ class TimerBuilder extends StatefulWidget {
 
 class _TimerBuilderState extends State<TimerBuilder> with SingleTickerProviderStateMixin {
   Ticker? _ticker;
+
   @override
   void initState() {
-   _ticker= createTicker((elapsed) {
+    _ticker = createTicker((elapsed) {
       setState(() {});
     });
 
@@ -29,9 +30,9 @@ class _TimerBuilderState extends State<TimerBuilder> with SingleTickerProviderSt
 
   @override
   void dispose() {
-   _ticker?.stop();
-   _ticker?.dispose();
-   
+    _ticker?.stop();
+    _ticker?.dispose();
+
     super.dispose();
   }
 

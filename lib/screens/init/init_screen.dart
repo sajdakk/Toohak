@@ -43,12 +43,12 @@ class _InitScreenState extends State<InitScreen> {
                   ),
                   const SizedBox(height: 32.0),
                   ThTextInput(
-                    hintText: 'Podaj kod PIN',
+                    hintText: 'Enter the PIN code',
                     isRequired: true,
                     formFieldKey: _codeKey,
                   ),
-                  ThButton(
-                    title: 'Dalej!',
+                  PrimaryButton(
+                    title: 'Join the game',
                     onTap: () {
                       if (_codeKey.currentState!.validate() != true) {
                         return;
@@ -66,7 +66,7 @@ class _InitScreenState extends State<InitScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Chcesz stworzyć swój własny quiz?',
+                        'Do you want to create a game?',
                         style: ThTextStyles.headlineH6Regular.copyWith(
                           color: ThColors.textText1,
                         ),
@@ -75,7 +75,7 @@ class _InitScreenState extends State<InitScreen> {
                       GestureDetector(
                         onTap: () async => await appSession.init(),
                         child: Text(
-                          'Przejdź tutaj!',
+                          'Click here!',
                           style: ThTextStyles.headlineH6Semibold.copyWith(
                             color: ThColors.ascentAscent,
                           ),

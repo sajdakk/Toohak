@@ -4,7 +4,7 @@ Future<String?> thShowAlert(
   BuildContext context, {
   required String content,
   required VoidCallback onConfirm,
-  String routeName = '/ld-dialog-route',
+  String routeName = '/th-dialog-route',
   String acceptedString = 'Yes',
   String rejectedString = 'No',
 }) {

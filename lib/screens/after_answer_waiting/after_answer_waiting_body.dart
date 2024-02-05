@@ -28,7 +28,7 @@ class _AfterAnswerWaitingBodyState extends State<AfterAnswerWaitingBody> {
                 ),
                 const SizedBox(height: 32.0),
                Text(
-                  'Geniusz? Czekaj na wyniki!',
+                  'Genius? Wait for the result!',
                   style: ThTextStyles.headlineH1Bold.copyWith(
                     color: ThColors.textText1,
                   ),

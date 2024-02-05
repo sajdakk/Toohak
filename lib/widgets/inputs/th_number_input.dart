@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toohak/_toohak.dart';
 
-class ThNumberInput extends StatelessWidget {
+class ThNumberInput extends StatefulWidget {
   const ThNumberInput({
     super.key,
     this.labelText,
@@ -17,7 +17,6 @@ class ThNumberInput extends StatelessWidget {
     this.initialValue,
     this.obscureText = false,
     this.onSubmit,
-    this.suffixText,
     this.showDeleteIcon = true,
     this.tooltipMsg,
   });
@@ -35,106 +34,132 @@ class ThNumberInput extends StatelessWidget {
   final String? initialValue;
   final bool obscureText;
   final void Function()? onSubmit;
-  final String? suffixText;
   final bool showDeleteIcon;
   final String? tooltipMsg;
 
-  static const NonUniformBorder _shapeBorder = NonUniformBorder(
-    leftWidth: 0.0,
-    rightWidth: 0.0,
-    topWidth: 0.0,
-    bottomWidth: 2.0,
-    color: Colors.white,
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(13),
-      topRight: Radius.circular(13),
-      bottomLeft: Radius.circular(12),
-      bottomRight: Radius.circular(12),
+  static const OutlineInputBorder _border = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+    borderSide: BorderSide(
+      color: ThColors.textFormBg,
     ),
   );
 
   @override
+  State<ThNumberInput> createState() => _ThNumberInputState();
+}
+
+class _ThNumberInputState extends State<ThNumberInput> {
+  @override
   Widget build(BuildContext context) {
-    return ImNumberInput(
-      labelText: labelText,
-      enabled: enabled,
-      onSubmit: onSubmit,
-      formFieldKey: formFieldKey,
-      onChanged: onChanged,
-      focusNode: focusNode,
-      controller: controller,
-      textStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText2,
-      ),
-      errorStyle: ThTextStyles.paragraphP3Medium.copyWith(
-        color: ThColors.statusColorDanger,
-      ),
-      errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.statusColorDanger,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: SizedBox(
+        height: 70.0,
+        child: TextFormField(
+          style: ThTextStyles.textCategory.copyWith(
+            color: ThColors.textText2,
+          ),
+          keyboardType: TextInputType.number,
+          initialValue: widget.initialValue,
+          minLines: widget.minLines ?? 1,
+          maxLines: widget.maxLines ?? 1,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: widget.controller,
+          enabled: widget.enabled,
+          onFieldSubmitted: (String value) => widget.onSubmit?.call(),
+          validator: (String? value) {
+            if (widget.required && (value == null || value.isEmpty)) {
+              return 'Field is required';
+            }
+
+            if (widget.validator != null) {
+              return widget.validator!(value);
+            }
+
+            return null;
+          },
+          focusNode: widget.focusNode,
+          onChanged: (String value) {
+            widget.onChanged?.call(value);
+
+            setState(() {});
+          },
+          key: widget.formFieldKey,
+          obscureText: widget.obscureText,
+          decoration: InputDecoration(
+            errorStyle: ThTextStyles.paragraphP3Medium.copyWith(
+              color: ThColors.statusColorDanger,
+            ),
+            errorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.statusColorDanger,
+              ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              borderSide: BorderSide(
+                color: ThColors.statusColorDanger,
+              ),
+            ),
+            fillColor: ThColors.textFormBg,
+            hintStyle: ThTextStyles.textCategory.copyWith(
+              color: ThColors.textText4,
+            ),
+            labelStyle: ThTextStyles.textCategory.copyWith(
+              color: ThColors.textText4,
+            ),
+            floatingLabelStyle: ThTextStyles.textCategory.copyWith(
+              color: ThColors.textText4,
+            ),
+            enabledBorder: ThNumberInput._border,
+            focusedBorder: ThNumberInput._border,
+            border: ThNumberInput._border,
+            focusColor: ThColors.ascentAscent,
+            suffixIcon: widget.showDeleteIcon
+                ? IconButton(
+                    onPressed: () {
+                      if (widget.controller != null) {
+                        widget.controller!.value = TextEditingValue(
+                          text: '',
+                          selection: TextSelection.fromPosition(
+                            const TextPosition(offset: ''.length),
+                          ),
+                        );
+                      }
+
+                      if (widget.formFieldKey != null) {
+                        widget.formFieldKey!.currentState?.didChange(null);
+                      }
+
+                      if (widget.onChanged != null) {
+                        widget.onChanged!('');
+                      }
+
+                      setState(() {});
+                    },
+                    icon: const Padding(
+                      padding: EdgeInsets.only(
+                        right: 8.0,
+                        bottom: 8.0,
+                      ),
+                      child: SizedBox(
+                        height: 16.0,
+                        width: 16.0,
+                        child: Icon(
+                          Icons.cancel,
+                          color: ThColors.textText3,
+                        ),
+                      ),
+                    ),
+                  )
+                : null,
+            filled: true,
+            alignLabelWithHint: false,
+            labelText: widget.labelText,
+          ),
         ),
-      ),
-      focusedErrorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        borderSide: BorderSide(
-          color: ThColors.statusColorDanger,
-        ),
-      ),
-      fillColor: ThColors.textFormBg,
-      hintStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
-      ),
-      labelStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
-      ),
-      floatingLabelStyle: ThTextStyles.textCategory.copyWith(
-        color: ThColors.textText4,
-      ),
-      enabledBorder: _shapeBorder,
-      focusedBorder: _shapeBorder,
-      border: _shapeBorder,
-      focusColor: ThColors.ascentAscent,
-      required: required,
-      validator: validator,
-      deleteIcon: const Icon(
-        Icons.cancel,
-        color: ThColors.textText3,
-      ),
-      initialValue: initialValue,
-      maxLines: maxLines,
-      minLines: minLines,
-      obscureText: obscureText,
-      suffixText: suffixText,
-      showDeleteIcon: showDeleteIcon,
-      inputHeight: 52.0,
-      finalHeight: 70.0,
-      contentPadding: const EdgeInsets.all(16.0),
-      suffixBoxDecoration: BoxDecoration(
-        color: ThColors.backgroundBG1,
-        border: Border.all(color: _getBorderColor(context)),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      suffixTextStyle: ThTextStyles.paragraphP3Medium.copyWith(
-        color: _getSuffixColor(context),
-        fontWeight: FontWeight.w700,
       ),
     );
-  }
-
-  Color _getSuffixColor(BuildContext context) {
-    if (formFieldKey != null && formFieldKey!.currentState != null && !formFieldKey!.currentState!.isValid) {
-      return ThColors.ascentAscent;
-    }
-
-    return ThColors.textText2;
-  }
-
-  Color _getBorderColor(BuildContext context) {
-    if (formFieldKey != null && formFieldKey!.currentState != null && !formFieldKey!.currentState!.isValid) {
-      return ThColors.ascentAscent;
-    }
-
-    return ThColors.ascentAscent;
   }
 }

@@ -28,11 +28,11 @@ class _AdminBodyState extends State<AdminBody> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ThButton(
-            title: 'Wyloguj się',
+          PrimaryButton(
+            title: 'Logout',
             onTap: () => thShowAlert(
               context,
-              content: 'Jesteś pewien, że chcesz się wylogować?',
+              content: 'Are you sure you want to logout?',
               onConfirm: () async {
                 BotToast.showLoading();
                 await appSession.signOut();
@@ -43,8 +43,8 @@ class _AdminBodyState extends State<AdminBody> {
             style: ThPrimaryButtonStyle.justText,
             secondaryTextColor: ThColors.statusColorDanger,
           ),
-          ThButton(
-            title: 'Stwórz nowy quiz',
+          PrimaryButton(
+            title: 'Create new quiz',
             onTap: () => thRouter.pushNamed(
               TemplateDetailsScreen.getRoute(id: null),
             ),
@@ -61,7 +61,7 @@ class _AdminBodyState extends State<AdminBody> {
                   template: template,
                   createGame: () async {
                     AdminCubit cubit = context.read();
-                    final  result = await cubit.createGame(template);
+                    final result = await cubit.createGame(template);
 
                     if (result == null) {
                       return;
@@ -73,7 +73,7 @@ class _AdminBodyState extends State<AdminBody> {
                   },
                   onDelete: () => thShowAlert(
                     context,
-                    content: 'Jesteś pewien, że chcesz usunąć ten quiz?',
+                    content: 'Are you sure you want to delete this template?',
                     onConfirm: () async {
                       AdminCubit cubit = context.read();
                       await cubit.deleteTemplate(template.id);
