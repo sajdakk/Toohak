@@ -90,6 +90,7 @@ class _RoundRankingBodyState extends State<RoundRankingBody> {
                               style: ThTextStyles.headlineH1Bold.copyWith(
                                 color: ThColors.textText1,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 24.0),
                             _buildRanking(),

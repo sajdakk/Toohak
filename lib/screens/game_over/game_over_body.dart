@@ -89,7 +89,7 @@ class _GameOverBodyState extends State<GameOverBody> {
                   ),
                   const SizedBox(height: 24.0),
                   Text(
-                    'Average answer time: ${(widget.event.averageAnswerTimeInMilis / 1000).toStringAsFixed(1)} sekund',
+                    'Average answer time: ${(widget.event.averageAnswerTimeInMilis / 1000).toStringAsFixed(1)} seconds',
                     style: ThTextStyles.headlineH1Bold.copyWith(
                       color: ThColors.textText1,
                     ),
