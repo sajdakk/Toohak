@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:toohak/_toohak.dart';
 
 class AuthManager {
-  final AuthProvider _authDataProvider = sl();
+  final MyAuthProvider _authDataProvider = sl();
   final FirebaseAuth _firebaseAuth = sl();
   final ProfilesDataManager _profilesDataManager = sl();
 

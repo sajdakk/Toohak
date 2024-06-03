@@ -15,7 +15,7 @@ Future<void> setupLocator() async {
   //data providers
   sl.registerFactory(() => GameTemplateDataProvider());
   sl.registerFactory(() => GameDataProvider());
-  sl.registerFactory(() => AuthProvider());
+  sl.registerFactory(() => MyAuthProvider());
   sl.registerFactory(() => ProfilesDataProvider());
   sl.registerFactory(() => FunctionsDataProvider());
 
